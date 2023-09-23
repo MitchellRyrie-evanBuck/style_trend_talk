@@ -1,3 +1,3 @@
 # style_trend_talk
 
-A new Flutter project.
+社交APP
