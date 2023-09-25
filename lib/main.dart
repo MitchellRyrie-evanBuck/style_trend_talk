@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:style_trend_talk/layout/home.dart';
 
 void main() {
   runApp(const MainApp());
@@ -9,12 +11,8 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
+    return GetMaterialApp(
+        theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
+        home: const HomeWidget());
   }
 }
