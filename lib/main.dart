@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:style_trend_talk/layout/home.dart';
 import 'package:style_trend_talk/routes/routing.dart';
 import 'package:style_trend_talk/pages/index.dart';
 
-void main() {
-  runApp(const MainApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // 初始化Flutter应用
+  final prefs = await SharedPreferences.getInstance();
+  final isLogged = prefs.getBool('isLogged') ?? false; // 检查登录状态
+  runApp(MainApp(isLogged: isLogged));
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  MainApp({super.key, required this.isLogged});
+  final bool isLogged;
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
-      home: const LoginPage(),
+      home: isLogged ? HomePage() : LoginPage(),
       initialRoute: "/",
       getPages: appRoutes, // 使用路由配置文件中的路由
     );
