@@ -4,6 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:style_trend_talk/layout/drawer_widget.dart';
 import 'package:style_trend_talk/layout/header_widget.dart';
 import 'package:style_trend_talk/layout/navigationBar.dart';
+import 'package:style_trend_talk/routes/routing.dart';
+import 'package:style_trend_talk/store/tab_index.dart';
 import '../index.dart';
 
 class HomePage extends GetView<HomeController> {
@@ -18,16 +20,15 @@ class HomePage extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    final tabIndexController = Get.put(TabIndexController());
+    final index = Get.find<TabIndexController>().index;
     return GetBuilder<HomeController>(
       init: HomeController(),
       id: "home",
       builder: (_) {
         return Scaffold(
-          appBar: HeaderWidget(),
-          body: SafeArea(
-            child: _buildView(),
-          ),
-          drawer: DrawerWidget(),
+          // appBar: HeaderWidget(),
+          body: routing[index.value],
           bottomNavigationBar: NavigationBarWidget(),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
