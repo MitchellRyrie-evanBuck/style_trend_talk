@@ -8,6 +8,7 @@ class HeaderWidget extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text('Custom  Example'),
+
       // 此处放置你的自定义内容
     );
   }

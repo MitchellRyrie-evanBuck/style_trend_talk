@@ -5,7 +5,7 @@ import 'package:style_trend_talk/pages/index.dart';
 final List<GetPage> appRoutes = [
   GetPage(name: '/', page: () => HomePage()),
   GetPage(name: '/login', page: () => LoginPage()),
-  GetPage(name: '/main', page: () => const MainPage()),
+  GetPage(name: '/main', page: () => MainPage()),
   GetPage(name: '/discover', page: () => const DiscoverPage()),
   GetPage(name: '/notification', page: () => const NotificationPage()),
   GetPage(name: '/profile', page: () => const ProfilePage()),
@@ -13,7 +13,7 @@ final List<GetPage> appRoutes = [
 ];
 
 final List routing = [
-  const MainPage(),
+  MainPage(),
   const DiscoverPage(),
   const NotificationPage(),
   const ProfilePage(),
