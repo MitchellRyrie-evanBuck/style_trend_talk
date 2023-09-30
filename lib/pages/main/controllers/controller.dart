@@ -1,18 +1,20 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:style_trend_talk/pages/main/views/view.dart';
 
 class MainController extends GetxController {
   MainController();
+// late TabController tabController;
+  final RxDouble indicatorPadding = RxDouble(15);
 
   _initData() {
     update(["main"]);
   }
 
-  void onTap() {}
-
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  // }
+  void updateIndicatorPadding(double value) {
+    indicatorPadding.value = value;
+    update();
+  }
 
   @override
   void onReady() {
@@ -20,8 +22,15 @@ class MainController extends GetxController {
     _initData();
   }
 
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
+  @override
+  void onInit() {
+    // tabController = TabController(length: listRouterWidget.length, vsync: this);
+    super.onInit();
+  }
+
+  @override
+  void onClose() {
+    // tabController.dispose();
+    super.onClose();
+  }
 }

@@ -6,28 +6,20 @@ import 'package:style_trend_talk/pages/main/widgets/app_header.dart';
 
 import '../index.dart';
 
+final List<Widget> listRouterWidget = [
+  Center(child: Text('Tab 1')),
+  Center(child: Text('Tab 2')),
+  Center(child: Text('Tab 3')),
+  Center(child: Text('Tab 4')),
+  Center(child: Text('Tab 5')),
+];
+
 class MainPage extends GetView<MainController> {
   MainPage({Key? key}) : super(key: key);
-  final List<Widget> listRouterWidget = [
-    Center(child: Text('Tab 1')),
-    Center(child: Text('Tab 2')),
-    Center(child: Text('Tab 3')),
-    Center(child: Text('Tab 4')),
-    Center(child: Text('Tab 5')),
-  ];
 
   // 主视图
   Widget _buildView() {
-    return CustomScrollView(
-      slivers: <Widget>[
-        HomeAppHeader(),
-        SliverFillRemaining(
-          child: TabBarView(
-            children: listRouterWidget,
-          ),
-        ),
-      ],
-    );
+    return HomeMiddleWareWidge();
   }
 
   @override
@@ -46,6 +38,63 @@ class MainPage extends GetView<MainController> {
               ),
             ));
       },
+    );
+  }
+}
+
+class HomeMiddleWareWidge extends StatefulWidget {
+  const HomeMiddleWareWidge({super.key});
+
+  @override
+  State<HomeMiddleWareWidge> createState() => _HomeMiddleWareWidgeState();
+}
+
+class _HomeMiddleWareWidgeState extends State<HomeMiddleWareWidge>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  late double indicatorPadding = 15;
+  final MainController getMainController = Get.put(MainController());
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController =
+        TabController(length: listRouterWidget.length, vsync: this);
+    _tabController.animation?.addListener(_onTabBarScroll);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose(); // 释放资源
+    super.dispose();
+  }
+
+  void _onTabBarScroll() {
+    double? number = _tabController.animation?.value;
+    String numberString = number.toString();
+    String decimalPart = '0.0';
+    if (numberString.split('.').length > 1) {
+      decimalPart = '0.' + numberString.split('.')[1];
+    }
+    if (decimalPart == '0.0') {
+      decimalPart = '1';
+    }
+    double paddindResult = double.parse(decimalPart);
+    getMainController.updateIndicatorPadding(paddindResult * 15);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(
+      slivers: <Widget>[
+        HomeAppHeader(tabController: _tabController),
+        SliverFillRemaining(
+          child: TabBarView(
+            controller: _tabController,
+            children: listRouterWidget,
+          ),
+        ),
+      ],
     );
   }
 }
