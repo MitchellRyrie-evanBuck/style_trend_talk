@@ -3,11 +3,12 @@ import 'package:get/get.dart';
 import 'package:style_trend_talk/layout/drawer_widget.dart';
 import 'package:style_trend_talk/layout/header_widget.dart';
 import 'package:style_trend_talk/pages/main/widgets/app_header.dart';
+import 'package:style_trend_talk/pages/main/widgets/recommendation.dart';
 
 import '../index.dart';
 
 final List<Widget> listRouterWidget = [
-  Center(child: Text('Tab 1')),
+  RecommendationPage(),
   Center(child: Text('Tab 2')),
   Center(child: Text('Tab 3')),
   Center(child: Text('Tab 4')),
