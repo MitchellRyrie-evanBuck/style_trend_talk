@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class RecommendTabPage extends StatefulWidget {
   const RecommendTabPage({super.key});
@@ -24,7 +25,7 @@ class _RecommendTabPageState extends State<RecommendTabPage>
           return RecommendItemDetails(index: index);
         } else if (index == items.length) {
           // Load more indicator
-          return ProgressIndicatorWidget();
+          return const ProgressIndicatorWidget();
         }
         return null;
       },
@@ -197,10 +198,53 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
   }
 
   Expanded _ImgContextWidget() {
+    late List<String> _listImg = [
+      'assets/images/recommend/avtr.png',
+      'assets/images/recommend/avtr.png',
+      'assets/images/recommend/avtr.png',
+    ];
     return Expanded(
         child: Container(
-      color: Colors.black,
-    ));
+            color: Colors.transparent,
+            child: GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                mainAxisSpacing: 3,
+                crossAxisSpacing: 3,
+                childAspectRatio: 1.0,
+              ),
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: _listImg.length,
+              itemBuilder: (context, index) {
+                return Container(
+                    height: 140,
+                    color: Colors.blue,
+                    child: Image(
+                      image: AssetImage(_listImg[index]),
+                      fit: BoxFit.cover,
+                    ));
+              },
+            )
+
+            // MasonryGridView.count(
+            //   crossAxisCount: 3,
+            //   mainAxisSpacing: 3,
+            //   crossAxisSpacing: 3,
+            //   shrinkWrap: true,
+            //   scrollDirection: Axis.vertical,
+            //   itemCount: _listImg.length,
+            //   semanticChildCount: _listImg.length,
+            //   itemBuilder: (context, index) {
+            //     return Container(
+            //         height: 140,
+            //         color: Colors.blue,
+            //         child: Image(
+            //           image: AssetImage(_listImg[index]),
+            //           fit: BoxFit.cover,
+            //         ));
+            //   },
+            // ),
+            ));
   }
 
   Container _DescribeWidget() {
