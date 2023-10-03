@@ -26,4 +26,6 @@ flutter:
   assets:
   - assets/images/
   - assets/images/recommend/
+  - assets/images/profile/
+
 

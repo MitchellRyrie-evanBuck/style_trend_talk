@@ -213,7 +213,7 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
                 crossAxisSpacing: 3,
                 childAspectRatio: 1.0,
               ),
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: _listImg.length,
               itemBuilder: (context, index) {
                 return Container(
