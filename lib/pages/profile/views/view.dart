@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:style_trend_talk/pages/profile/widgets/profileHeader.dart';
 
 import '../index.dart';
 
@@ -160,7 +161,7 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
   }
 
   void scrollControllerFn() {
-    print('scrollController----${scrollController.offset}');
+    // print('scrollController----${scrollController.offset}');
   }
 
   void profileContainerWidgetStateControllerFn() {
@@ -170,55 +171,58 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
 
   @override
   Widget build(BuildContext context) {
-    return NestedScrollView(
-      controller: scrollController,
-      floatHeaderSlivers: true,
-      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-        return <Widget>[
-          SliverAppBar(
-            expandedHeight: 180.0,
-            floating: false,
-            pinned: true,
-            actions: [
-              IconButton(
-                icon: const Icon(
-                  FontAwesomeIcons.cog,
-                  color: Colors.white,
-                ),
-                onPressed: () {},
-              ),
-            ],
-            title: Container(
-              height: 30,
-              width: 30,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/images/profile/user.png'),
-                    fit: BoxFit.cover),
-              ),
-            ),
-            surfaceTintColor: Colors.black,
-            backgroundColor: const Color.fromARGB(255, 40, 40, 40),
-            foregroundColor: Colors.white,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(
-                'assets/images/profile/profile.png',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ];
-      },
-      body: DefaultTabController(
-          length: listTabs.length,
-          child: CustomScrollView(
-            slivers: <Widget>[
-              _MyProfileDesc(listProfile),
-              _MyProfileLife(),
-              _MyProfileContext()
-            ],
-          )),
-    );
+    // return NestedScrollView(
+    //   controller: scrollController,
+    //   floatHeaderSlivers: true,
+    //   headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+    //     return <Widget>[
+    //       SliverAppBar(
+    //         expandedHeight: 180.0,
+    //         floating: false,
+    //         pinned: true,
+    //         actions: [
+    //           IconButton(
+    //             icon: const Icon(
+    //               FontAwesomeIcons.cog,
+    //               color: Colors.white,
+    //             ),
+    //             onPressed: () {},
+    //           ),
+    //         ],
+    //         title: Container(
+    //           height: 30,
+    //           width: 30,
+    //           decoration: const BoxDecoration(
+    //             image: DecorationImage(
+    //                 image: AssetImage('assets/images/profile/user.png'),
+    //                 fit: BoxFit.cover),
+    //           ),
+    //         ),
+    //         surfaceTintColor: Colors.black,
+    //         backgroundColor: const Color.fromARGB(255, 40, 40, 40),
+    //         foregroundColor: Colors.white,
+    //         flexibleSpace: FlexibleSpaceBar(
+    //           background: Image.asset(
+    //             'assets/images/profile/profile.png',
+    //             fit: BoxFit.cover,
+    //           ),
+    //         ),
+    //       ),
+    //     ];
+    //   },
+    //   body:
+    return DefaultTabController(
+        length: listTabs.length,
+        child: CustomScrollView(
+          controller: scrollController,
+          slivers: <Widget>[
+            MyProfileHeader(),
+            _MyProfileDesc(listProfile),
+            _MyProfileLife(),
+            _MyProfileContext()
+          ],
+        ));
+    // );
   }
 
   SliverFillRemaining _MyProfileContext() {
