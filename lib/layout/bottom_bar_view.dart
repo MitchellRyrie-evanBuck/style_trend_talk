@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:style_trend_talk/data/fitness_app_theme.dart';
 import 'package:style_trend_talk/data/tabIcon_data.dart';
-import 'package:style_trend_talk/hooks/index.dart';
+// import 'package:style_trend_talk/hooks/index.dart';
 import 'package:style_trend_talk/store/tab_index.dart';
 
 class BottomBarView extends StatefulWidget {

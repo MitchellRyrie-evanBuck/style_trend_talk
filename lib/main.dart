@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:style_trend_talk/layout/home.dart';
+// import 'package:style_trend_talk/layout/home.dart';
 import 'package:style_trend_talk/routes/routing.dart';
 import 'package:style_trend_talk/pages/index.dart';
 import 'package:style_trend_talk/store/tab_index.dart';
@@ -28,7 +28,7 @@ class MainApp extends StatelessWidget {
   }
 
   Widget routerWidget(BuildContext context) {
-    final tabIndexController = Get.put(TabIndexController());
+    // final tabIndexController = Get.put(TabIndexController());
     final index = Get.find<TabIndexController>().index;
     return GetBuilder<TabIndexController>(
       builder: (tabIndexController) {

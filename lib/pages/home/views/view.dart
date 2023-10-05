@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:style_trend_talk/data/tabIcon_data.dart';
 import 'package:style_trend_talk/layout/bottom_bar_view.dart';
-import 'package:style_trend_talk/layout/drawer_widget.dart';
-import 'package:style_trend_talk/layout/header_widget.dart';
-import 'package:style_trend_talk/layout/navigationBar.dart';
+// import 'package:style_trend_talk/layout/drawer_widget.dart';
+// import 'package:style_trend_talk/layout/header_widget.dart';
+// import 'package:style_trend_talk/layout/navigationBar.dart';
 import 'package:style_trend_talk/routes/routing.dart';
 import 'package:style_trend_talk/store/tab_index.dart';
 import '../index.dart';
