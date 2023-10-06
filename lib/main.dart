@@ -28,7 +28,7 @@ class MainApp extends StatelessWidget {
   }
 
   Widget routerWidget(BuildContext context) {
-    // final tabIndexController = Get.put(TabIndexController());
+    final tabIndexController = Get.put(TabIndexController());
     final index = Get.find<TabIndexController>().index;
     return GetBuilder<TabIndexController>(
       builder: (tabIndexController) {
