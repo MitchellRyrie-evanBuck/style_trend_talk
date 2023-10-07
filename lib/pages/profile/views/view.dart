@@ -5,6 +5,14 @@ import 'package:style_trend_talk/pages/profile/widgets/profileHeader.dart';
 
 import '../index.dart';
 
+late List<Tab> listTabs = [
+  const Tab(text: '时光机'),
+  const Tab(text: '视频'),
+  const Tab(text: '图片'),
+  const Tab(text: '点赞'),
+  const Tab(text: '收藏'),
+];
+
 class ProfilePage extends GetView<ProfileController> {
   const ProfilePage({Key? key}) : super(key: key);
 
@@ -80,15 +88,7 @@ class ProfileContainerWidget extends StatefulWidget {
 class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
     with SingleTickerProviderStateMixin {
   ScrollController scrollController = ScrollController();
-  TabController? _profileContainerWidgetStateController;
-
-  late List<Tab> listTabs = [
-    const Tab(text: '时光机'),
-    const Tab(text: '视频'),
-    const Tab(text: '图片'),
-    const Tab(text: '点赞'),
-    const Tab(text: '收藏'),
-  ];
+  late TabController _profileContainerWidgetStateController;
 
   final List<Widget> listWidgets = [
     Container(
@@ -218,14 +218,18 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
           slivers: <Widget>[
             MyProfileHeader(),
             _MyProfileDesc(listProfile),
-            _MyProfileLife(),
+            SliverPersistentHeader(
+              delegate: MySliverTabBarHeaderDelegate(
+                  _profileContainerWidgetStateController),
+              pinned: true,
+            ),
             _MyProfileContext()
           ],
         ));
     // );
   }
 
-  SliverFillRemaining _MyProfileContext() {
+  Widget _MyProfileContext() {
     return SliverFillRemaining(
       child: TabBarView(
         controller: _profileContainerWidgetStateController,
@@ -234,40 +238,12 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
     );
   }
 
-  SliverToBoxAdapter _MyProfileLife() {
-    return SliverToBoxAdapter(
-        child: Container(
-      color: Colors.white,
-      child: TabBar(
-        controller: _profileContainerWidgetStateController,
-        indicatorColor: Colors.black,
-        isScrollable: false,
-        indicatorWeight: 0,
-        indicatorSize: TabBarIndicatorSize.label,
-        indicator: const BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: Colors.black,
-              width: 2,
-            ),
-          ),
-        ),
-        // indicator: AnimatedTabBarIndicator(listenable: _animatedContainer),
-        dividerColor: Colors.transparent,
-        labelColor: Colors.black,
-        unselectedLabelColor: Colors.grey,
-        labelStyle: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-        ),
-        onTap: (index) {
-          print('object---${index}');
-          // 切换tab
-        },
-        physics: const BouncingScrollPhysics(),
-        tabs: listTabs,
-      ),
-    ));
+  Widget _MyProfileLife() {
+    return SliverPersistentHeader(
+      delegate:
+          MySliverTabBarHeaderDelegate(_profileContainerWidgetStateController),
+      pinned: true,
+    );
   }
 
   SliverList _MyProfileDesc(List<Map<String, dynamic>> listProfile) {
@@ -313,5 +289,59 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
         childCount: listProfile.length,
       ),
     );
+  }
+}
+
+class MySliverTabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
+  MySliverTabBarHeaderDelegate(this._profileContainerWidgetStateController);
+
+  final TabController _profileContainerWidgetStateController;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: Colors.white,
+      child: TabBar(
+        controller: _profileContainerWidgetStateController,
+        indicatorColor: Colors.black,
+        isScrollable: false,
+        indicatorWeight: 0,
+        indicatorSize: TabBarIndicatorSize.label,
+        indicator: const BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: Colors.black,
+              width: 2,
+            ),
+          ),
+        ),
+        // indicator: AnimatedTabBarIndicator(listenable: _animatedContainer),
+        dividerColor: Colors.transparent,
+        labelColor: Colors.black,
+        unselectedLabelColor: Colors.grey,
+        labelStyle: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+        ),
+        onTap: (index) {
+          print('object---${index}');
+          // 切换tab
+        },
+        physics: const BouncingScrollPhysics(),
+        tabs: listTabs,
+      ),
+    );
+  }
+
+  @override
+  double get maxExtent => 46.0;
+
+  @override
+  double get minExtent => 46.0;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+    return false;
   }
 }

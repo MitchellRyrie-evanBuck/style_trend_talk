@@ -17,7 +17,7 @@ class _RecommendTabPageState extends State<RecommendTabPage>
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: EdgeInsets.only(bottom: 100),
+      padding: const EdgeInsets.only(bottom: 100),
       separatorBuilder: (context, index) => const SizedBox(height: 1),
       itemCount: items.length + 1, // Add 1 for load more indicator
       itemBuilder: (context, index) {

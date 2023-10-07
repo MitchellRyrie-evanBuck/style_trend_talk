@@ -64,16 +64,28 @@ class _MyProfileHeaderState extends State<MyProfileHeader> {
   Widget build(BuildContext context) {
     return SliverPersistentHeader(
       delegate: MyProfileSliverPersistentHeaderDelegate(
-          minHeight: 100,
-          maxHeight: 180,
+          minHeight: 110,
+          maxHeight: 280,
           child: Container(
-            height: 180,
-            width: MediaQuery.of(Get.context!).size.width,
             decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage('assets/images/profile/profile.png'),
                   fit: BoxFit.cover),
             ),
+            child: Row(children: [
+              Container(
+                height: 60,
+                width: 60,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 2,
+                    ),
+                    image: const DecorationImage(
+                        image: AssetImage('assets/images/profile/user.png'))),
+              )
+            ]),
           )),
       pinned: true,
     );
