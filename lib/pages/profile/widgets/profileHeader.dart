@@ -28,7 +28,7 @@ class MyProfileSliverPersistentHeaderDelegate
     // 计算滑动比例，根据需要隐藏或显示widget
     final double scrollPercentage =
         (maxExtent - shrinkOffset) / (maxExtent - minExtent);
-    print('scrollPercentage------${scrollPercentage}');
+    print('scrollPercentage-------${scrollPercentage}');
 
     // 根据滑动比例来控制widget的透明度
     late double opacity = 1 - scrollPercentage;
