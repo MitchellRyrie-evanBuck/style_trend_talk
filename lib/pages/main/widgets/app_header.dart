@@ -92,9 +92,10 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
                   isScrollable: true,
                   indicatorWeight: 0,
                   // indicatorPadding: EdgeInsets.zero,
-                  indicatorPadding:
-                      EdgeInsets.only(left: 15, right: currentIndicatorPadding),
-                  indicatorSize: TabBarIndicatorSize.tab,
+                  // indicatorPadding:
+                  //     EdgeInsets.only(left: 15, right: currentIndicatorPadding),
+                  indicatorSize: TabBarIndicatorSize.label,
+                  // indicatorSize: TabBarIndicatorSize.tab,
                   indicator: const BoxDecoration(
                     border: Border(
                       bottom: BorderSide(

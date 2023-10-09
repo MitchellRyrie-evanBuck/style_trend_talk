@@ -86,4 +86,10 @@ class FitnessAppTheme {
     letterSpacing: 0.2,
     color: lightText, // was lightText
   );
+
+  static const TextStyle playFair = TextStyle(
+      color: Colors.black,
+      fontSize: 13,
+      fontWeight: FontWeight.w400,
+      fontFamily: fontName);
 }
