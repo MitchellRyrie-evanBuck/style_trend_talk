@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:style_trend_talk/data/main_tab.dart';
 import 'package:style_trend_talk/pages/profile/widgets/profileHeader.dart';
 
 import '../index.dart';
-
-late List<Tab> listTabs = [
-  const Tab(text: '时光机'),
-  const Tab(text: '视频'),
-  const Tab(text: '图片'),
-  const Tab(text: '点赞'),
-  const Tab(text: '收藏'),
-];
 
 class ProfilePage extends GetView<ProfileController> {
   const ProfilePage({Key? key}) : super(key: key);
@@ -19,49 +12,6 @@ class ProfilePage extends GetView<ProfileController> {
   // 主视图
   Widget _buildView() {
     return ProfileContainerWidget();
-  }
-
-  Stack _ProfileContextHeader() {
-    return Stack(
-      children: [
-        // 背景
-        Container(
-          height: 180,
-          width: MediaQuery.of(Get.context!).size.width,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/images/profile/profile.png'),
-                fit: BoxFit.cover),
-          ),
-        ),
-        // 内容
-        Container(
-          margin: const EdgeInsets.only(top: 156, left: 25),
-          child: Column(
-            children: [
-              // 头像
-              Container(
-                width: 66,
-                height: 66,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 2,
-                  ),
-                  image: const DecorationImage(
-                    image: AssetImage(
-                      'assets/images/profile/user.png',
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
   }
 
   @override
@@ -90,60 +40,6 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
   ScrollController scrollController = ScrollController();
   late TabController _profileContainerWidgetStateController;
 
-  final List<Widget> listWidgets = [
-    Container(
-      color: Colors.white,
-      child: const Center(child: Text('时光机')),
-    ),
-    Container(
-      color: Colors.white,
-      child: const Center(child: Text('视频')),
-    ),
-    Container(
-      color: Colors.white,
-      child: const Center(child: Text('图片')),
-    ),
-    Container(
-      color: Colors.white,
-      child: const Center(child: Text('点赞')),
-    ),
-    Container(
-      color: Colors.white,
-      child: const Center(child: Text('收藏')),
-    ),
-  ];
-
-  final List<Map<String, dynamic>> listProfile = [
-    {
-      'name': '数据资产',
-      'icon': FontAwesomeIcons.asterisk,
-      'title': '管理我的数据资产',
-      'route': '/profile/info',
-      'desc': ''
-    },
-    {
-      'name': '基础信息',
-      'icon': FontAwesomeIcons.user,
-      'title': '填写信息',
-      'route': '/profile/info',
-      'desc': ''
-    },
-    {
-      'name': '清单',
-      'icon': FontAwesomeIcons.sun,
-      'title': '---',
-      'route': '/profile/info',
-      'desc': ''
-    },
-    {
-      'name': '我的相关',
-      'icon': FontAwesomeIcons.hand,
-      'title': '访客记录  私藏',
-      'route': '/profile/info',
-      'desc': ''
-    },
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -171,52 +67,12 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
 
   @override
   Widget build(BuildContext context) {
-    // return NestedScrollView(
-    //   controller: scrollController,
-    //   floatHeaderSlivers: true,
-    //   headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-    //     return <Widget>[
-    //       SliverAppBar(
-    //         expandedHeight: 180.0,
-    //         floating: false,
-    //         pinned: true,
-    //         actions: [
-    //           IconButton(
-    //             icon: const Icon(
-    //               FontAwesomeIcons.cog,
-    //               color: Colors.white,
-    //             ),
-    //             onPressed: () {},
-    //           ),
-    //         ],
-    //         title: Container(
-    //           height: 30,
-    //           width: 30,
-    //           decoration: const BoxDecoration(
-    //             image: DecorationImage(
-    //                 image: AssetImage('assets/images/profile/user.png'),
-    //                 fit: BoxFit.cover),
-    //           ),
-    //         ),
-    //         surfaceTintColor: Colors.black,
-    //         backgroundColor: const Color.fromARGB(255, 40, 40, 40),
-    //         foregroundColor: Colors.white,
-    //         flexibleSpace: FlexibleSpaceBar(
-    //           background: Image.asset(
-    //             'assets/images/profile/profile.png',
-    //             fit: BoxFit.cover,
-    //           ),
-    //         ),
-    //       ),
-    //     ];
-    //   },
-    //   body:
     return DefaultTabController(
         length: listTabs.length,
         child: CustomScrollView(
           controller: scrollController,
           slivers: <Widget>[
-            MyProfileHeader(),
+            const MyProfileHeader(),
             _MyProfileDesc(listProfile),
             SliverPersistentHeader(
               delegate: MySliverTabBarHeaderDelegate(

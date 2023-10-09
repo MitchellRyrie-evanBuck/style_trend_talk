@@ -20,10 +20,10 @@ class TabData {
 
   static List<TabData> tabsList = <TabData>[
     TabData(
-      imagePath: Icon(
+      imagePath: const Icon(
         FontAwesomeIcons.home,
       ),
-      selectedImagePath: Icon(
+      selectedImagePath: const Icon(
         FontAwesomeIcons.home,
       ),
       index: 0,
@@ -32,10 +32,10 @@ class TabData {
       label: "首页",
     ),
     TabData(
-      imagePath: Icon(
+      imagePath: const Icon(
         FontAwesomeIcons.search,
       ),
-      selectedImagePath: Icon(
+      selectedImagePath: const Icon(
         FontAwesomeIcons.search,
       ),
       index: 1,
@@ -44,10 +44,10 @@ class TabData {
       label: "视频",
     ),
     TabData(
-      imagePath: Icon(
+      imagePath: const Icon(
         FontAwesomeIcons.message,
       ),
-      selectedImagePath: Icon(
+      selectedImagePath: const Icon(
         FontAwesomeIcons.message,
       ),
       index: 2,
@@ -56,10 +56,10 @@ class TabData {
       label: "消息",
     ),
     TabData(
-      imagePath: Icon(
+      imagePath: const Icon(
         FontAwesomeIcons.productHunt,
       ),
-      selectedImagePath: Icon(
+      selectedImagePath: const Icon(
         FontAwesomeIcons.productHunt,
       ),
       index: 3,
