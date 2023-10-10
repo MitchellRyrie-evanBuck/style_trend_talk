@@ -9,7 +9,7 @@ class MyProfileSliverPersistentHeaderDelegate
     extends SliverPersistentHeaderDelegate {
   final double minHeight;
   final double maxHeight;
-  final Widget child;
+  final Function child;
 
   MyProfileSliverPersistentHeaderDelegate({
     required this.minHeight,
@@ -46,7 +46,8 @@ class MyProfileSliverPersistentHeaderDelegate
 
     return Opacity(
       opacity: 1,
-      child: SizedBox.expand(child: child),
+      child:
+          SizedBox.expand(child: child(context, shrinkOffset, overlapsContent)),
     );
   }
 
@@ -57,13 +58,18 @@ class MyProfileSliverPersistentHeaderDelegate
 }
 
 class MyProfileHeader extends StatefulWidget {
-  const MyProfileHeader({super.key});
+  const MyProfileHeader({Key? key, required this.scrollController});
+  final ScrollController scrollController;
 
   @override
   State<MyProfileHeader> createState() => _MyProfileHeaderState();
 }
 
-class _MyProfileHeaderState extends State<MyProfileHeader> {
+class _MyProfileHeaderState extends State<MyProfileHeader>
+    with SingleTickerProviderStateMixin {
+  final double minHeight = 110;
+  final double maxHeight = 320;
+
   final double bottomLeftDistance = 150.0;
   final double bottomRightDistance = 120.0;
   final double blurHeight = 70.0;
@@ -75,32 +81,105 @@ class _MyProfileHeaderState extends State<MyProfileHeader> {
   // 获取视窗宽度
   late double queryScreenWidth = 0;
   final double queryUserDescWidth = 380;
+  double widgetOpacity = 0;
+  final Duration duration = const Duration(milliseconds: 500);
+  // --------------------------
+  double animatedLeftBlur = -100.0;
+  // --------------------------
+  late AnimationController _animationController;
+  late Animation<double> _opacityAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: duration, // 可根据需要调整动画持续时间
+    );
+
+    _opacityAnimation = Tween<double>(
+      begin: 1.0, // 开始透明度
+      end: 0.0, // 结束透明度
+    ).animate(_animationController);
+// 监听滚动
+    widget.scrollController.addListener(() {
+      final offset = widget.scrollController.offset;
+
+      if (offset >= 0 && offset <= 100) {
+        // 在 0 到 200 的范围内计算透明度
+        final opacity = 1.0 - (offset / 100.0);
+
+        // 更新透明度动画的值
+        _opacityAnimation = Tween<double>(
+          begin: _opacityAnimation.value, // 保持当前值
+          end: opacity,
+        ).animate(_animationController);
+
+        // 播放动画
+        _animationController.forward();
+      } else {
+        // 当滚动超过 200 时，反向播放透明度动画
+        _animationController.reverse();
+      }
+    });
+    // 在页面加载后，通过定时器来控制Container移入和透明度递增
+    Future.delayed(duration, () {
+      setState(() {
+        animatedLeftBlur = 0; // 移入到视图内部
+        widgetOpacity = 1.0; // 透明度递增到1
+      });
+    });
+
+    // 控制上滑组件的移出和透明度降低
+    Future.delayed(Duration(milliseconds: 1500), () {
+      // setState(() {
+      //   slideOutPosition = -100.0; // 移出到视图外部
+      // });
+    });
+  }
+
+  Future<void> setOpacity(double shrinkOffset) async {
+    print(
+        'scrollController.offset------------------------${widget.scrollController.offset}');
+    print('MyProfileHeader------------------------${shrinkOffset}');
+
+    // 确保 shrinkOffset 处于最小和最大高度之间
+    shrinkOffset = shrinkOffset.clamp(minHeight, maxHeight);
+
+    // 计算透明度，将 shrinkOffset 映射到透明度范围 [0, 1]
+    double opacity = (shrinkOffset - minHeight) / (maxHeight - minHeight);
+    print('MyProfileHeader----------opacity--------------${opacity}');
+  }
 
   @override
   Widget build(BuildContext context) {
     queryScreenWidth = MediaQuery.of(context).size.width;
     return SliverPersistentHeader(
       delegate: MyProfileSliverPersistentHeaderDelegate(
-          minHeight: 110,
-          maxHeight: 320,
-          child: Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/images/profile/profile.png'),
-                  fit: BoxFit.cover),
-            ),
-            child: Stack(children: [
-              _LeftBlur(),
-              _RightBlur(),
-              _BottomGradient(),
-              _UserImg(),
-              _UserImgAdd(),
-              _UserProfileStar(),
-              _PersonalSignature(),
-              _UserDes(),
-              _UserMoreProfile()
-            ]),
-          )),
+        minHeight: minHeight,
+        maxHeight: maxHeight,
+        child:
+            (BuildContext context, double shrinkOffset, bool overlapsContent) {
+          setOpacity(shrinkOffset);
+          return Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage('assets/images/profile/profile.png'),
+                    fit: BoxFit.cover),
+              ),
+              child: Stack(children: [
+                _LeftBlur(),
+                _RightBlur(),
+                _BottomGradient(),
+                _UserImg(),
+                _UserImgAdd(),
+                _UserProfileStar(),
+                _PersonalSignature(),
+                _UserDes(),
+                _UserMoreProfile()
+              ]));
+        },
+      ),
       pinned: true,
     );
   }
@@ -242,18 +321,21 @@ class _MyProfileHeaderState extends State<MyProfileHeader> {
     return Positioned(
         bottom: userBottomHeight,
         left: 33,
-        child: Container(
-          height: 60,
-          width: 60,
-          decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: Colors.white,
-                width: 2,
-              ),
-              image: const DecorationImage(
-                  image: AssetImage('assets/images/profile/user.png'))),
-        ));
+        child: AnimatedOpacity(
+            duration: duration,
+            opacity: _opacityAnimation.value,
+            child: Container(
+              height: 60,
+              width: 60,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 2,
+                  ),
+                  image: const DecorationImage(
+                      image: AssetImage('assets/images/profile/user.png'))),
+            )));
   }
 
   Positioned _BottomGradient() {
@@ -276,28 +358,38 @@ class _MyProfileHeaderState extends State<MyProfileHeader> {
         ));
   }
 
-  Positioned _RightBlur() {
-    return Positioned(
+  AnimatedPositioned _RightBlur() {
+    return AnimatedPositioned(
+        duration: duration,
         bottom: bottomRightDistance,
         right: 0,
-        child: ClipSelfWidget(
-          height: blurHeight,
-          width: rightBlurWidth,
-          radius: const BorderRadius.only(
-              topLeft: Radius.circular(50), bottomLeft: Radius.circular(50)),
-        ));
+        child: AnimatedOpacity(
+            duration: duration,
+            opacity: _opacityAnimation.value,
+            child: ClipSelfWidget(
+              height: blurHeight,
+              width: rightBlurWidth,
+              radius: const BorderRadius.only(
+                  topLeft: Radius.circular(15),
+                  bottomLeft: Radius.circular(15)),
+            )));
   }
 
-  Positioned _LeftBlur() {
-    return Positioned(
+  AnimatedPositioned _LeftBlur() {
+    return AnimatedPositioned(
+        duration: duration,
         bottom: bottomLeftDistance,
-        left: 0,
-        child: ClipSelfWidget(
-          height: blurHeight,
-          width: leftBlurWidth,
-          radius: const BorderRadius.only(
-              topRight: Radius.circular(50), bottomRight: Radius.circular(50)),
-        ));
+        left: animatedLeftBlur,
+        child: AnimatedOpacity(
+            duration: duration,
+            opacity: _opacityAnimation.value,
+            child: ClipSelfWidget(
+              height: blurHeight,
+              width: leftBlurWidth,
+              radius: const BorderRadius.only(
+                  topRight: Radius.circular(50),
+                  bottomRight: Radius.circular(50)),
+            )));
   }
 }
 
@@ -326,8 +418,8 @@ class _ClipSelfWidgetState extends State<ClipSelfWidget> {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15), // 调整sigma值以改变模糊程度
           child: Container(
-            color: const Color.fromARGB(255, 255, 255, 255)
-                .withOpacity(0.2), // 调整颜色和不透明度以改变遮罩效果
+            color: Color.fromARGB(255, 168, 168, 168)
+                .withOpacity(0.38), // 调整颜色和不透明度以改变遮罩效果
           ),
         ),
       ),

@@ -72,7 +72,7 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
         child: CustomScrollView(
           controller: scrollController,
           slivers: <Widget>[
-            const MyProfileHeader(),
+            MyProfileHeader(scrollController: scrollController),
             _MyProfileDesc(listProfile),
             SliverPersistentHeader(
               delegate: MySliverTabBarHeaderDelegate(
