@@ -32,7 +32,7 @@ class MainApp extends StatelessWidget {
     final index = Get.find<TabIndexController>().index;
     return GetBuilder<TabIndexController>(
       builder: (tabIndexController) {
-        print('tabIndexController.index.value: ${index}');
+        // print('tabIndexController.index.value: ${index}');
         return isLogged ? HomePage() : LoginPage();
       },
     );

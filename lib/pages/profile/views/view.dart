@@ -46,7 +46,7 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
     scrollController.addListener(scrollControllerFn);
     _profileContainerWidgetStateController =
         TabController(length: listTabs.length, vsync: this);
-    _profileContainerWidgetStateController!
+    _profileContainerWidgetStateController
         .addListener(profileContainerWidgetStateControllerFn);
   }
 
@@ -62,7 +62,7 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
 
   void profileContainerWidgetStateControllerFn() {
     print(
-        'profileContainerWidgetStateControllerFn----${_profileContainerWidgetStateController!.index}');
+        'profileContainerWidgetStateControllerFn----${_profileContainerWidgetStateController.index}');
   }
 
   @override
