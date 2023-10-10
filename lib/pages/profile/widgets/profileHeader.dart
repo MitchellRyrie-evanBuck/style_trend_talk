@@ -26,24 +26,6 @@ class MyProfileSliverPersistentHeaderDelegate
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    print('shrinkOffset------${shrinkOffset}');
-    print('overlapsContent------${overlapsContent}');
-
-    // 计算滑动比例，根据需要隐藏或显示widget
-    final double scrollPercentage =
-        (maxExtent - shrinkOffset) / (maxExtent - minExtent);
-    print('scrollPercentage-------${scrollPercentage}');
-
-    // 根据滑动比例来控制widget的透明度
-    late double opacity = 1 - scrollPercentage;
-    print('opacity------${opacity}');
-    if (opacity > 1) {
-      opacity = 1;
-    }
-    if (opacity < 0) {
-      opacity = 0;
-    }
-
     return Opacity(
       opacity: 1,
       child:
@@ -58,14 +40,15 @@ class MyProfileSliverPersistentHeaderDelegate
 }
 
 class MyProfileHeader extends StatefulWidget {
-  const MyProfileHeader({Key? key, required this.scrollController});
+  const MyProfileHeader(
+      {super.key, required this.scrollController, required this.callBack});
   final ScrollController scrollController;
-
+  final void Function(String) callBack;
   @override
-  State<MyProfileHeader> createState() => _MyProfileHeaderState();
+  State<MyProfileHeader> createState() => MyProfileHeaderState();
 }
 
-class _MyProfileHeaderState extends State<MyProfileHeader>
+class MyProfileHeaderState extends State<MyProfileHeader>
     with SingleTickerProviderStateMixin {
   final double minHeight = 110;
   final double maxHeight = 320;
@@ -102,26 +85,26 @@ class _MyProfileHeaderState extends State<MyProfileHeader>
       end: 0.0, // 结束透明度
     ).animate(_animationController);
 // 监听滚动
-    widget.scrollController.addListener(() {
-      final offset = widget.scrollController.offset;
+    // widget.scrollController.addListener(() {
+    //   final offset = widget.scrollController.offset;
 
-      if (offset >= 0 && offset <= 100) {
-        // 在 0 到 200 的范围内计算透明度
-        final opacity = 1.0 - (offset / 100.0);
+    //   if (offset >= 0 && offset <= 100) {
+    //     // 在 0 到 200 的范围内计算透明度
+    //     final opacity = 1.0 - (offset / 100.0);
 
-        // 更新透明度动画的值
-        _opacityAnimation = Tween<double>(
-          begin: _opacityAnimation.value, // 保持当前值
-          end: opacity,
-        ).animate(_animationController);
+    //     // 更新透明度动画的值
+    //     _opacityAnimation = Tween<double>(
+    //       begin: _opacityAnimation.value, // 保持当前值
+    //       end: opacity,
+    //     ).animate(_animationController);
 
-        // 播放动画
-        _animationController.forward();
-      } else {
-        // 当滚动超过 200 时，反向播放透明度动画
-        _animationController.reverse();
-      }
-    });
+    //     // 播放动画
+    //     _animationController.forward();
+    //   } else {
+    //     // 当滚动超过 200 时，反向播放透明度动画
+    //     _animationController.reverse();
+    //   }
+    // });
     // 在页面加载后，通过定时器来控制Container移入和透明度递增
     Future.delayed(duration, () {
       setState(() {
@@ -138,17 +121,33 @@ class _MyProfileHeaderState extends State<MyProfileHeader>
     });
   }
 
-  Future<void> setOpacity(double shrinkOffset) async {
-    print(
-        'scrollController.offset------------------------${widget.scrollController.offset}');
-    print('MyProfileHeader------------------------${shrinkOffset}');
+  void tipValue(double value) {
+    // print('************************************$value');
+  }
 
-    // 确保 shrinkOffset 处于最小和最大高度之间
-    shrinkOffset = shrinkOffset.clamp(minHeight, maxHeight);
+  Future<void> setOpacity(
+    double shrinkOffset,
+  ) async {
+    final offset = shrinkOffset;
+    if (offset >= 0 && offset <= 100) {
+      // 在 0 到 200 的范围内计算透明度
+      final opacity = 1.0 - (offset / 100.0);
+      print('**************offset***************$offset');
 
-    // 计算透明度，将 shrinkOffset 映射到透明度范围 [0, 1]
-    double opacity = (shrinkOffset - minHeight) / (maxHeight - minHeight);
-    print('MyProfileHeader----------opacity--------------${opacity}');
+      print('**************opacity***************$opacity');
+      // 更新透明度动画的值
+      _opacityAnimation = Tween<double>(
+        begin: _opacityAnimation.value, // 保持当前值
+        end: opacity,
+      ).animate(_animationController);
+
+      // 播放动画
+      _animationController.forward();
+    } else {
+      // 当滚动超过 200 时，反向播放透明度动画
+      _animationController.reverse();
+    }
+    // print('MyProfileHeader----------opacity--------------${opacity}');
   }
 
   @override
@@ -160,28 +159,32 @@ class _MyProfileHeaderState extends State<MyProfileHeader>
         maxHeight: maxHeight,
         child:
             (BuildContext context, double shrinkOffset, bool overlapsContent) {
-          setOpacity(shrinkOffset);
-          return Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/images/profile/profile.png'),
-                    fit: BoxFit.cover),
-              ),
-              child: Stack(children: [
-                _LeftBlur(),
-                _RightBlur(),
-                _BottomGradient(),
-                _UserImg(),
-                _UserImgAdd(),
-                _UserProfileStar(),
-                _PersonalSignature(),
-                _UserDes(),
-                _UserMoreProfile()
-              ]));
+          // setOpacity(shrinkOffset);
+          return _ProfileController();
         },
       ),
       pinned: true,
     );
+  }
+
+  Container _ProfileController() {
+    return Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/images/profile/profile.png'),
+              fit: BoxFit.cover),
+        ),
+        child: Stack(children: [
+          _LeftBlur(),
+          _RightBlur(),
+          _BottomGradient(),
+          _UserImg(),
+          _UserImgAdd(),
+          _UserProfileStar(),
+          _PersonalSignature(),
+          _UserDes(),
+          _UserMoreProfile()
+        ]));
   }
 
   Positioned _UserMoreProfile() {
@@ -323,7 +326,8 @@ class _MyProfileHeaderState extends State<MyProfileHeader>
         left: 33,
         child: AnimatedOpacity(
             duration: duration,
-            opacity: _opacityAnimation.value,
+            // opacity: _opacityAnimation.value,
+            opacity: 1,
             child: Container(
               height: 60,
               width: 60,
@@ -365,7 +369,8 @@ class _MyProfileHeaderState extends State<MyProfileHeader>
         right: 0,
         child: AnimatedOpacity(
             duration: duration,
-            opacity: _opacityAnimation.value,
+            // opacity: _opacityAnimation.value,
+            opacity: 1,
             child: ClipSelfWidget(
               height: blurHeight,
               width: rightBlurWidth,
@@ -382,7 +387,8 @@ class _MyProfileHeaderState extends State<MyProfileHeader>
         left: animatedLeftBlur,
         child: AnimatedOpacity(
             duration: duration,
-            opacity: _opacityAnimation.value,
+            // opacity: _opacityAnimation.value,
+            opacity: 1,
             child: ClipSelfWidget(
               height: blurHeight,
               width: leftBlurWidth,

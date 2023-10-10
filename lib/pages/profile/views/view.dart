@@ -39,7 +39,8 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
     with SingleTickerProviderStateMixin {
   ScrollController scrollController = ScrollController();
   late TabController _profileContainerWidgetStateController;
-
+  final GlobalKey<MyProfileHeaderState> childKey =
+      GlobalKey<MyProfileHeaderState>();
   @override
   void initState() {
     super.initState();
@@ -65,24 +66,50 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
         'profileContainerWidgetStateControllerFn----${_profileContainerWidgetStateController.index}');
   }
 
+  double setChildValue(val) {
+    return val;
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: listTabs.length,
-        child: CustomScrollView(
-          controller: scrollController,
-          slivers: <Widget>[
-            MyProfileHeader(scrollController: scrollController),
-            _MyProfileDesc(listProfile),
-            SliverPersistentHeader(
-              delegate: MySliverTabBarHeaderDelegate(
-                  _profileContainerWidgetStateController),
-              pinned: true,
-            ),
-            _MyProfileContext()
-          ],
-        ));
+        child: NotificationListener<ScrollNotification>(
+            onNotification: (ScrollNotification scrollInfo) {
+              // scrollInfo.metrics 是ScrollUpdateNotification中包含的ScrollMetrics对象。ScrollMetrics包含了关于滚动位置、速度等信息的数据。
+              // scrollInfo.metrics.pixels表示当前滚动位置的像素值。这个值表示从滚动视图的顶部开始计算的偏移量，当向上滚动时值递增，向下滚动时值递减
+              // 获取滚动信息，例如scrollInfo.metrics等
+              // 在这里你可以处理滚动事件，例如计算透明度等
+              // scrollInfo.metrics.pixels是一个表示当前滚动位置的值
+              print(
+                  'scrollInfo.metrics.pixels==========${scrollInfo.metrics.pixels}');
+              if (scrollInfo.metrics.pixels >= 0) {
+                childKey.currentState?.setOpacity(scrollInfo.metrics.pixels);
+                childKey.currentState?.tipValue(scrollInfo.metrics.pixels);
+              }
+              return true; // 返回true表示停止事件冒泡，false表示继续冒泡
+            },
+            child: _CustomScrollView()));
     // );
+  }
+
+  CustomScrollView _CustomScrollView() {
+    return CustomScrollView(
+      controller: scrollController,
+      slivers: <Widget>[
+        MyProfileHeader(
+            key: childKey,
+            scrollController: scrollController,
+            callBack: setChildValue),
+        _MyProfileDesc(listProfile),
+        SliverPersistentHeader(
+          delegate: MySliverTabBarHeaderDelegate(
+              _profileContainerWidgetStateController),
+          pinned: true,
+        ),
+        _MyProfileContext()
+      ],
+    );
   }
 
   Widget _MyProfileContext() {
