@@ -85,8 +85,9 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
                   'scrollInfo.metrics.pixels==========${scrollInfo.metrics.pixels}');
               if (scrollInfo.metrics.pixels >= 0) {
                 childKey.currentState?.setOpacity(scrollInfo.metrics.pixels);
-                childKey.currentState?.tipValue(scrollInfo.metrics.pixels);
               }
+              childKey.currentState
+                  ?.setMaskTransparency(scrollInfo.metrics.pixels);
               return true; // 返回true表示停止事件冒泡，false表示继续冒泡
             },
             child: _CustomScrollView()));

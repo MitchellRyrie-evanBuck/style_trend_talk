@@ -50,7 +50,7 @@ class MyProfileHeader extends StatefulWidget {
 
 class MyProfileHeaderState extends State<MyProfileHeader>
     with SingleTickerProviderStateMixin {
-  final double minHeight = 110;
+  final double minHeight = 100;
   final double maxHeight = 320;
 
   final double bottomLeftDistance = 150.0;
@@ -65,6 +65,7 @@ class MyProfileHeaderState extends State<MyProfileHeader>
   late double queryScreenWidth = 0;
   final double queryUserDescWidth = 380;
   double widgetOpacity = 0;
+  double topMaskTransparency = 0;
   final Duration duration = const Duration(milliseconds: 500);
   // --------------------------
   double animatedLeftBlur = -100.0;
@@ -121,6 +122,7 @@ class MyProfileHeaderState extends State<MyProfileHeader>
     });
   }
 
+// ==================================================================
   void tipValue(double value) {
     // print('************************************$value');
   }
@@ -149,6 +151,24 @@ class MyProfileHeaderState extends State<MyProfileHeader>
     }
     // print('MyProfileHeader----------opacity--------------${opacity}');
   }
+
+  void setMaskTransparency(double pixels) {
+    // 在150范围内处理透明度
+    if (pixels >= 0 && pixels <= 150) {
+      double opacity = 1 - (pixels / 150);
+      // 这里可以将透明度应用到你的UI组件中
+      print('Opacity: $opacity');
+      topMaskTransparency = opacity;
+    } else if (pixels < 0) {
+      topMaskTransparency = 0;
+    } else if (pixels > 150) {
+      // 超过150时，将透明度设置为1
+      topMaskTransparency = 1;
+      // 这里可以将透明度应用到你的UI组件中
+      print('Opacity: 1.0');
+    }
+  }
+// ==================================================================
 
   @override
   Widget build(BuildContext context) {
@@ -183,8 +203,41 @@ class MyProfileHeaderState extends State<MyProfileHeader>
           _UserProfileStar(),
           _PersonalSignature(),
           _UserDes(),
-          _UserMoreProfile()
+          // _UserMoreProfile(),
+          _MaskWidget()
         ]));
+  }
+
+  Positioned _MaskWidget() {
+    return Positioned(
+        child: AnimatedOpacity(
+      duration: duration,
+      opacity: topMaskTransparency,
+      child: Container(
+        alignment: Alignment.bottomCenter,
+        height: minHeight,
+        width: queryScreenWidth,
+        color: const Color.fromARGB(255, 54, 54, 54),
+        padding: const EdgeInsets.only(bottom: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _imgWidget(32, 32),
+            const SizedBox(
+              width: 10,
+            ),
+            const Text(
+              'AFL',
+              style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600),
+            )
+          ],
+        ),
+      ),
+    ));
   }
 
   Positioned _UserMoreProfile() {
@@ -328,18 +381,22 @@ class MyProfileHeaderState extends State<MyProfileHeader>
             duration: duration,
             // opacity: _opacityAnimation.value,
             opacity: 1,
-            child: Container(
-              height: 60,
-              width: 60,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 2,
-                  ),
-                  image: const DecorationImage(
-                      image: AssetImage('assets/images/profile/user.png'))),
-            )));
+            child: _imgWidget(60, 60)));
+  }
+
+  Container _imgWidget(double height, double width) {
+    return Container(
+      height: height,
+      width: width,
+      decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: Colors.white,
+            width: 2,
+          ),
+          image: const DecorationImage(
+              image: AssetImage('assets/images/profile/user.png'))),
+    );
   }
 
   Positioned _BottomGradient() {
