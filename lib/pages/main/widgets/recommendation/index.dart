@@ -46,7 +46,7 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
     return Container(
       height: 500,
       margin: const EdgeInsets.symmetric(vertical: 10),
-      child: Column(children: [
+      child: Column(mainAxisSize: MainAxisSize.min, children: [
         _UserDescribe(),
         _ImgContextWidget(),
         _DescribeWidget(),
@@ -224,27 +224,7 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
                       fit: BoxFit.cover,
                     ));
               },
-            )
-
-            // MasonryGridView.count(
-            //   crossAxisCount: 3,
-            //   mainAxisSpacing: 3,
-            //   crossAxisSpacing: 3,
-            //   shrinkWrap: true,
-            //   scrollDirection: Axis.vertical,
-            //   itemCount: _listImg.length,
-            //   semanticChildCount: _listImg.length,
-            //   itemBuilder: (context, index) {
-            //     return Container(
-            //         height: 140,
-            //         color: Colors.blue,
-            //         child: Image(
-            //           image: AssetImage(_listImg[index]),
-            //           fit: BoxFit.cover,
-            //         ));
-            //   },
-            // ),
-            ));
+            )));
   }
 
   Container _DescribeWidget() {
