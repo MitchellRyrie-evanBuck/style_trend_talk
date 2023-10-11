@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:style_trend_talk/pages/main/views/view.dart';
+// import 'package:style_trend_talk/pages/main/views/view.dart';
 
 class RecommendationController extends GetxController {
   RecommendationController();

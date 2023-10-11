@@ -26,8 +26,8 @@ class _BottomBarViewState extends State<BottomBarView>
   // late AnimationController atController;
   // late Animation<Color?> atColorAnimation;
 
-  Alignment _begin = Alignment.topLeft;
-  Alignment _end = Alignment.bottomRight;
+  Alignment alibegin = Alignment.topLeft;
+  Alignment aliend = Alignment.bottomRight;
   List<Color> _colors = [
     Colors.black,
     Colors.grey,
@@ -49,8 +49,8 @@ class _BottomBarViewState extends State<BottomBarView>
   void _startAnimation() {
     Future.delayed(Duration(seconds: 2), () {
       setState(() {
-        _begin = _generateRandomAlignment();
-        _end = _generateRandomAlignment();
+        alibegin = _generateRandomAlignment();
+        aliend = _generateRandomAlignment();
         _currentColorIndex = (_currentColorIndex + 1) % _colors.length;
       });
       _startAnimation();
@@ -191,8 +191,8 @@ class _BottomBarViewState extends State<BottomBarView>
               // gradient: LinearGradient(
               //   colors: _colors.sublist(_currentColorIndex) +
               //       _colors.sublist(0, _currentColorIndex),
-              //   begin: _begin,
-              //   end: _end,
+              //   begin: alibegin,
+              //   end: aliend,
               // ),
               shape: BoxShape.circle,
               boxShadow: <BoxShadow>[

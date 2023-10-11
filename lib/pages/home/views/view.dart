@@ -12,7 +12,7 @@ import '../index.dart';
 
 class HomePage extends GetView<HomeController> {
   HomePage({Key? key}) : super(key: key);
-  List<TabData> tabIconsList = TabData.tabsList;
+  final List<TabData> tabIconsList = TabData.tabsList;
   final tabIndexController = Get.put(TabIndexController());
   final index = Get.find<TabIndexController>().index;
   @override
