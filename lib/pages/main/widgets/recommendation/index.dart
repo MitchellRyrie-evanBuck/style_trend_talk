@@ -48,7 +48,7 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
       margin: const EdgeInsets.symmetric(vertical: 10),
       child: Column(mainAxisSize: MainAxisSize.min, children: [
         _UserDescribe(),
-        _ImgContextWidget(),
+        _imgContextWidget(),
         _DescribeWidget(),
         _TagWidget(),
         _LikeOrStarWidget(),
@@ -197,7 +197,7 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
     );
   }
 
-  Expanded _ImgContextWidget() {
+  Expanded _imgContextWidget() {
     late List<String> _listImg = [
       'assets/images/recommend/avtr.png',
       'assets/images/recommend/avtr.png',
