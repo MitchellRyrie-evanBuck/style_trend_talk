@@ -1,3 +1,4 @@
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
 import 'package:video_player/video_player.dart';
@@ -5,7 +6,7 @@ import 'package:video_player/video_player.dart';
 class VideoComponent extends StatefulWidget {
   final String videoPath;
 
-  VideoComponent({Key? key, required this.videoPath}) : super(key: key);
+  const VideoComponent({Key? key, required this.videoPath});
 
   @override
   _VideoComponentState createState() => _VideoComponentState();
@@ -13,14 +14,28 @@ class VideoComponent extends StatefulWidget {
 
 class _VideoComponentState extends State<VideoComponent> {
   late VideoPlayerController _controller;
+  late ChewieController chewieController;
+  late Widget playerWidget;
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.networkUrl(Uri.parse(widget.videoPath))
+    _controller = VideoPlayerController.asset(widget.videoPath)
       ..initialize().then((_) {
         // Ensure the first frame is shown and set state to rebuild the widget.
-        setState(() {});
+        setState(() {
+          chewieController = ChewieController(
+            videoPlayerController: _controller,
+            autoPlay: true,
+            looping: true,
+            showControls: true,
+            aspectRatio: 16 / 9, // 视频宽高比
+          );
+
+          playerWidget = Chewie(
+            controller: chewieController,
+          );
+        });
       });
   }
 
@@ -28,34 +43,17 @@ class _VideoComponentState extends State<VideoComponent> {
   void dispose() {
     super.dispose();
     _controller.dispose();
+    chewieController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        if (_controller.value.isInitialized)
-          AspectRatio(
-            aspectRatio: _controller.value.aspectRatio,
-            child: VideoPlayer(_controller),
-          )
-        else
-          const ProgressIndicatorWidget(),
-        ElevatedButton(
-          onPressed: () {
-            setState(() {
-              if (_controller.value.isPlaying) {
-                _controller.pause();
-              } else {
-                _controller.play();
-              }
-            });
-          },
-          child: Icon(
-            _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-          ),
-        ),
-      ],
-    );
+    if (_controller.value.isInitialized) {
+      return playerWidget;
+    } else {
+      return const Center(
+        child: ProgressIndicatorWidget(),
+      );
+    }
   }
 }

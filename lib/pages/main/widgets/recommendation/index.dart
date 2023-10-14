@@ -218,7 +218,6 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
               itemBuilder: (context, index) {
                 return Container(
                     height: 140,
-                    color: Colors.blue,
                     child: Image(
                       image: AssetImage(_listImg[index]),
                       fit: BoxFit.cover,
