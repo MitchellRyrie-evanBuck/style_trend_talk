@@ -91,7 +91,7 @@ class _FollowItemPageState extends State<FollowItemPage> {
 
               return VideoPlayer(controller);
             } else {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
           },
         ),
