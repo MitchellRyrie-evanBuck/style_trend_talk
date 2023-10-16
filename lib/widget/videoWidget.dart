@@ -6,7 +6,7 @@ import 'package:video_player/video_player.dart';
 class VideoComponent extends StatefulWidget {
   final String videoPath;
 
-  const VideoComponent({Key? key, required this.videoPath});
+  const VideoComponent({super.key, required this.videoPath});
 
   @override
   _VideoComponentState createState() => _VideoComponentState();
@@ -26,10 +26,31 @@ class _VideoComponentState extends State<VideoComponent> {
         setState(() {
           chewieController = ChewieController(
             videoPlayerController: _controller,
-            autoPlay: true,
+            autoPlay: false,
             looping: true,
             showControls: true,
             aspectRatio: 16 / 9, // 视频宽高比
+            // overlay: Container(
+            //   height: 50,
+            //   width: 50,
+            //   color: Colors.green,
+            // ),
+            allowFullScreen: false,
+            allowMuting: false,
+            allowPlaybackSpeedChanging: false,
+            controlsSafeAreaMinimum: EdgeInsets.only(bottom: 8),
+            // customControls: Column(
+            //   children: [
+            //     // 添加自定义的全屏按钮
+            //     IconButton(
+            //       onPressed: () {
+            //         chewieController.enterFullScreen();
+            //       },
+            //       icon: Icon(Icons.fullscreen),
+            //     ),
+            //     // 在此添加其他自定义控制按钮
+            //   ],
+            // ),
           );
 
           playerWidget = Chewie(
