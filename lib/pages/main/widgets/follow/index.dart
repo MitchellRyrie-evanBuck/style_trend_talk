@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
 import 'package:style_trend_talk/widget/videoWidget.dart';
-import 'package:video_player/video_player.dart';
 
 class FollowPage extends StatefulWidget {
   const FollowPage({super.key});
