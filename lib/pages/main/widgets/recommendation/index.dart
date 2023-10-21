@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:style_trend_talk/data/index.dart';
+import 'package:style_trend_talk/pages/index.dart';
 import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
 // import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -14,22 +19,34 @@ List<String> items = List.generate(3, (index) => 'Item $index');
 
 class _RecommendTabPageState extends State<RecommendTabPage>
     with TickerProviderStateMixin {
+  final mainController = Get.put(MainController());
+
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
+    return PagedListView<int, RecommendationModel>.separated(
       padding: const EdgeInsets.only(bottom: 100),
       separatorBuilder: (context, index) => const SizedBox(height: 1),
-      itemCount: items.length + 1, // Add 1 for load more indicator
-      itemBuilder: (context, index) {
-        if (index < items.length) {
+      pagingController: mainController.pagingController,
+      builderDelegate: PagedChildBuilderDelegate<RecommendationModel>(
+        itemBuilder: (context, item, index) {
           return RecommendItemDetails(index: index);
-        } else if (index == items.length) {
-          // Load more indicator
-          return const ProgressIndicatorWidget();
-        }
-        return null;
-      },
+        },
+      ),
     );
+    // ListView.separated(
+    //   padding: const EdgeInsets.only(bottom: 100),
+    //   separatorBuilder: (context, index) => const SizedBox(height: 1),
+    //   itemCount: items.length + 1, // Add 1 for load more indicator
+    //   itemBuilder: (context, index) {
+    //     if (index < items.length) {
+    //       return RecommendItemDetails(index: index);
+    //     } else if (index == items.length) {
+    //       // Load more indicator
+    //       return const ProgressIndicatorWidget();
+    //     }
+    //     return null;
+    //   },
+    // );
   }
 }
 
@@ -41,6 +58,15 @@ class RecommendItemDetails extends StatefulWidget {
 }
 
 class _RecommendItemDetailsState extends State<RecommendItemDetails> {
+  final MainController getMainController = Get.put(MainController());
+  late final RecommendationModel userData;
+
+  @override
+  void initState() {
+    userData = getMainController.dataList[widget.index];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -154,29 +180,29 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
           const SizedBox(
             width: 10,
           ),
-          const Column(
+          Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
                   Text(
-                    'Audrey Hail',
-                    style: TextStyle(
+                    userData.userName,
+                    style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
                         fontFamily: AutofillHints.birthdayDay),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
-                  Text(
+                  const Text(
                     'Follow',
                     style: TextStyle(color: Colors.blue),
                   )
                 ],
               ),
-              Row(
+              const Row(
                 children: [
                   Text(
                     'Harvard University',
