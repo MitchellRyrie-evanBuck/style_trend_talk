@@ -137,7 +137,7 @@ List recommendationList = [
     'vedio': 'assets/video/sea.mov',
     'photo': [],
     'text':
-        'Life was like a box of chocolates, you never know what you going to get.o',
+        'Life was like a box  of chocolates, you never know what you going to get.o',
     '@': []
   },
   {
