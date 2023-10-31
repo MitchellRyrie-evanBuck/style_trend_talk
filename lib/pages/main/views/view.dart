@@ -9,11 +9,11 @@ import 'package:style_trend_talk/pages/main/widgets/recommendation.dart';
 import '../index.dart';
 
 final List<Widget> listRouterWidget = [
-  RecommendationPage(),
-  FollowPage(),
-  Center(child: Text('Tab 3')),
-  Center(child: Text('Tab 4')),
-  Center(child: Text('Tab 5')),
+  const RecommendationPage(),
+  const FollowPage(),
+  const Center(child: Text('Tab 3')),
+  const Center(child: Text('Tab 4')),
+  const Center(child: Text('Tab 5')),
 ];
 
 class MainPage extends GetView<MainController> {

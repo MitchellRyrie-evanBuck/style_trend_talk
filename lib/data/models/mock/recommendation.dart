@@ -119,7 +119,7 @@ List recommendationList = [
     '@': []
   },
   {
-    'user_name': 'Anfu Tom',
+    'user_name': 'Anfu- Tom',
     'user_id': 1341232,
     'user_img': 'assets/images/material/user2.png',
     'flow': true,
@@ -170,7 +170,7 @@ List recommendationList = [
     '@': []
   },
   {
-    'user_name': 'Aenfu... Tom',
+    'user_name': 'Aeiiiinfu... Tom',
     'user_id': 412325,
     'user_img': 'assets/images/material/user3.png',
     'flow': true,
