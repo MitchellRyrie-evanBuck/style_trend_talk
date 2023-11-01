@@ -26,7 +26,7 @@ class LoginPage extends GetView<LoginController> {
   }
 
   Positioned _loginForm(BuildContext context) {
-    final double contextHeight = 300;
+    const double contextHeight = 300;
     final double loginBtnWidth = MediaQuery.of(context).size.width - 80;
     final double loginBgWidth = MediaQuery.of(context).size.width - 60;
 
@@ -85,7 +85,7 @@ class LoginPage extends GetView<LoginController> {
                       },
                       activeColor: Colors.black),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 const Text(
@@ -154,7 +154,7 @@ class LoginPage extends GetView<LoginController> {
                       : loginController.isValidateMobile.value
                           ? FontAwesomeIcons.arrowRight
                           : FontAwesomeIcons.arrowLeft,
-                  color: Color.fromARGB(255, 0, 0, 0),
+                  color: const Color.fromARGB(255, 0, 0, 0),
                 ),
               ),
             )),

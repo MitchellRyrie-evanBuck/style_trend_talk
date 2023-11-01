@@ -195,10 +195,23 @@ List recommendationList = [
   },
 ];
 
+// 源数据
 List<RecommendationModel> recommendationListSource = recommendationList
     .map((data) => RecommendationModel.fromMap(data))
     .toList();
 
+List<String> pathList = [
+  'assets/images/material/details1.png',
+  'assets/images/material/details2.png',
+  'assets/images/material/details3.png',
+  'assets/images/material/details4.png',
+  'assets/images/material/details5.png',
+  'assets/images/material/details6.png',
+  'assets/images/material/details7.png',
+  'assets/images/material/details8.png',
+];
+
+//
 List<RecommendationModel> items = List.generate(10, (index) {
   return RecommendationModel(
     userName: generateRandomString(10),
@@ -217,7 +230,7 @@ List<RecommendationModel> items = List.generate(10, (index) {
     updateTimer: '2023-10-10',
     type: 1,
     video: null,
-    photo: ['assets/images/material/details1.png'],
+    photo: getRandomItems(3, pathList),
     text:
         'Life was like a box of chocolates, you never know what you going to get.o',
     mentions: [],
@@ -233,6 +246,9 @@ String generateRandomString(int length) {
       length, (_) => characters.codeUnitAt(random.nextInt(characters.length))));
 }
 
+/*
+  @deprecated 生成随机数据
+*/
 List<T> getRandomItems<T>(int count, List<T> sourceList) {
   if (count > sourceList.length) {
     return sourceList;
@@ -247,4 +263,9 @@ List<T> getRandomItems<T>(int count, List<T> sourceList) {
     }
   }
   return resultList;
+}
+
+Future<List<RecommendationModel>> getBeerList(page) async {
+  print('page:     $page');
+  return items;
 }

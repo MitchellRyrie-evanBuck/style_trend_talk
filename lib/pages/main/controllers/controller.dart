@@ -10,17 +10,16 @@ class MainController extends GetxController {
   final RxDouble indicatorPadding = RxDouble(15);
   final RxList<RecommendationModel> dataList = RxList<RecommendationModel>([]);
   final PagingController<int, RecommendationModel> pagingController =
-      PagingController(firstPageKey: 1);
-  static const pageSize = 10;
+      PagingController(firstPageKey: 0);
+  static const _pageSize = 10;
 
   _initData() {
     pagingController.addPageRequestListener((pageKey) {
-      print('触底: $pageKey');
       // Simulate loading data from an API
-      // fetchData(pageKey);
+      fetchData(pageKey);
     });
 
-    updatePageList(recommendationListSource);
+    // updatePageList(recommendationListSource);
     update(["main"]);
     update(["recommendation"]);
   }
@@ -34,6 +33,23 @@ class MainController extends GetxController {
     dataList.addAll(list);
     pagingController.appendLastPage(list);
     update(["recommendation"]);
+  }
+
+  Future<void> fetchData(int pageKey) async {
+    print('触底: $pageKey');
+
+    try {
+      // final newItems = await RemoteApi.getBeerList(pageKey, _pageSize);
+      // final isLastPage = newItems.length < _pageSize;
+      // if (isLastPage) {
+      //   pagingController.appendLastPage(newItems);
+      // } else {
+      //   final nextPageKey = pageKey + newItems.length;
+      //   pagingController.appendPage(newItems, nextPageKey as int?);
+      // }
+    } catch (error) {
+      pagingController.error = error;
+    }
   }
 
   @override
