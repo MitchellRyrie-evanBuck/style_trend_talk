@@ -266,6 +266,6 @@ List<T> getRandomItems<T>(int count, List<T> sourceList) {
 }
 
 Future<List<RecommendationModel>> getBeerList(page) async {
-  print('page:     $page');
+  print('page--:     $page');
   return items;
 }
