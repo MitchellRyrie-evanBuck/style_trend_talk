@@ -15,11 +15,8 @@ class MainController extends GetxController {
 
   _initData() {
     pagingController.addPageRequestListener((pageKey) {
-      // Simulate loading data from an API
       fetchData(pageKey);
     });
-
-    // updatePageList(recommendationListSource);
     update(["main"]);
     update(["recommendation"]);
   }
@@ -29,24 +26,25 @@ class MainController extends GetxController {
     update();
   }
 
-  Future updatePageList(List<RecommendationModel> list) async {
-    dataList.addAll(list);
-    pagingController.appendLastPage(list);
-    update(["recommendation"]);
+  Future<void> fetchRefresh() async {
+    pagingController.refresh();
+    //  pagingController.reset();
   }
 
   Future<void> fetchData(int pageKey) async {
+    // ignore: avoid_print
     print('触底: $pageKey');
+    await Future.delayed(const Duration(seconds: 1));
 
     try {
-      // final newItems = await RemoteApi.getBeerList(pageKey, _pageSize);
-      // final isLastPage = newItems.length < _pageSize;
-      // if (isLastPage) {
-      //   pagingController.appendLastPage(newItems);
-      // } else {
-      //   final nextPageKey = pageKey + newItems.length;
-      //   pagingController.appendPage(newItems, nextPageKey as int?);
-      // }
+      final newItems = await getBeerList(pageKey, _pageSize);
+      final isLastPage = newItems.length < _pageSize;
+      if (isLastPage) {
+        pagingController.appendLastPage(newItems);
+      } else {
+        final nextPageKey = pageKey + newItems.length;
+        pagingController.appendPage(newItems, nextPageKey as int?);
+      }
     } catch (error) {
       pagingController.error = error;
     }

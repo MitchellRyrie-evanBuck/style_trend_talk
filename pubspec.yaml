@@ -32,6 +32,9 @@ flutter:
   - assets/images/
   - assets/images/recommend/
   - assets/images/profile/
+  - assets/images/material/
+  - assets/images/user/
+
   - assets/video/sea.mov
   - assets/video/
 

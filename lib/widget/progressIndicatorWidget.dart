@@ -50,7 +50,7 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget>
   }
 
   void startLoadingAnimation() {
-    timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
+    timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
       setState(() {
         if (loadingText == '加载中.') {
           loadingText = '加载中..';

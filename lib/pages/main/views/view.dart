@@ -9,7 +9,7 @@ import 'package:style_trend_talk/pages/main/widgets/recommendation.dart';
 import '../index.dart';
 
 final List<Widget> listRouterWidget = [
-  const RecommendationPage(),
+  RecommendationPage(),
   const FollowPage(),
   const Center(child: Text('Tab 3')),
   const Center(child: Text('Tab 4')),
@@ -76,7 +76,7 @@ class _HomeMiddleWareWidgeState extends State<HomeMiddleWareWidge>
     String numberString = number.toString();
     String decimalPart = '0.0';
     if (numberString.split('.').length > 1) {
-      decimalPart = '0.' + numberString.split('.')[1];
+      decimalPart = '0.${numberString.split('.')[1]}';
     }
     if (decimalPart == '0.0') {
       decimalPart = '1';

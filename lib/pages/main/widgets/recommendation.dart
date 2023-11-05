@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:style_trend_talk/data/index.dart';
+import 'package:style_trend_talk/pages/main/controllers/controller.dart';
 import 'package:style_trend_talk/pages/main/controllers/recommendation.dart';
 import 'package:style_trend_talk/pages/main/widgets/recommendation/index.dart';
 import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
 
 class RecommendationPage extends GetView<RecommendationController> {
-  const RecommendationPage({Key? key}) : super(key: key);
+  RecommendationPage({Key? key}) : super(key: key);
+  final mainController = Get.put(MainController());
 
   // 主视图
   Widget _buildView() {
@@ -18,6 +20,7 @@ class RecommendationPage extends GetView<RecommendationController> {
           //   items.addAll(List.generate(
           //       20, (index) => 'Refreshed Item $index'));
           // });
+          mainController.fetchRefresh();
         },
         child: const RecommendTabPage());
   }
@@ -47,6 +50,6 @@ class RecommendationPage extends GetView<RecommendationController> {
   Future getData() async {
     await Future<dynamic>.delayed(const Duration(milliseconds: 500));
     // recommendationList
-    return recommendationList;
+    // return recommendationList;
   }
 }

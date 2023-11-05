@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,9 +31,10 @@ class _RecommendTabPageState extends State<RecommendTabPage>
       pagingController: mainController.pagingController,
       builderDelegate: PagedChildBuilderDelegate<RecommendationModel>(
         itemBuilder: (context, item, index) {
-          return RecommendItemDetails(index: index);
+          return RecommendItemDetails(index: index, itemData: item);
         },
       ),
+      // noItemsFoundBuilder: (context) => const ProgressIndicatorWidget(),
     );
     // return ListView.separated(
     //   padding: const EdgeInsets.only(bottom: 100),
@@ -51,7 +54,9 @@ class _RecommendTabPageState extends State<RecommendTabPage>
 }
 
 class RecommendItemDetails extends StatefulWidget {
-  const RecommendItemDetails({super.key, required this.index});
+  const RecommendItemDetails(
+      {super.key, required this.index, required this.itemData});
+  final RecommendationModel itemData;
   final int index;
   @override
   State<RecommendItemDetails> createState() => _RecommendItemDetailsState();
@@ -63,23 +68,24 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
 
   @override
   void initState() {
-    userData = getMainController.dataList[widget.index];
+    // userData = getMainController.dataList[widget.index];
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 500,
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      child: Column(mainAxisSize: MainAxisSize.min, children: [
-        _UserDescribe(),
-        _imgContextWidget(),
-        _DescribeWidget(),
-        _TagWidget(),
-        _LikeOrStarWidget(),
-        _TimeContainer(),
-      ]),
+    return IntrinsicHeight(
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 10),
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          _UserDescribe(),
+          _imgContextWidget(context),
+          _DescribeWidget(),
+          _TagWidget(),
+          _LikeOrStarWidget(),
+          _TimeContainer(),
+        ]),
+      ),
     );
   }
 
@@ -187,7 +193,7 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
               Row(
                 children: [
                   Text(
-                    userData.userName,
+                    widget.itemData.userName,
                     style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -223,33 +229,67 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
     );
   }
 
-  Expanded _imgContextWidget() {
-    late List<String> _listImg = [
-      'assets/images/recommend/avtr.png',
-      'assets/images/recommend/avtr.png',
-      'assets/images/recommend/avtr.png',
-    ];
-    return Expanded(
-        child: Container(
-            color: Colors.transparent,
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                mainAxisSpacing: 3,
-                crossAxisSpacing: 3,
-                childAspectRatio: 1.0,
-              ),
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: _listImg.length,
-              itemBuilder: (context, index) {
-                return Container(
-                    height: 140,
-                    child: Image(
-                      image: AssetImage(_listImg[index]),
-                      fit: BoxFit.cover,
-                    ));
-              },
-            )));
+  Widget _imgContextWidget(BuildContext context) {
+    late double screenWidth = MediaQuery.of(context).size.width;
+    if (widget.itemData.photo == null || widget.itemData.photo!.isEmpty) {
+      return const SizedBox(height: 0);
+    }
+    print('widget.itemData.photo----${widget.itemData.photo}');
+    late double imgHeight = 140;
+    late int contextFlag = 1;
+    if (widget.itemData.photo != null && widget.itemData.photo!.length == 1) {
+      imgHeight = 260;
+      contextFlag = 2;
+      return Container(
+        height: 320,
+        width: screenWidth,
+        color: Colors.black,
+        child: Image(
+          image: AssetImage(widget.itemData.photo![0]),
+          fit: BoxFit.cover,
+        ),
+      );
+    } else if (widget.itemData.photo != null &&
+        widget.itemData.photo!.length > 1 &&
+        widget.itemData.photo!.length < 3) {
+      imgHeight = 260;
+      contextFlag = 3;
+    } else if (widget.itemData.photo != null &&
+        widget.itemData.photo!.length == 3) {
+      imgHeight = 260;
+      contextFlag = 4;
+    } else if (widget.itemData.photo != null &&
+        widget.itemData.photo!.length > 3 &&
+        widget.itemData.photo!.length <= 6) {
+      imgHeight = 260;
+      contextFlag = 5;
+    } else if (widget.itemData.photo != null &&
+        widget.itemData.photo!.length > 6) {
+      imgHeight = 260;
+      contextFlag = 6;
+    }
+    print('imgHeight---contextFlag---${imgHeight}-----${contextFlag}');
+    return Container(
+        height: imgHeight,
+        color: Colors.black,
+        child: GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            mainAxisSpacing: 3,
+            crossAxisSpacing: 3,
+            childAspectRatio: 1.0,
+          ),
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: widget.itemData.photo!.length,
+          shrinkWrap: true, // 确保尽可能小地包装内容
+          itemBuilder: (context, index) {
+            return Container(
+                child: Image(
+              image: AssetImage(widget.itemData.photo![index]),
+              fit: BoxFit.cover,
+            ));
+          },
+        ));
   }
 
   Container _DescribeWidget() {
@@ -265,7 +305,7 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
   Container _TagWidget() {
     late List<String> tagList = ['Movie', 'Classis ines'];
     return Container(
-      height: 36,
+      height: 34,
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
