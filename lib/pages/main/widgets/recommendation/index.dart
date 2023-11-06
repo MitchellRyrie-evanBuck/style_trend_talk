@@ -251,20 +251,15 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
       );
     } else if (widget.itemData.photo != null &&
         widget.itemData.photo!.length > 1 &&
-        widget.itemData.photo!.length < 3) {
-      imgHeight = 260;
+        widget.itemData.photo!.length < 6) {
+      imgHeight = 300;
       contextFlag = 3;
+      return ImgLookContainer(
+        imgHeight: imgHeight,
+        itemData: widget.itemData,
+      );
     } else if (widget.itemData.photo != null &&
-        widget.itemData.photo!.length == 3) {
-      imgHeight = 260;
-      contextFlag = 4;
-    } else if (widget.itemData.photo != null &&
-        widget.itemData.photo!.length > 3 &&
-        widget.itemData.photo!.length <= 6) {
-      imgHeight = 260;
-      contextFlag = 5;
-    } else if (widget.itemData.photo != null &&
-        widget.itemData.photo!.length > 6) {
+        widget.itemData.photo!.length >= 6) {
       imgHeight = 260;
       contextFlag = 6;
     }
@@ -373,7 +368,7 @@ class _ImgCircles extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle, // 将容器形状设置为圆形
             border: Border.all(
-              color: Color.fromARGB(255, 255, 255, 255), // 边框颜色
+              color: const Color.fromARGB(255, 255, 255, 255), // 边框颜色
               width: 3.0, // 边框宽度
             ),
           ),
@@ -384,5 +379,82 @@ class _ImgCircles extends StatelessWidget {
             ),
           ),
         ));
+  }
+}
+
+class ImgLookContainer extends StatefulWidget {
+  const ImgLookContainer(
+      {super.key, required this.itemData, required this.imgHeight});
+  final RecommendationModel itemData;
+  final double imgHeight;
+
+  @override
+  State<ImgLookContainer> createState() => _ImgLookContainerState();
+}
+
+class _ImgLookContainerState extends State<ImgLookContainer> {
+  int currentIndex = 0;
+  PageController pageController = PageController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: widget.imgHeight,
+      child: Column(children: [
+        Expanded(
+            child: Container(
+          color: Colors.black,
+          child: PageView.builder(
+            itemCount: widget.itemData.photo!.length,
+            controller: pageController,
+            onPageChanged: (index) {
+              setState(() {
+                currentIndex = index;
+              });
+            },
+            itemBuilder: (context, index) {
+              return Center(
+                child: Image(
+                  image: AssetImage(widget.itemData.photo![index]),
+                ),
+              );
+            },
+          ),
+        )),
+        Container(
+          height: 20,
+          child: Center(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: widget.itemData.photo!.asMap().entries.map((entry) {
+                final int index = entry.key;
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      currentIndex = index;
+                      pageController.animateToPage(
+                        index,
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.ease,
+                      );
+                    });
+                  },
+                  child: Container(
+                    height: 5,
+                    width: 5,
+                    margin: EdgeInsets.symmetric(horizontal: 2),
+                    decoration: BoxDecoration(
+                        color:
+                            currentIndex == index ? Colors.black : Colors.grey,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10))),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        )
+      ]),
+    );
   }
 }
