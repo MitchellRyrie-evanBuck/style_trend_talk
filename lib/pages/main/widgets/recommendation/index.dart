@@ -31,11 +31,14 @@ class _RecommendTabPageState extends State<RecommendTabPage>
       separatorBuilder: (context, index) => const SizedBox(height: 1),
       pagingController: mainController.pagingController,
       builderDelegate: PagedChildBuilderDelegate<RecommendationModel>(
+        firstPageProgressIndicatorBuilder: (context) =>
+            const ProgressIndicatorWidget(),
+        newPageProgressIndicatorBuilder: (context) =>
+            const ProgressIndicatorWidget(),
         itemBuilder: (context, item, index) {
           return RecommendItemDetails(index: index, itemData: item);
         },
       ),
-      // noItemsFoundBuilder: (context) => const ProgressIndicatorWidget(),
     );
     // return ListView.separated(
     //   padding: const EdgeInsets.only(bottom: 100),
@@ -153,19 +156,14 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
     return Container(
       width: 80,
       margin: const EdgeInsets.only(right: 12),
-      child: const Stack(alignment: AlignmentDirectional.centerEnd, children: [
-        _ImgCircles(
-          left: 0,
-          imgPath: 'assets/images/recommend/avtr.png',
-        ),
-        _ImgCircles(
-          left: 20,
-          imgPath: 'assets/images/recommend/avtr.png',
-        ),
-        _ImgCircles(
-          left: 40,
-          imgPath: 'assets/images/recommend/avtr.png',
-        ),
+      child: Stack(alignment: AlignmentDirectional.centerEnd, children: [
+        if (widget.itemData.mentions.isNotEmpty)
+          ...List.generate(widget.itemData.mentions.length, (index) {
+            return _ImgCircles(
+              left: index * 20,
+              imgPath: widget.itemData.mentions[index],
+            );
+          })
       ]),
     );
   }
@@ -181,7 +179,7 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
             width: 30,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
-              child: Image.asset('assets/images/recommend/avtr.png'),
+              child: Image.asset(widget.itemData.userImg),
             ),
           ),
           const SizedBox(
@@ -235,12 +233,9 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
     if (widget.itemData.photo == null || widget.itemData.photo!.isEmpty) {
       return const SizedBox(height: 0);
     }
-    print('widget.itemData.photo----${widget.itemData.photo}');
     late double imgHeight = 140;
-    late int contextFlag = 1;
     if (widget.itemData.photo != null && widget.itemData.photo!.length == 1) {
       imgHeight = 260;
-      contextFlag = 2;
       return Container(
         height: 320,
         width: screenWidth,
@@ -254,7 +249,6 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
         widget.itemData.photo!.length > 1 &&
         widget.itemData.photo!.length < 6) {
       imgHeight = 300;
-      contextFlag = 3;
       return ImgLookContainer(
         imgHeight: imgHeight,
         itemData: widget.itemData,
@@ -262,10 +256,8 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
     } else if (widget.itemData.photo != null &&
         widget.itemData.photo!.length >= 6) {
       imgHeight = 260;
-      contextFlag = 6;
     }
-    print('imgHeight---contextFlag---${imgHeight}-----${contextFlag}');
-    return Container(
+    return SizedBox(
         height: imgHeight,
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

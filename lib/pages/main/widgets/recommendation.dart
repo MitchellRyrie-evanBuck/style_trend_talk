@@ -15,11 +15,6 @@ class RecommendationPage extends GetView<RecommendationController> {
     return RefreshIndicator(
         onRefresh: () async {
           await Future.delayed(const Duration(seconds: 1));
-          // setState(() {
-          //   items.clear();
-          //   items.addAll(List.generate(
-          //       20, (index) => 'Refreshed Item $index'));
-          // });
           mainController.fetchRefresh();
         },
         child: const RecommendTabPage());

@@ -57,7 +57,7 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
       final double currentIndicatorPadding =
           mainController.indicatorPadding.value; // 提取值到局部变量
 
-      print('currentIndicatorPadding---${currentIndicatorPadding}');
+      // print('currentIndicatorPadding---${currentIndicatorPadding}');
       return Container(
           color: Colors.transparent,
           child: Stack(fit: StackFit.expand, children: [

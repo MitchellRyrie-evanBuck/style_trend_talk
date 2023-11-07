@@ -226,7 +226,7 @@ List<RecommendationModel> items = List.generate(10, (index) {
   return RecommendationModel(
     userName: generateRandomString(10),
     userId: 412325,
-    userImg: 'assets/images/material/user3.png',
+    userImg: getRandomUserImgs(userListPath),
     flow: true,
     flowSelf: true,
     desc:
@@ -243,7 +243,7 @@ List<RecommendationModel> items = List.generate(10, (index) {
     photo: getRandomItems(random.nextInt(10), userListPath),
     text:
         'Life was like a box of chocolates, you never know what you going to get.o',
-    mentions: [],
+    mentions: getRandomItems(3, userListPath),
   );
 });
 
@@ -273,6 +273,13 @@ List<T> getRandomItems<T>(int count, List<T> sourceList) {
     }
   }
   return resultList;
+}
+
+/*
+  @deprecated 生成随机数据
+*/
+String getRandomUserImgs(List sourceList) {
+  return sourceList[random.nextInt(10)];
 }
 
 Future<List<RecommendationModel>> getBeerList(page, pageSize) async {

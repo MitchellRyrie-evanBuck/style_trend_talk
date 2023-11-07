@@ -21,7 +21,7 @@ class MainPage extends GetView<MainController> {
 
   // 主视图
   Widget _buildView() {
-    return HomeMiddleWareWidge();
+    return const HomeMiddleWareWidge();
   }
 
   @override
@@ -52,10 +52,13 @@ class HomeMiddleWareWidge extends StatefulWidget {
 }
 
 class _HomeMiddleWareWidgeState extends State<HomeMiddleWareWidge>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late TabController _tabController;
   late double indicatorPadding = 15;
   final MainController getMainController = Get.put(MainController());
+
+  @override
+  bool get wantKeepAlive => true; // 启用AutomaticKeepAliveClientMixin
 
   @override
   void initState() {
@@ -87,6 +90,7 @@ class _HomeMiddleWareWidgeState extends State<HomeMiddleWareWidge>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context); // 必须调用super.build
     return CustomScrollView(
       slivers: <Widget>[
         HomeAppHeader(tabController: _tabController),
@@ -95,6 +99,10 @@ class _HomeMiddleWareWidgeState extends State<HomeMiddleWareWidge>
             controller: _tabController,
             children: listRouterWidget,
           ),
+          // child: IndexedStack(
+          //   index: _tabController.index, // 当前活动标签的索引
+          //   children: listRouterWidget,
+          // ),
         ),
       ],
     );

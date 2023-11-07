@@ -15,8 +15,13 @@ class MainController extends GetxController {
 
   _initData() {
     pagingController.addPageRequestListener((pageKey) {
+      print('pageKey---->${pageKey}');
       fetchData(pageKey);
     });
+    pagingController.addStatusListener((pageState) {
+      print('pageState---->${pageState}');
+    });
+
     update(["main"]);
     update(["recommendation"]);
   }
@@ -28,6 +33,7 @@ class MainController extends GetxController {
 
   Future<void> fetchRefresh() async {
     pagingController.refresh();
+    // pagingController.itemListController.clear();
     //  pagingController.reset();
   }
 
@@ -64,7 +70,7 @@ class MainController extends GetxController {
 
   @override
   void onClose() {
-    // tabController.dispose();
+    pagingController.dispose();
     super.onClose();
   }
 }
