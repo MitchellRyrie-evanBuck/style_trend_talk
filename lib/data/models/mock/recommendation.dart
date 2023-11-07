@@ -1,6 +1,7 @@
 import 'dart:math';
 
 Future<dynamic> getRecommendation(int page) async {}
+final random = Random();
 
 class RecommendationModel {
   final String userName;
@@ -239,7 +240,7 @@ List<RecommendationModel> items = List.generate(10, (index) {
     updateTimer: '2023-10-10',
     type: 1,
     video: null,
-    photo: getRandomItems(5, userListPath),
+    photo: getRandomItems(random.nextInt(10), userListPath),
     text:
         'Life was like a box of chocolates, you never know what you going to get.o',
     mentions: [],

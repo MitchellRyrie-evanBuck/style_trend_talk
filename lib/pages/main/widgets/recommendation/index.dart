@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -266,7 +267,6 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
     print('imgHeight---contextFlag---${imgHeight}-----${contextFlag}');
     return Container(
         height: imgHeight,
-        color: Colors.black,
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
@@ -278,11 +278,39 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
           itemCount: widget.itemData.photo!.length,
           shrinkWrap: true, // 确保尽可能小地包装内容
           itemBuilder: (context, index) {
-            return Container(
-                child: Image(
-              image: AssetImage(widget.itemData.photo![index]),
-              fit: BoxFit.cover,
-            ));
+            if (widget.itemData.photo!.length > 6 && index == 5) {
+              return Container(
+                  child: Stack(
+                children: [
+                  Image(
+                    image: AssetImage(widget.itemData.photo![index]),
+                    fit: BoxFit.cover,
+                  ),
+                  ClipRect(
+                    child: Container(
+                      child: BackdropFilter(
+                        filter:
+                            ImageFilter.blur(sigmaX: 3, sigmaY: 3), // 添加模糊效果
+                        child: Container(
+                          color: Colors.black.withOpacity(0.3), // 添加半透明的颜色遮罩
+                          child: const Center(
+                              child: Text(
+                            '查看更多',
+                            style: TextStyle(color: Colors.white),
+                          )),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ));
+            } else {
+              return Container(
+                  child: Image(
+                image: AssetImage(widget.itemData.photo![index]),
+                fit: BoxFit.cover,
+              ));
+            }
           },
         ));
   }
