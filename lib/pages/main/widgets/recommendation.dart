@@ -1,10 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:style_trend_talk/data/index.dart';
+// import 'package:style_trend_talk/data/index.dart';
 import 'package:style_trend_talk/pages/main/controllers/controller.dart';
 import 'package:style_trend_talk/pages/main/controllers/recommendation.dart';
 import 'package:style_trend_talk/pages/main/widgets/recommendation/index.dart';
 import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
+
+class RecommendationPageMiddle extends StatefulWidget {
+  const RecommendationPageMiddle({super.key});
+
+  @override
+  State<RecommendationPageMiddle> createState() =>
+      _RecommendationPageMiddleState();
+}
+
+class _RecommendationPageMiddleState extends State<RecommendationPageMiddle>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true; // 启用状态保持
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context); // 必须调用super.build
+
+    return RecommendationPage();
+  }
+}
 
 class RecommendationPage extends GetView<RecommendationController> {
   RecommendationPage({Key? key}) : super(key: key);
@@ -34,7 +55,7 @@ class RecommendationPage extends GetView<RecommendationController> {
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else {
-                final data = snapshot.data;
+                // final data = snapshot.data;
                 return _buildView();
               }
             });
@@ -43,7 +64,7 @@ class RecommendationPage extends GetView<RecommendationController> {
   }
 
   Future getData() async {
-    await Future<dynamic>.delayed(const Duration(milliseconds: 500));
+    // await Future<dynamic>.delayed(const Duration(milliseconds: 500));
     // recommendationList
     // return recommendationList;
   }

@@ -1,4 +1,4 @@
-// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:style_trend_talk/data/index.dart';
@@ -6,8 +6,12 @@ import 'package:style_trend_talk/data/index.dart';
 
 class MainController extends GetxController {
   MainController();
-// late TabController tabController;
+
+  // final TabController tabController;
   final RxDouble indicatorPadding = RxDouble(15);
+  PageController pageController = PageController();
+  final RxInt currentIndex = RxInt(0);
+
   final RxList<RecommendationModel> dataList = RxList<RecommendationModel>([]);
   final PagingController<int, RecommendationModel> pagingController =
       PagingController(firstPageKey: 0);
@@ -22,6 +26,10 @@ class MainController extends GetxController {
       print('pageState---->${pageState}');
     });
 
+    pageController.addListener(() {
+      print('pageController---->${pageController.page}');
+    });
+
     update(["main"]);
     update(["recommendation"]);
   }
@@ -29,6 +37,17 @@ class MainController extends GetxController {
   void updateIndicatorPadding(double value) {
     indicatorPadding.value = value;
     update();
+  }
+
+  void setIndex(index) {
+    currentIndex.value = index;
+    pageController.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.ease,
+    );
+    update(["main"]);
+    update(["recommendation"]);
   }
 
   Future<void> fetchRefresh() async {
@@ -65,6 +84,7 @@ class MainController extends GetxController {
   @override
   void onInit() {
     // tabController = TabController(length: listRouterWidget.length, vsync: this);
+
     super.onInit();
   }
 

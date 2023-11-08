@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:style_trend_talk/pages/main/controllers/controller.dart';
 
+List<String> listTabName = ['推荐', '关注', '直播', '广场', '同城'];
+
 class HomeAppHeader extends StatefulWidget {
   const HomeAppHeader({
     super.key,
@@ -49,13 +51,13 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     final double tabWidth = screenWidth - 120;
-    final double screenPadding = screenWidth / 2 - tabWidth / 2;
+    // final double screenPadding = (screenWidth / 2 - tabWidth / 2) + 10;
 
-    final mainController = Get.put(MainController());
+    // final mainController = Get.put(MainController());
 
     return GetBuilder<MainController>(builder: (controller) {
-      final double currentIndicatorPadding =
-          mainController.indicatorPadding.value; // 提取值到局部变量
+      // final double currentIndicatorPadding =
+      //     mainController.indicatorPadding.value;
 
       // print('currentIndicatorPadding---${currentIndicatorPadding}');
       return Container(
@@ -63,13 +65,11 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
           child: Stack(fit: StackFit.expand, children: [
             Positioned(
                 left: 0.0,
-                child: Container(
-                  child: IconButton(
-                    icon: const Icon(Icons.bolt),
-                    onPressed: () {
-                      // 打开抽屉
-                    },
-                  ),
+                child: IconButton(
+                  icon: const Icon(Icons.bolt),
+                  onPressed: () {
+                    // 打开抽屉
+                  },
                 )),
             Positioned(
               right: 0.0,
@@ -80,79 +80,14 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
                 },
               ),
             ),
-            Positioned(
-              left: screenPadding,
-              top: 10,
-              child: SizedBox(
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                padding: const EdgeInsets.only(bottom: 3),
                 width: tabWidth,
                 height: tabHeight - 20,
-                child: TabBar(
-                  controller: tabController,
-                  indicatorColor: Colors.black,
-                  isScrollable: true,
-                  indicatorWeight: 0,
-                  // indicatorPadding: EdgeInsets.zero,
-                  // indicatorPadding:
-                  //     EdgeInsets.only(left: 15, right: currentIndicatorPadding),
-                  indicatorSize: TabBarIndicatorSize.label,
-                  // indicatorSize: TabBarIndicatorSize.tab,
-                  indicator: const BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Colors.black,
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                  // indicator: AnimatedTabBarIndicator(listenable: _animatedContainer),
-                  dividerColor: Colors.transparent,
-                  labelColor: Colors.black,
-                  unselectedLabelColor: Colors.grey,
-                  labelStyle: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  mouseCursor: MouseCursor.defer,
-                  enableFeedback: false,
-                  onTap: (index) {
-                    print('object---${index}');
-                    // 切换tab
-                  },
-
-                  physics: const BouncingScrollPhysics(),
-                  splashFactory: InkSplash.splashFactory,
-                  splashBorderRadius:
-                      const BorderRadius.all(Radius.circular(10)),
-                  tabAlignment: TabAlignment.center,
-                  tabs: const [
-                    Tab(
-                      child: Center(
-                        child: Text("推荐"),
-                      ),
-                    ),
-                    Tab(
-                      height: 30,
-                      child: Center(
-                        child: Text("关注"),
-                      ),
-                    ),
-                    Tab(
-                      child: Center(
-                        child: Text("直播"),
-                      ),
-                    ),
-                    Tab(
-                      child: Center(
-                        child: Text("广场"),
-                      ),
-                    ),
-                    Tab(
-                      child: Center(
-                        child: Text("同城"),
-                      ),
-                    ),
-                  ],
-                ),
+                child: CustomTabBarWidget(tabController: tabController),
+                // child: const CustomPageWidget(),
               ),
             )
           ]));
@@ -168,6 +103,154 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
     return false;
+  }
+}
+
+class CustomPageWidget extends StatefulWidget {
+  const CustomPageWidget({super.key});
+
+  @override
+  State<CustomPageWidget> createState() => _CustomPageWidgetState();
+}
+
+class _CustomPageWidgetState extends State<CustomPageWidget> {
+  final mainController = Get.put(MainController());
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<MainController>(
+        id: "main",
+        builder: (_) {
+          return Stack(
+            children: [
+              ListView.separated(
+                  padding: const EdgeInsets.only(top: 3),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(width: 30),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: listTabName.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      child: Container(
+                          child: Text(
+                        listTabName[index],
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: index == mainController.currentIndex.value
+                                ? Colors.black
+                                : Colors.grey),
+                      )),
+                      onTap: () {
+                        mainController.setIndex(index);
+                      },
+                    );
+                  }),
+              AnimatedPositioned(
+                  left: 0,
+                  bottom: 0,
+                  duration: const Duration(milliseconds: 100),
+                  child: Container(
+                    height: 2,
+                    width: 30,
+                    color: Colors.black,
+                  ))
+            ],
+          );
+        });
+
+    // Row(
+    // mainAxisAlignment: MainAxisAlignment.center,
+    // children: listTabName.asMap().entries.map((entry) {
+    //   final int index = entry.key;
+    //   return GestureDetector(
+    //     child: Container(
+    //         margin: EdgeInsets.symmetric(horizontal: 10),
+    //         child: Text(listTabName[index])),
+    //     onTap: () {
+    //       mainController.setIndex(index);
+    //     },
+    //   );
+    // }).toList(),
+    // );
+  }
+}
+
+class CustomTabBarWidget extends StatelessWidget {
+  CustomTabBarWidget({
+    super.key,
+    required this.tabController,
+  });
+
+  final TabController tabController;
+  final mainController = Get.put(MainController());
+
+  @override
+  Widget build(BuildContext context) {
+    return TabBar(
+      controller: tabController,
+      indicatorColor: Colors.black,
+      isScrollable: true,
+      indicatorWeight: 0,
+      // indicatorPadding: EdgeInsets.zero,
+      // indicatorPadding:
+      //     EdgeInsets.only(left: 15, right: currentIndicatorPadding),
+      indicatorSize: TabBarIndicatorSize.label,
+      // indicatorSize: TabBarIndicatorSize.tab,
+      indicator: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.black,
+            width: 2,
+          ),
+        ),
+      ),
+      // indicator: AnimatedTabBarIndicator(listenable: _animatedContainer),
+      dividerColor: Colors.transparent,
+      labelColor: Colors.black,
+      unselectedLabelColor: Colors.grey,
+      labelStyle: const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+      ),
+      mouseCursor: MouseCursor.defer,
+      enableFeedback: false,
+      onTap: (index) {
+        mainController.setIndex(index);
+      },
+
+      physics: const BouncingScrollPhysics(),
+      splashFactory: InkSplash.splashFactory,
+      splashBorderRadius: const BorderRadius.all(Radius.circular(10)),
+      tabAlignment: TabAlignment.center,
+      tabs: const [
+        Tab(
+          child: Center(
+            child: Text("推荐"),
+          ),
+        ),
+        Tab(
+          height: 30,
+          child: Center(
+            child: Text("关注"),
+          ),
+        ),
+        Tab(
+          child: Center(
+            child: Text("直播"),
+          ),
+        ),
+        Tab(
+          child: Center(
+            child: Text("广场"),
+          ),
+        ),
+        Tab(
+          child: Center(
+            child: Text("同城"),
+          ),
+        ),
+      ],
+    );
   }
 }
 
