@@ -19,6 +19,7 @@ dependencies:
   video_player: ^2.7.2
   chewie: ^1.7.1
   infinite_scroll_pagination: ^4.0.0
+  pull_to_refresh: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -36,6 +37,7 @@ flutter:
   - assets/images/user/
 
   - assets/video/sea.mov
+  - assets/video/rush.mp4
   - assets/video/
 
 

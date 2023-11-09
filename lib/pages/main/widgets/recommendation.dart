@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 // import 'package:style_trend_talk/data/index.dart';
 import 'package:style_trend_talk/pages/main/controllers/controller.dart';
 import 'package:style_trend_talk/pages/main/controllers/recommendation.dart';
@@ -22,7 +23,6 @@ class _RecommendationPageMiddleState extends State<RecommendationPageMiddle>
   @override
   Widget build(BuildContext context) {
     super.build(context); // 必须调用super.build
-
     return RecommendationPage();
   }
 }
@@ -33,12 +33,7 @@ class RecommendationPage extends GetView<RecommendationController> {
 
   // 主视图
   Widget _buildView() {
-    return RefreshIndicator(
-        onRefresh: () async {
-          await Future.delayed(const Duration(seconds: 1));
-          mainController.fetchRefresh();
-        },
-        child: const RecommendTabPage());
+    return const RecommendTabPage();
   }
 
   @override

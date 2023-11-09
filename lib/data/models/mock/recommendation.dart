@@ -66,136 +66,6 @@ class RecommendationModel {
         mentions = List<String>.from(data['@']);
 }
 
-/*
-  description type : string
-  0 纯文案
-  1 单图片 或 单视频 
-  2 大于 一张 小于 六张的图片
-  3 等于大于六张
-*/
-
-// List recommendationList = [
-//   {
-//     'user_name': generateRandomString(10),
-//     'user_id': 341232,
-//     'user_img': 'assets/images/user/user1.png',
-//     'flow': true,
-//     'flow_self': true,
-//     'desc': '有志者事竟成',
-//     'like': 123,
-//     'like_self': true,
-//     'star': 234,
-//     'star_self': false,
-//     'share': 987,
-//     'create_timer': '2023-10-10',
-//     'update_timer': '2023-10-10',
-//     'type': 2, // 0 1 ,2, 3 ，4 ，5
-//     'vedio': null,
-//     'photo': [
-//       'assets/images/material/details1.png',
-//       'assets/images/material/details2.png',
-//       'assets/images/material/details3.png'
-//     ],
-//     'text': 'lemo lemo lemo lemo lemo lemo lemo lemo lemo lemo lemo lemo',
-//     '@': []
-//   },
-//   {
-//     'user_name': generateRandomString(7),
-//     'user_id': 34122232,
-//     'user_img': 'assets/images/user/user1.png',
-//     'flow': true,
-//     'flow_self': true,
-//     'desc': '有志者事竟成',
-//     'like': 123,
-//     'like_self': true,
-//     'star': 234,
-//     'star_self': false,
-//     'share': 987,
-//     'create_timer': '2023-10-10',
-//     'update_timer': '2023-10-10',
-//     'type': 0, // 0 1 ,2, 3 ，4 ，5
-//     'vedio': null,
-//     'photo': null,
-//     'text': 'lemo lemo lemo lemo lemo lemo lemo lemo lemo lemo lemo lemo',
-//     '@': []
-//   },
-//   {
-//     'user_name': 'Anfu- Tom',
-//     'user_id': 1341232,
-//     'user_img': 'assets/images/user/user2.png',
-//     'flow': true,
-//     'flow_self': true,
-//     'desc':
-//         'Life was like a box of chocolates, you never know what you going to get.',
-//     'like': 123,
-//     'like_self': true,
-//     'star': 234,
-//     'star_self': false,
-//     'share': 987,
-//     'create_timer': '2023-10-10',
-//     'update_timer': '2023-10-10',
-//     'type': 1, // 1 ,2, 3
-//     'vedio': 'assets/video/sea.mov',
-//     'photo': [],
-//     'text':
-//         'Life was like a box  of chocolates, you never know what you going to get.o',
-//     '@': []
-//   },
-//   {
-//     'user_name': 'Anfu... Tom',
-//     'user_id': 41232,
-//     'user_img': 'assets/images/user/user3.png',
-//     'flow': true,
-//     'flow_self': true,
-//     'desc':
-//         'Life was like a box of chocolates, you never know what you going to get.',
-//     'like': 123,
-//     'like_self': true,
-//     'star': 234,
-//     'star_self': false,
-//     'share': 987,
-//     'create_timer': '2023-10-10',
-//     'update_timer': '2023-10-10',
-//     'type': 3, // 1 ,2, 3
-//     'vedio': null,
-//     'photo': [
-//       'assets/images/material/details1.png',
-//       'assets/images/material/details2.png',
-//       'assets/images/material/details3.png',
-//       'assets/images/material/details4.png',
-//       'assets/images/material/details5.png',
-//       'assets/images/material/details6.png'
-//     ],
-//     'text':
-//         'Life was like a box of chocolates, you never know what you going to get.o',
-//     '@': []
-//   },
-//   {
-//     'user_name': 'Aeiiiinfu... Tom',
-//     'user_id': 412325,
-//     'user_img': 'assets/images/user/user3.png',
-//     'flow': true,
-//     'flow_self': true,
-//     'desc':
-//         'Life was like a box of chocolates, you never know what you going to get.',
-//     'like': 123,
-//     'like_self': true,
-//     'star': 234,
-//     'star_self': false,
-//     'share': 987,
-//     'create_timer': '2023-10-10',
-//     'update_timer': '2023-10-10',
-//     'type': 1, // 1 ,2, 3
-//     'vedio': null,
-//     'photo': [
-//       'assets/images/material/details1.png',
-//     ],
-//     'text':
-//         'Life was like a box of chocolates, you never know what you going to get.o',
-//     '@': []
-//   },
-// ];
-
 // // 源数据
 // List<RecommendationModel> recommendationListSource = recommendationList
 //     .map((data) => RecommendationModel.fromMap(data))
@@ -217,6 +87,11 @@ List<String> pathList = [
   'assets/images/material/third.png',
 ];
 
+List<String> videoFilesPaths = [
+  'assets/video/sea.mov',
+  'assets/video/rush.mp4',
+];
+
 List<String> userListPath = List.generate(28, (index) {
   return 'assets/images/user/user${index + 1}.png';
 });
@@ -226,7 +101,7 @@ List<RecommendationModel> items = List.generate(10, (index) {
   return RecommendationModel(
     userName: generateRandomString(10),
     userId: 412325,
-    userImg: getRandomUserImgs(userListPath),
+    userImg: getRandomUserImgs(userListPath, 10),
     flow: true,
     flowSelf: true,
     desc:
@@ -239,7 +114,7 @@ List<RecommendationModel> items = List.generate(10, (index) {
     createTimer: '2023-10-10',
     updateTimer: '2023-10-10',
     type: 1,
-    video: null,
+    video: getRandomStringOrNull(videoFilesPaths),
     photo: getRandomItems(random.nextInt(10), userListPath),
     text:
         'Life was like a box of chocolates, you never know what you going to get.o',
@@ -278,11 +153,21 @@ List<T> getRandomItems<T>(int count, List<T> sourceList) {
 /*
   @deprecated 生成随机数据
 */
-String getRandomUserImgs(List sourceList) {
-  return sourceList[random.nextInt(10)];
+String getRandomUserImgs(List sourceList, int nums) {
+  return sourceList[random.nextInt(nums)];
 }
 
 Future<List<RecommendationModel>> getBeerList(page, pageSize) async {
   // ignore: avoid_print
   return items;
+}
+
+String? getRandomStringOrNull(List<String> stringList) {
+  // 生成一个随机数，范围为0到3
+  int randomIndex = Random().nextInt(10);
+
+  // 如果随机数为0，则返回数组中的随机字符串；否则返回null
+  return (randomIndex <= 5)
+      ? stringList[Random().nextInt(stringList.length)]
+      : null;
 }

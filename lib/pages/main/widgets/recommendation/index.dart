@@ -5,9 +5,11 @@ import 'package:get/get.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:style_trend_talk/data/index.dart';
 import 'package:style_trend_talk/pages/index.dart';
 import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
+import 'package:style_trend_talk/widget/videoWidget.dart';
 // import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class RecommendTabPage extends StatefulWidget {
@@ -22,23 +24,55 @@ List<String> items = List.generate(3, (index) => 'Item $index');
 class _RecommendTabPageState extends State<RecommendTabPage>
     with TickerProviderStateMixin {
   final mainController = Get.put(MainController());
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(const Duration(milliseconds: 1000));
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
+  void _onLoading() async {
+    // monitor network fetch
+    await Future.delayed(const Duration(milliseconds: 1000));
+    // if failed,use loadFailed(),if no data return,use LoadNodata()
+    _refreshController.loadComplete();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return PagedListView<int, RecommendationModel>.separated(
-      padding: const EdgeInsets.only(bottom: 100),
-      separatorBuilder: (context, index) => const SizedBox(height: 1),
-      pagingController: mainController.pagingController,
-      builderDelegate: PagedChildBuilderDelegate<RecommendationModel>(
-        firstPageProgressIndicatorBuilder: (context) =>
-            const ProgressIndicatorWidget(),
-        newPageProgressIndicatorBuilder: (context) =>
-            const ProgressIndicatorWidget(),
-        itemBuilder: (context, item, index) {
-          return RecommendItemDetails(index: index, itemData: item);
-        },
+    return Scrollbar(
+      child: SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: true,
+        header: const WaterDropMaterialHeader(
+            color: Colors.white,
+            distance: 30,
+            semanticsValue: '',
+            semanticsLabel: "努力加载中",
+            backgroundColor: Color.fromARGB(255, 120, 120, 120)),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        child: PagedListView<int, RecommendationModel>.separated(
+          padding: const EdgeInsets.only(bottom: 100),
+          separatorBuilder: (context, index) => const SizedBox(height: 1),
+          pagingController: mainController.pagingController,
+          builderDelegate: PagedChildBuilderDelegate<RecommendationModel>(
+            firstPageProgressIndicatorBuilder: (context) =>
+                const ProgressIndicatorWidget(),
+            newPageProgressIndicatorBuilder: (context) =>
+                const ProgressIndicatorWidget(),
+            itemBuilder: (context, item, index) {
+              print('获取到的单条数据：${item.video}');
+              return RecommendItemDetails(index: index, itemData: item);
+            },
+          ),
+        ),
       ),
     );
+
     // return ListView.separated(
     //   padding: const EdgeInsets.only(bottom: 100),
     //   separatorBuilder: (context, index) => const SizedBox(height: 1),
@@ -229,6 +263,17 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
 
   Widget _imgContextWidget(BuildContext context) {
     late double screenWidth = MediaQuery.of(context).size.width;
+    // ----------------------------------------------------------------
+    if (widget.itemData.video != null) {
+      return IntrinsicHeight(
+        child: Container(
+          color: Colors.black,
+          // height: 220,
+          child: VideoComponent(videoPath: widget.itemData.video as String),
+        ),
+      );
+    }
+    // ----------------------------------------------------------------
     if (widget.itemData.photo == null || widget.itemData.photo!.isEmpty) {
       return const SizedBox(height: 0);
     }
