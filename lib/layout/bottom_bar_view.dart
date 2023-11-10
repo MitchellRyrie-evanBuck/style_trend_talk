@@ -28,7 +28,7 @@ class _BottomBarViewState extends State<BottomBarView>
 
   Alignment alibegin = Alignment.topLeft;
   Alignment aliend = Alignment.bottomRight;
-  List<Color> _colors = [
+  final List<Color> _colors = [
     Colors.black,
     Colors.grey,
     Color.fromARGB(255, 91, 122, 135)

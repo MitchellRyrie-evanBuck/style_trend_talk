@@ -19,12 +19,12 @@ class _HomeWidgetState extends State<HomeWidget> {
       body: Container(
         width: 200,
       ),
-      drawer: DrawerWidget(),
-      bottomNavigationBar: NavigationBarWidget(),
+      drawer: const DrawerWidget(),
+      bottomNavigationBar: const NavigationBarWidget(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       floatingActionButton: IconButton(
-        icon: Icon(FontAwesomeIcons.userCircle),
+        icon: const Icon(FontAwesomeIcons.userCircle),
         onPressed: () {
           // 点击菜单按钮的回调函数
         },

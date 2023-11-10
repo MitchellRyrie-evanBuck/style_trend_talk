@@ -16,8 +16,28 @@ final List<Widget> listRouterWidget = [
   const Center(child: Text('Tab 5')),
 ];
 
+class MainPageMiddle extends StatefulWidget {
+  const MainPageMiddle({super.key});
+
+  @override
+  State<MainPageMiddle> createState() => _MainPageMiddleState();
+}
+
+class _MainPageMiddleState extends State<MainPageMiddle>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true; // 启用状态保持
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context); // 必须调用super.build
+
+    return const MainPage();
+  }
+}
+
 class MainPage extends GetView<MainController> {
-  MainPage({Key? key}) : super(key: key);
+  const MainPage({Key? key}) : super(key: key);
 
   // 主视图
   Widget _buildView() {

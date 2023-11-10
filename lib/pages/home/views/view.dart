@@ -31,7 +31,10 @@ class HomePage extends GetView<HomeController> {
                 } else {
                   return Stack(
                     children: <Widget>[
-                      routing[index.value],
+                      IndexedStack(
+                        index: index.value,
+                        children: routing,
+                      ),
                       bottomBar(),
                     ],
                   );
