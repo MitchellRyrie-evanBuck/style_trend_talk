@@ -31,7 +31,7 @@ class _BottomBarViewState extends State<BottomBarView>
   final List<Color> _colors = [
     Colors.black,
     Colors.grey,
-    Color.fromARGB(255, 91, 122, 135)
+    const Color.fromARGB(255, 91, 122, 135)
   ];
   int _currentColorIndex = 0;
 
@@ -47,7 +47,7 @@ class _BottomBarViewState extends State<BottomBarView>
   }
 
   void _startAnimation() {
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       setState(() {
         alibegin = _generateRandomAlignment();
         aliend = _generateRandomAlignment();
@@ -256,6 +256,28 @@ class _TabIconsState extends State<TabIcons> {
                   ),
                 ),
               ),
+              widget.tabData?.index == 2
+                  ? Positioned(
+                      top: 3,
+                      right: 4,
+                      child: Container(
+                        height: 18,
+                        width: 18,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: const Center(
+                          child: Text(
+                            '99',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ))
+                  : const SizedBox(),
               widget.tabData?.index == 3
                   ? Positioned(
                       top: 10,

@@ -18,22 +18,8 @@ class _FollowPageState extends State<FollowPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(
-      padding: const EdgeInsets.only(bottom: 10),
-      separatorBuilder: (context, index) => const SizedBox(height: 1),
-      itemCount: items.length + 1, // Add 1 for load more indicator
-      itemBuilder: (context, index) {
-        if (index < items.length) {
-          return Container(
-            height: 260,
-            child: VideoComponent(videoPath: assetVideoPath),
-          );
-        } else if (index == items.length) {
-          // Load more indicator
-          return const ProgressIndicatorWidget();
-        }
-        return null;
-      },
+    return const Center(
+      child: Text('---'),
     );
   }
 }

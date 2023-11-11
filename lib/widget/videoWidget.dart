@@ -16,6 +16,8 @@ class _VideoComponentState extends State<VideoComponent> {
   late VideoPlayerController _controller;
   late ChewieController chewieController;
   late Widget playerWidget;
+  bool isChewieControllerInitialized = false;
+
   double videoHeight = 220.0; // 初始高度，可以根据需要调整
   double maxVideoHeight = 500.0; // 最大高度，可以根据需要调整
 

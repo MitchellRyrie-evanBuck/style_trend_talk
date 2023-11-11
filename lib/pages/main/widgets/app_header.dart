@@ -222,34 +222,34 @@ class CustomTabBarWidget extends StatelessWidget {
       splashFactory: InkSplash.splashFactory,
       splashBorderRadius: const BorderRadius.all(Radius.circular(10)),
       tabAlignment: TabAlignment.center,
-      tabs: const [
-        Tab(
-          child: Center(
-            child: Text("推荐"),
+      tabs: listTabName.asMap().entries.map((entry) {
+        final int index = entry.key;
+        return Tab(
+          child: Container(
+            child: Stack(
+              children: [
+                Center(
+                  child: Text(listTabName[index]),
+                ),
+                // Positioned(
+                //     top: 0,
+                //     right: 0,
+                //     child: Container(
+                //       height: 20,
+                //       width: 20,
+                //       decoration: const BoxDecoration(
+                //           color: Color.fromARGB(255, 255, 16, 16),
+                //           borderRadius: BorderRadius.all(Radius.circular(10))),
+                //       child: const Text(
+                //         '99',
+                //         style: TextStyle(color: Colors.white),
+                //       ),
+                //     ))
+              ],
+            ),
           ),
-        ),
-        Tab(
-          height: 30,
-          child: Center(
-            child: Text("关注"),
-          ),
-        ),
-        Tab(
-          child: Center(
-            child: Text("直播"),
-          ),
-        ),
-        Tab(
-          child: Center(
-            child: Text("广场"),
-          ),
-        ),
-        Tab(
-          child: Center(
-            child: Text("同城"),
-          ),
-        ),
-      ],
+        );
+      }).toList(),
     );
   }
 }
