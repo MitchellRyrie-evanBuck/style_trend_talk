@@ -187,7 +187,7 @@ class _BottomBarViewState extends State<BottomBarView>
             duration: const Duration(milliseconds: 2000),
             curve: Curves.easeInToLinear,
             decoration: BoxDecoration(
-              color: Color.fromARGB(255, 60, 60, 60),
+              color: const Color.fromARGB(255, 60, 60, 60),
               // gradient: LinearGradient(
               //   colors: _colors.sublist(_currentColorIndex) +
               //       _colors.sublist(0, _currentColorIndex),
