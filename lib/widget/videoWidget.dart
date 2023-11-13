@@ -24,6 +24,16 @@ class _VideoComponentState extends State<VideoComponent> {
   @override
   void initState() {
     super.initState();
+    // _initializeChewieController();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _initializeChewieController();
+  }
+
+  _initializeChewieController() {
     _controller = VideoPlayerController.asset(widget.videoPath)
       ..initialize().then((_) {
         // Ensure the first frame is shown and set state to rebuild the widget.

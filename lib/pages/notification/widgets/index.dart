@@ -7,6 +7,7 @@ import 'package:style_trend_talk/pages/notification/controllers/controller.dart'
 import 'package:style_trend_talk/pages/notification/widgets/message/index.dart';
 import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
 import 'package:style_trend_talk/widget/refresh.dart';
+import 'package:style_trend_talk/widget/flickr.dart';
 
 class NotifierMainViewWidget extends StatefulWidget {
   const NotifierMainViewWidget({super.key});
@@ -61,9 +62,9 @@ class _NotifierMainViewWidgetState extends State<NotifierMainViewWidget>
           pagingController: notificationController.pagingController,
           builderDelegate: PagedChildBuilderDelegate<NotifierTionListModel>(
             firstPageProgressIndicatorBuilder: (context) =>
-                const ProgressIndicatorWidget(),
+                const ProcesssFlicker(),
             newPageProgressIndicatorBuilder: (context) =>
-                const ProgressIndicatorWidget(),
+                const ProcesssFlicker(),
             itemBuilder: (context, item, index) {
               print('item======================>   $item');
               return CustomMessageWidget(itemData: item);

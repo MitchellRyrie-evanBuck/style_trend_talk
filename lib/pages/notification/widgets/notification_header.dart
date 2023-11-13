@@ -37,7 +37,7 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   );
 
   final double screenWidth;
-  final double tabHeight = 50;
+  final double tabHeight = 45;
 
   @override
   Widget build(
@@ -81,9 +81,9 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
             Align(
               alignment: Alignment.center,
               child: Container(
-                padding: const EdgeInsets.only(bottom: 3),
+                padding: const EdgeInsets.only(bottom: 0),
                 width: tabWidth,
-                height: tabHeight - 20,
+                height: tabHeight,
                 child: const CustomPageWidget(),
                 // child: const CustomPageWidget(),
               ),

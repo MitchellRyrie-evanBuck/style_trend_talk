@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:style_trend_talk/data/index.dart';
@@ -9,6 +10,8 @@ class NotificationController extends GetxController {
   }
   final PagingController<int, NotifierTionListModel> pagingController =
       PagingController(firstPageKey: 0);
+  PageController pageController = PageController();
+
   static const _pageSize = 10;
 
   _initData() {
@@ -54,6 +57,8 @@ class NotificationController extends GetxController {
   @override
   void onClose() {
     pagingController.dispose();
+    pageController.dispose();
+
     super.onClose();
   }
 }

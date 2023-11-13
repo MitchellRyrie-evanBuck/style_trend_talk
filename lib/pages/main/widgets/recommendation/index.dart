@@ -8,6 +8,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:style_trend_talk/data/index.dart';
 import 'package:style_trend_talk/pages/index.dart';
+import 'package:style_trend_talk/widget/flickr.dart';
 import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
 import 'package:style_trend_talk/widget/videoWidget.dart';
 // import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -61,9 +62,9 @@ class _RecommendTabPageState extends State<RecommendTabPage>
           pagingController: mainController.pagingController,
           builderDelegate: PagedChildBuilderDelegate<RecommendationModel>(
             firstPageProgressIndicatorBuilder: (context) =>
-                const ProgressIndicatorWidget(),
+                const ProcesssFlicker(),
             newPageProgressIndicatorBuilder: (context) =>
-                const ProgressIndicatorWidget(),
+                const ProcesssFlicker(),
             itemBuilder: (context, item, index) {
               // print('获取到的单条数据：${item.video}');
               return RecommendItemDetails(index: index, itemData: item);

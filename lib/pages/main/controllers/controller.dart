@@ -82,6 +82,7 @@ class MainController extends GetxController {
   @override
   void onClose() {
     pagingController.dispose();
+    pageController.dispose();
     super.onClose();
   }
 }

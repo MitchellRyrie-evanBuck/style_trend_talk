@@ -83,19 +83,18 @@ class _NotifierControllerState extends State<NotifierController>
     return CustomScrollView(
       slivers: <Widget>[
         const NotificationAppHeader(),
+        SliverToBoxAdapter(
+          child: Container(
+            color: Colors.blue,
+            height: 50,
+            child: const Center(child: Text('搜索框')),
+          ),
+        ),
         SliverFillRemaining(
           child: PageView.builder(
             itemCount: listNotificationRouterWidget.length,
-            // controller: getNotificationController.pageController,
-            onPageChanged: (index) {
-              // getMainController.setIndex(index);
-
-              // _tabController.animateTo(
-              //   index,
-              //   duration: const Duration(milliseconds: 300),
-              //   curve: Curves.ease,
-              // );
-            },
+            controller: getNotificationController.pageController,
+            onPageChanged: (index) {},
             itemBuilder: (context, index) {
               return PageStorage(
                 bucket: PageStorageBucket(), // 创建一个新的存储桶

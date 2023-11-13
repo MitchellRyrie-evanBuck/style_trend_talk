@@ -20,12 +20,12 @@ class NotifierTionListModel {
   });
 }
 
-List<NotifierTionListModel> notifierTionItems = List.generate(10, (index) {
+List<NotifierTionListModel> notifierTionItems = List.generate(5, (index) {
   return NotifierTionListModel(
     name: generateRandomString(10),
     userId: 412325,
     avatarUrl: getRandomUserImgs(userListPath, 10),
-    lastMessage: '',
+    lastMessage: 'hello what are you doing',
     lastMessageTime: '',
     isOnline: false,
     unreadMessages: 99,
