@@ -65,7 +65,7 @@ class _RecommendTabPageState extends State<RecommendTabPage>
             newPageProgressIndicatorBuilder: (context) =>
                 const ProgressIndicatorWidget(),
             itemBuilder: (context, item, index) {
-              print('获取到的单条数据：${item.video}');
+              // print('获取到的单条数据：${item.video}');
               return RecommendItemDetails(index: index, itemData: item);
             },
           ),

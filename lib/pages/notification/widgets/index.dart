@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:style_trend_talk/data/index.dart';
+import 'package:style_trend_talk/pages/notification/controllers/controller.dart';
+import 'package:style_trend_talk/pages/notification/widgets/message/index.dart';
 import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
+import 'package:style_trend_talk/widget/refresh.dart';
 
 class NotifierMainViewWidget extends StatefulWidget {
   const NotifierMainViewWidget({super.key});
@@ -16,6 +21,9 @@ class _NotifierMainViewWidgetState extends State<NotifierMainViewWidget>
   bool get wantKeepAlive => true; // 启用状态保持
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
+  final NotificationController notificationController =
+      Get.put(NotificationController());
+
   void _onRefresh() async {
     // monitor network fetch
     await Future.delayed(const Duration(milliseconds: 1000));
@@ -36,35 +44,34 @@ class _NotifierMainViewWidgetState extends State<NotifierMainViewWidget>
 
     return Scrollbar(
       child: SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: true,
-          header: const WaterDropMaterialHeader(
-              color: Colors.white,
-              distance: 30,
-              semanticsValue: '',
-              semanticsLabel: "努力加载中",
-              backgroundColor: Color.fromARGB(255, 120, 120, 120)),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          onLoading: _onLoading,
-          child: Column(
-            children: [],
-          )
-          // PagedListView<int, RecommendationModel>.separated(
-          //   padding: const EdgeInsets.only(bottom: 100),
-          //   separatorBuilder: (context, index) => const SizedBox(height: 1),
-          //   pagingController: mainController.pagingController,
-          //   builderDelegate: PagedChildBuilderDelegate<RecommendationModel>(
-          //     firstPageProgressIndicatorBuilder: (context) =>
-          //         const ProgressIndicatorWidget(),
-          //     newPageProgressIndicatorBuilder: (context) =>
-          //         const ProgressIndicatorWidget(),
-          //     itemBuilder: (context, item, index) {
-          //       return RecommendItemDetails(index: index, itemData: item);
-          //     },
-          //   ),
-          // ),
+        enablePullDown: true,
+        enablePullUp: true,
+        header: const WaterDropMaterialHeader(
+            color: Colors.white,
+            distance: 30,
+            semanticsValue: '',
+            semanticsLabel: "努力加载中",
+            backgroundColor: Color.fromARGB(255, 120, 120, 120)),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        onLoading: _onLoading,
+        child: PagedListView<int, NotifierTionListModel>.separated(
+          padding: const EdgeInsets.only(bottom: 100),
+          separatorBuilder: (context, index) => const SizedBox(height: 1),
+          pagingController: notificationController.pagingController,
+          builderDelegate: PagedChildBuilderDelegate<NotifierTionListModel>(
+            firstPageProgressIndicatorBuilder: (context) =>
+                const ProgressIndicatorWidget(),
+            newPageProgressIndicatorBuilder: (context) =>
+                const ProgressIndicatorWidget(),
+            itemBuilder: (context, item, index) {
+              print('item======================>   $item');
+              return CustomMessageWidget(itemData: item);
+              // return RecommendItemDetails(index: index, itemData: item);
+            },
           ),
+        ),
+      ),
     );
   }
 }

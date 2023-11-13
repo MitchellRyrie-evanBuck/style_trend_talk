@@ -19,15 +19,7 @@ class MainController extends GetxController {
 
   _initData() {
     pagingController.addPageRequestListener((pageKey) {
-      print('pageKey---->${pageKey}');
       fetchData(pageKey);
-    });
-    pagingController.addStatusListener((pageState) {
-      print('pageState---->${pageState}');
-    });
-
-    pageController.addListener(() {
-      print('pageController---->${pageController.page}');
     });
 
     update(["main"]);
@@ -58,7 +50,6 @@ class MainController extends GetxController {
 
   Future<void> fetchData(int pageKey) async {
     // ignore: avoid_print
-    print('触底: $pageKey');
     await Future.delayed(const Duration(seconds: 1));
 
     try {

@@ -1,7 +1,6 @@
-import 'dart:math';
+import 'package:style_trend_talk/data/index.dart';
 
 Future<dynamic> getRecommendation(int page) async {}
-final random = Random();
 
 class RecommendationModel {
   final String userName;
@@ -71,33 +70,8 @@ class RecommendationModel {
 //     .map((data) => RecommendationModel.fromMap(data))
 //     .toList();
 
-List<String> pathList = [
-  'assets/images/material/details1.png',
-  'assets/images/material/details2.png',
-  'assets/images/material/details3.png',
-  'assets/images/material/details4.png',
-  'assets/images/material/details5.png',
-  'assets/images/material/details6.png',
-  'assets/images/material/details7.png',
-  'assets/images/material/details8.png',
-  'assets/images/material/桌面壁纸.png',
-  'assets/images/material/fifth.png',
-  'assets/images/material/first.png',
-  'assets/images/material/fourth.png',
-  'assets/images/material/third.png',
-];
-
-List<String> videoFilesPaths = [
-  'assets/video/sea.mov',
-  'assets/video/rush.mp4',
-];
-
-List<String> userListPath = List.generate(28, (index) {
-  return 'assets/images/user/user${index + 1}.png';
-});
-
 //
-List<RecommendationModel> items = List.generate(10, (index) {
+List<RecommendationModel> recommendationItems = List.generate(10, (index) {
   return RecommendationModel(
     userName: generateRandomString(10),
     userId: 412325,
@@ -122,52 +96,7 @@ List<RecommendationModel> items = List.generate(10, (index) {
   );
 });
 
-// 生成随机字符串的函数
-String generateRandomString(int length) {
-  const characters =
-      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  final random = Random();
-  return String.fromCharCodes(Iterable.generate(
-      length, (_) => characters.codeUnitAt(random.nextInt(characters.length))));
-}
-
-/*
-  @deprecated 生成随机数据
-*/
-List<T> getRandomItems<T>(int count, List<T> sourceList) {
-  if (count > sourceList.length) {
-    return sourceList;
-  }
-  var random = Random();
-  var resultList = <T>[];
-  while (resultList.length < count) {
-    var randomIndex = random.nextInt(sourceList.length);
-    var randomItem = sourceList[randomIndex];
-    if (!resultList.contains(randomItem)) {
-      resultList.add(randomItem);
-    }
-  }
-  return resultList;
-}
-
-/*
-  @deprecated 生成随机数据
-*/
-String getRandomUserImgs(List sourceList, int nums) {
-  return sourceList[random.nextInt(nums)];
-}
-
 Future<List<RecommendationModel>> getBeerList(page, pageSize) async {
   // ignore: avoid_print
-  return items;
-}
-
-String? getRandomStringOrNull(List<String> stringList) {
-  // 生成一个随机数，范围为0到3
-  int randomIndex = Random().nextInt(10);
-
-  // 如果随机数为0，则返回数组中的随机字符串；否则返回null
-  return (randomIndex <= 4)
-      ? stringList[Random().nextInt(stringList.length)]
-      : null;
+  return recommendationItems;
 }
