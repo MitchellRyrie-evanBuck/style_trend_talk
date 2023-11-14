@@ -53,7 +53,7 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
 
       // print('currentIndicatorPadding---${currentIndicatorPadding}');
       return Container(
-          color: Colors.transparent,
+          color: Colors.white,
           child: Stack(fit: StackFit.expand, children: [
             Positioned(
                 left: 0.0,

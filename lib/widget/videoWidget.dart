@@ -103,6 +103,7 @@ class _VideoComponentState extends State<VideoComponent> {
   @override
   Widget build(BuildContext context) {
     if (_controller.value.isInitialized) {
+      // ignore: unnecessary_null_comparison
       if (chewieController != null) {
         return SizedBox(
           height: videoHeight, // 动态设置父级容器的高度

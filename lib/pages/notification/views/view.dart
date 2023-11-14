@@ -1,7 +1,10 @@
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:style_trend_talk/pages/notification/widgets/group/index.dart';
 import 'package:style_trend_talk/pages/notification/widgets/index.dart';
+import 'package:style_trend_talk/pages/notification/widgets/message_search/search.dart';
 import 'package:style_trend_talk/pages/notification/widgets/notification_header.dart';
 
 import '../index.dart';
@@ -65,6 +68,10 @@ class _NotifierControllerState extends State<NotifierController>
   final NotificationController getNotificationController =
       Get.put(NotificationController());
 
+  final EasyRefreshController _controller = EasyRefreshController(
+    controlFinishRefresh: true,
+    controlFinishLoad: true,
+  );
   @override
   void initState() {
     super.initState();
@@ -80,30 +87,82 @@ class _NotifierControllerState extends State<NotifierController>
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: <Widget>[
-        const NotificationAppHeader(),
-        SliverToBoxAdapter(
-          child: Container(
-            color: Colors.blue,
-            height: 50,
-            child: const Center(child: Text('搜索框')),
-          ),
-        ),
-        SliverFillRemaining(
-          child: PageView.builder(
-            itemCount: listNotificationRouterWidget.length,
-            controller: getNotificationController.pageController,
-            onPageChanged: (index) {},
-            itemBuilder: (context, index) {
-              return PageStorage(
-                bucket: PageStorageBucket(), // 创建一个新的存储桶
-                child: listNotificationRouterWidget[index],
-              );
+    return EasyRefresh.builder(
+        controller: _controller,
+        onRefresh: () async {
+          _controller.finishRefresh();
+          _controller.resetFooter();
+        },
+        onLoad: () async {
+          _controller.finishLoad(IndicatorResult.noMore);
+        },
+        childBuilder: (context, physics) {
+          return NestedScrollView(
+            floatHeaderSlivers: false,
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                const NotificationAppHeader(),
+
+                // SliverOverlapAbsorber(
+                //     handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                //         context),
+                //     sliver: const NotificationAppHeader()),
+              ];
             },
-          ),
-        ),
-      ],
-    );
+            body: PageView.builder(
+              itemCount: listNotificationRouterWidget.length,
+              controller: getNotificationController.pageController,
+              onPageChanged: (index) {},
+              itemBuilder: (context, index) {
+                return PageStorage(
+                    bucket: PageStorageBucket(), // 创建一个新的存储桶
+                    child: CustomScrollView(
+                      slivers: <Widget>[
+                        const SliverToBoxAdapter(
+                          child: Column(
+                            children: [
+                              CustomSearch(),
+                              // Add any other widgets you want to scroll with the list
+                            ],
+                          ),
+                        ),
+                        listNotificationRouterWidget[index],
+                        // SliverFillRemaining(
+                        //   child: listNotificationRouterWidget[index],
+                        // ),
+                      ],
+                    ));
+              },
+            ),
+          );
+        });
   }
 }
+
+
+
+     // CustomScrollView(
+          //   slivers: <Widget>[
+          //     const NotificationAppHeader(),
+          //     const SliverToBoxAdapter(child: CustomSearch()),
+          //     SliverFillRemaining(
+          //       child: PageView.builder(
+          //         itemCount: listNotificationRouterWidget.length,
+          //         controller: getNotificationController.pageController,
+          //         onPageChanged: (index) {},
+          //         itemBuilder: (context, index) {
+          //           return PageStorage(
+          //             bucket: PageStorageBucket(), // 创建一个新的存储桶
+          //             child: NestedScrollView(
+          //                 headerSliverBuilder:
+          //                     (BuildContext context, bool innerBoxIsScrolled) {
+          //                   return <Widget>[];
+          //                 },
+          //                 body: listNotificationRouterWidget[index]),
+          //           );
+          //         },
+          //       ),
+          //     ),
+          //   ],
+          // );
