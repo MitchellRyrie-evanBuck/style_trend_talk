@@ -1,13 +1,13 @@
-import 'package:easy_refresh/easy_refresh.dart';
+// import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+// import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:style_trend_talk/data/index.dart';
 import 'package:style_trend_talk/pages/notification/controllers/controller.dart';
 import 'package:style_trend_talk/pages/notification/widgets/message/index.dart';
-import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
-import 'package:style_trend_talk/widget/refresh.dart';
+// import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
+// import 'package:style_trend_talk/widget/refresh.dart';
 import 'package:style_trend_talk/widget/flickr.dart';
 
 class NotifierMainViewWidget extends StatefulWidget {

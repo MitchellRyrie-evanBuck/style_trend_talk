@@ -80,7 +80,19 @@ class SwipeToDeleteChatBubble extends StatelessWidget {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                                 image: AssetImage(data.avatarUrl))),
-                      )
+                      ),
+                      Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: Container(
+                            height: 15,
+                            width: 15,
+                            decoration: BoxDecoration(
+                                color: Colors.green,
+                                shape: BoxShape.circle,
+                                border:
+                                    Border.all(color: Colors.white, width: 2)),
+                          ))
                     ]),
                   ),
                   const SizedBox(

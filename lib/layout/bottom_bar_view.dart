@@ -17,6 +17,7 @@ class BottomBarView extends StatefulWidget {
   final Function()? addClick;
   final List<TabData>? tabIconsList;
   @override
+  // ignore: library_private_types_in_public_api
   _BottomBarViewState createState() => _BottomBarViewState();
 }
 
@@ -25,6 +26,8 @@ class _BottomBarViewState extends State<BottomBarView>
   AnimationController? animationController;
   // late AnimationController atController;
   // late Animation<Color?> atColorAnimation;
+  final tabIndexController = Get.put(TabIndexController());
+  final index = Get.find<TabIndexController>().index;
 
   Alignment alibegin = Alignment.topLeft;
   Alignment aliend = Alignment.bottomRight;
@@ -85,6 +88,8 @@ class _BottomBarViewState extends State<BottomBarView>
 
   @override
   Widget build(BuildContext context) {
+    // return GetBuilder<TabIndexController>(
+    //   builder: (_) {
     return Stack(
       alignment: AlignmentDirectional.bottomCenter,
       children: <Widget>[
@@ -94,7 +99,9 @@ class _BottomBarViewState extends State<BottomBarView>
             return Transform(
               transform: Matrix4.translationValues(0.0, 0.0, 0.0),
               child: PhysicalShape(
-                color: FitnessAppTheme.white,
+                color: index.value == 1
+                    ? FitnessAppTheme.btnBlack
+                    : FitnessAppTheme.white,
                 elevation: 10.0,
                 clipper: TabClipper(
                     radius: Tween<double>(begin: 0.0, end: 1.0)
@@ -171,6 +178,8 @@ class _BottomBarViewState extends State<BottomBarView>
         ),
       ],
     );
+    //   },
+    // );
   }
 
   SizedBox _btnContaienrAT() {
@@ -184,10 +193,12 @@ class _BottomBarViewState extends State<BottomBarView>
           scale: Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
               parent: animationController!, curve: Curves.fastOutSlowIn)),
           child: AnimatedContainer(
-            duration: const Duration(milliseconds: 2000),
+            duration: const Duration(milliseconds: 1000),
             curve: Curves.easeInToLinear,
             decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 60, 60, 60),
+              color: index.value != 1
+                  ? FitnessAppTheme.controllerBg
+                  : FitnessAppTheme.controllerBgNight,
               // gradient: LinearGradient(
               //   colors: _colors.sublist(_currentColorIndex) +
               //       _colors.sublist(0, _currentColorIndex),
@@ -209,9 +220,11 @@ class _BottomBarViewState extends State<BottomBarView>
                 highlightColor: Colors.transparent,
                 focusColor: Colors.transparent,
                 onTap: widget.addClick,
-                child: const Icon(
+                child: Icon(
                   FontAwesomeIcons.at,
-                  color: FitnessAppTheme.white,
+                  color: index.value != 1
+                      ? FitnessAppTheme.white
+                      : FitnessAppTheme.btnNotCheck,
                   size: 32,
                 ),
               ),
@@ -234,6 +247,8 @@ class TabIcons extends StatefulWidget {
 
 class _TabIconsState extends State<TabIcons> {
   final tabIndexController = Get.put(TabIndexController());
+  final index = Get.find<TabIndexController>().index;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -242,17 +257,20 @@ class _TabIconsState extends State<TabIcons> {
         builder: (controller) {
           return Stack(
             children: [
-              Container(
+              SizedBox(
                 width: 60,
                 height: 50,
                 child: Center(
                   child: Text(
                     widget.tabData?.label ?? "",
                     style: TextStyle(
-                        color: widget.tabData?.index ==
-                                tabIndexController.index.value
-                            ? Colors.black
-                            : const Color.fromARGB(255, 176, 176, 176)),
+                        color: widget.tabData?.index == index.value
+                            ? index.value == 1
+                                ? FitnessAppTheme.white
+                                : FitnessAppTheme.black
+                            : index.value == 1
+                                ? FitnessAppTheme.btnNotCheckNight
+                                : FitnessAppTheme.btnNotCheck),
                   ),
                 ),
               ),

@@ -4,6 +4,17 @@ class FitnessAppTheme {
   FitnessAppTheme._();
   static const Color nearlyWhite = Color(0xFFFAFAFA);
   static const Color white = Color(0xFFFFFFFF);
+  static const Color black = Color.fromARGB(255, 0, 0, 0);
+  static const Color btnBlack = Color.fromARGB(255, 0, 0, 0);
+  static const Color btnNotCheck = Color.fromARGB(255, 176, 176, 176);
+  static const Color btnNotCheckNight = Color.fromARGB(255, 132, 132, 132);
+
+  // --------contaller 控制球----------
+  static const Color controllerBg = Color.fromARGB(225, 60, 60, 60);
+  static const Color controllerBgNight = Color.fromRGBO(50, 61, 72, 0.576);
+
+  // ------------------
+
   static const Color background = Color(0xFFF2F3F8);
   static const Color nearlyDarkBlue = Color(0xFF2633C5);
 

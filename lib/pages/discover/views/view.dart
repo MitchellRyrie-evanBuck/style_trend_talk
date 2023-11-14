@@ -8,8 +8,9 @@ class DiscoverPage extends GetView<DiscoverController> {
 
   // 主视图
   Widget _buildView() {
-    return const Center(
-      child: Text("DiscoverPage"),
+    return Container(
+      decoration: const BoxDecoration(color: Color.fromARGB(255, 3, 3, 3)),
+      child: const Stack(children: []),
     );
   }
 
@@ -20,10 +21,7 @@ class DiscoverPage extends GetView<DiscoverController> {
       id: "discover",
       builder: (_) {
         return Scaffold(
-          appBar: AppBar(title: const Text("discover")),
-          body: SafeArea(
-            child: _buildView(),
-          ),
+          body: _buildView(),
         );
       },
     );

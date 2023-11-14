@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+// import 'package:pull_to_refresh/pull_to_refresh.dart';
 // import 'package:style_trend_talk/data/index.dart';
 import 'package:style_trend_talk/pages/main/controllers/controller.dart';
 import 'package:style_trend_talk/pages/main/controllers/recommendation.dart';
