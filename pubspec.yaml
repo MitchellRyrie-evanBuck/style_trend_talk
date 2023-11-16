@@ -39,6 +39,9 @@ flutter:
 
   - assets/video/sea.mov
   - assets/video/rush.mp4
+  - assets/video/01.MP4
+  - assets/video/02.MP4
+  - assets/video/03.MP4
   - assets/video/
 
   - assets/gif/refresh.gif
