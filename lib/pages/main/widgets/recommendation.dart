@@ -48,7 +48,7 @@ class RecommendationPage extends GetView<RecommendationController> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const ProgressIndicatorWidget();
               } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
+                return Text('Error--: ${snapshot.error}');
               } else {
                 // final data = snapshot.data;
                 return _buildView();
