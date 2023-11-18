@@ -9,7 +9,7 @@ class DiscoverPage extends GetView<DiscoverController> {
   // 主视图
   Widget _buildView() {
     return Container(
-      decoration: const BoxDecoration(color: Color.fromARGB(255, 3, 3, 3)),
+      decoration: const BoxDecoration(color: Color.fromARGB(255, 9, 7, 7)),
       child: const Stack(children: []),
     );
   }
