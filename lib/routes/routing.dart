@@ -7,7 +7,7 @@ final List<GetPage> appRoutes = [
   GetPage(name: '/', page: () => HomePage()),
   GetPage(name: '/login', page: () => LoginPage()),
   GetPage(name: '/main', page: () => const MainPageMiddle()),
-  GetPage(name: '/discover', page: () => const DiscoverPage()),
+  GetPage(name: '/discover', page: () => DiscoverPage()),
   GetPage(name: '/notification', page: () => const NotificationPage()),
   GetPage(name: '/profile', page: () => const ProfilePage()),
   // 添加其他路由和详情页的GetPage
@@ -20,7 +20,7 @@ final List<Widget> routing = [
   ),
   PageStorage(
     bucket: PageStorageBucket(),
-    child: const DiscoverPage(), // 替换为你的第二个页面组件
+    child: DiscoverPage(), // 替换为你的第二个页面组件
   ),
   PageStorage(
     bucket: PageStorageBucket(),
