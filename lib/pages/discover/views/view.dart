@@ -13,6 +13,26 @@ List<Widget> discoverRouterList = [
   const DiscoverFllowTabPage()
 ];
 
+class DiscoverPageMiddle extends StatefulWidget {
+  const DiscoverPageMiddle({super.key});
+
+  @override
+  State<DiscoverPageMiddle> createState() => _DiscoverPageMiddleState();
+}
+
+class _DiscoverPageMiddleState extends State<DiscoverPageMiddle>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true; // 启用状态保持
+
+  @override
+  Widget build(BuildContext context) {
+    super.build(context); // 必须调用super.build
+
+    return DiscoverPage();
+  }
+}
+
 class DiscoverPage extends GetView<DiscoverController> {
   DiscoverPage({Key? key}) : super(key: key);
 
@@ -30,7 +50,10 @@ class DiscoverPage extends GetView<DiscoverController> {
             scrollDirection: Axis.horizontal,
             itemCount: discoverListTabName.length, // 页面数量，假设有10个视频
             itemBuilder: (context, index) {
-              return discoverRouterList[index];
+              return PageStorage(
+                bucket: PageStorageBucket(), // 创建一个新的存储桶
+                child: discoverRouterList[index],
+              );
             },
           ),
         ),

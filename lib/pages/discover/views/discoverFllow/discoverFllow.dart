@@ -8,9 +8,15 @@ class DiscoverFllowTabPage extends StatefulWidget {
   State<DiscoverFllowTabPage> createState() => _DiscoverFllowTabPageState();
 }
 
-class _DiscoverFllowTabPageState extends State<DiscoverFllowTabPage> {
+class _DiscoverFllowTabPageState extends State<DiscoverFllowTabPage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true; // 启用状态保持
+
   @override
   Widget build(BuildContext context) {
+    super.build(context); // 必须调用super.build
+
     return PageView.builder(
       // controller: discoverController.tabPageController,
       scrollDirection: Axis.vertical,
