@@ -1,5 +1,6 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:style_trend_talk/widget/flickr.dart';
 import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
 import 'package:video_player/video_player.dart';
 
@@ -14,110 +15,102 @@ class VideoComponent extends StatefulWidget {
 
 class _VideoComponentState extends State<VideoComponent> {
   late VideoPlayerController _controller;
-  late ChewieController chewieController;
+  // late ChewieController chewieController;
   late Widget playerWidget;
   bool isChewieControllerInitialized = false;
-
-  double videoHeight = 220.0; // 初始高度，可以根据需要调整
-  double maxVideoHeight = 500.0; // 最大高度，可以根据需要调整
+  bool isShow = false;
+  double _videoHeight = 220.0; // 初始高度，可以根据需要调整
+  double _maxVideoHeight = 500.0; // 最大高度，可以根据需要调整
+  double _videoWidth = 300;
 
   @override
   void initState() {
     super.initState();
-    // _initializeChewieController();
+    _initializeChewieController();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _initializeChewieController();
+    // _initializeChewieController();
   }
 
   _initializeChewieController() {
     _controller = VideoPlayerController.asset(widget.videoPath)
       ..initialize().then((_) {
-        // Ensure the first frame is shown and set state to rebuild the widget.
+        double videoWidth = _controller.value.size.width;
+        double videoHeight = _controller.value.size.height;
+        // 获取屏幕宽度
+        double screenWidth = MediaQuery.of(context).size.width;
+
+        // 计算适当的高度，以确保视频宽度等于屏幕宽度，且高度等比例放大
+        double calculatedHeight = screenWidth * (videoHeight / videoWidth);
+
+        // 设置视频宽高比
+        // _controller.setVolume(1.0); // 设置音量
+        // _controller.play(); // 播放视频
+        print('calculatedHeight----$calculatedHeight');
+
         setState(() {
-          chewieController = ChewieController(
-            videoPlayerController: _controller,
-            autoPlay: false,
-            looping: true,
-            showControls: true,
-            aspectRatio: 16 / 9, // 视频宽高比
-            // overlay: Container(
-            //   height: 50,
-            //   width: 50,
-            //   color: Colors.green,
-            // ),
-            allowFullScreen: false,
-            allowMuting: false,
-            allowPlaybackSpeedChanging: false,
-            controlsSafeAreaMinimum: EdgeInsets.only(bottom: 8),
-            // customControls: Column(
-            //   children: [
-            //     // 添加自定义的全屏按钮
-            //     IconButton(
-            //       onPressed: () {
-            //         chewieController.enterFullScreen();
-            //       },
-            //       icon: Icon(Icons.fullscreen),
-            //     ),
-            //     // 在此添加其他自定义控制按钮
-            //   ],
-            // ),
-          );
-
-          playerWidget = Chewie(
-            controller: chewieController,
-          );
-
-          // 获取视频的宽高信息
-          double videoWidth = _controller.value.size.width;
-          double videoHeight = _controller.value.size.height;
-
-          // 获取父级容器的宽度
-          double parentWidth =
-              MediaQuery.of(context).size.width; // 可以根据需要修改获取父级容器宽度的方式
-
-          // 计算适当的高度，以确保视频宽度撑满父级，但不超过最大高度
-          double calculatedHeight = parentWidth * (videoHeight / videoWidth);
-          this.videoHeight = calculatedHeight.clamp(0.0, maxVideoHeight);
-
-          // 如果视频高度小于最大高度，垂直居中
-          if (calculatedHeight < maxVideoHeight) {
-            this.videoHeight = calculatedHeight;
-          } else {
-            this.videoHeight = maxVideoHeight;
-          }
+          _videoHeight = calculatedHeight;
+          _videoHeight = screenWidth;
+          isShow = true;
         });
       });
+
+    // 添加视频控制器监听
+    _controller.addListener(() {
+      // 在此可以处理视频播放状态的变化
+    });
   }
 
   @override
   void dispose() {
     super.dispose();
     _controller.dispose();
-    chewieController.dispose();
+    // chewieController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_controller.value.isInitialized) {
-      // ignore: unnecessary_null_comparison
-      if (chewieController != null) {
-        return SizedBox(
-          height: videoHeight, // 动态设置父级容器的高度
-          child: Center(child: playerWidget),
-        );
-      } else {
-        return const Center(
-          child: CircularProgressIndicator(), // 或者其他加载中的指示器
-        );
-      }
-    } else {
-      return const Center(
-        child: ProgressIndicatorWidget(),
-      );
-    }
+    print('videoHeight----$_videoHeight');
+    return isShow
+        ? Container(
+            height: _videoHeight,
+            width: MediaQuery.of(context).size.width,
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: _controller.value.isInitialized
+                      ? AspectRatio(
+                          aspectRatio: _controller.value.aspectRatio,
+                          child: VideoPlayer(_controller),
+                        )
+                      : Container(),
+                ),
+                Positioned(
+                  child: GestureDetector(
+                    onTap: () {
+                      _controller.value.isPlaying
+                          ? _controller.pause()
+                          : _controller.play();
+                    },
+                    child: Icon(
+                      _controller.value.isPlaying
+                          ? Icons.pause
+                          : Icons.play_arrow,
+                      size: 50,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+        : SizedBox(
+            height: _videoHeight,
+            child: const Center(
+              child: ProcesssFlicker(),
+            ),
+          );
   }
 }

@@ -42,7 +42,7 @@ String? getRandomStringOrNull(List<String> stringList) {
   int randomIndex = Random().nextInt(10);
 
   // 如果随机数为0，则返回数组中的随机字符串；否则返回null
-  return (randomIndex <= 4)
+  return (randomIndex <= 7)
       ? stringList[Random().nextInt(stringList.length)]
       : null;
 }

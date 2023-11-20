@@ -59,7 +59,7 @@ class RecommendationPage extends GetView<RecommendationController> {
   }
 
   Future getData() async {
-    // await Future<dynamic>.delayed(const Duration(milliseconds: 500));
+    await Future<dynamic>.delayed(const Duration(milliseconds: 1000));
     // recommendationList
     // return recommendationList;
   }

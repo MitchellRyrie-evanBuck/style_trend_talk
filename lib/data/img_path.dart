@@ -17,6 +17,10 @@ List<String> pathList = [
 List<String> videoFilesPaths = [
   'assets/video/sea.mov',
   'assets/video/rush.mp4',
+  'assets/video/01.MP4',
+  'assets/video/02.MP4',
+  'assets/video/03.MP4',
+  'assets/video/04.MP4',
 ];
 
 List<String> userListPath = List.generate(28, (index) {
