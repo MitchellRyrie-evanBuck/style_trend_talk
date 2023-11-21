@@ -90,35 +90,41 @@ class _VideoComponentState extends State<VideoComponent> {
     return isShow
         ? Container(
             height: _videoHeight,
-            width: _videoWidth,
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: _controller.value.isInitialized
-                      ? AspectRatio(
-                          aspectRatio: _controller.value.aspectRatio,
-                          child: VideoPlayer(_controller),
-                        )
-                      : Container(),
-                ),
-                Positioned(
-                  child: GestureDetector(
-                    onTap: () {
-                      _controller.value.isPlaying
-                          ? _controller.pause()
-                          : _controller.play();
-                    },
-                    child: Icon(
-                      _controller.value.isPlaying
-                          ? Icons.pause
-                          : Icons.play_arrow,
-                      size: 50,
+            width: MediaQuery.of(context).size.width,
+            color: FitnessAppTheme.black,
+            child: Center(
+              child: SizedBox(
+                height: _videoHeight,
+                width: _videoWidth,
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: _controller.value.isInitialized
+                          ? AspectRatio(
+                              aspectRatio: _controller.value.aspectRatio,
+                              child: VideoPlayer(_controller),
+                            )
+                          : Container(),
                     ),
-                  ),
+                    Positioned(
+                      child: GestureDetector(
+                        onTap: () {
+                          _controller.value.isPlaying
+                              ? _controller.pause()
+                              : _controller.play();
+                        },
+                        child: Icon(
+                          _controller.value.isPlaying
+                              ? Icons.pause
+                              : Icons.play_arrow,
+                          size: 50,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          )
+              ),
+            ))
         : SizedBox(
             height: _videoHeight,
             child: const Center(
