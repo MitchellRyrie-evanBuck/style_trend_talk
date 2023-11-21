@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:style_trend_talk/data/fitness_app_theme.dart';
 import 'package:style_trend_talk/data/index.dart';
 import 'package:style_trend_talk/pages/index.dart';
 import 'package:style_trend_talk/widget/flickr.dart';
@@ -268,7 +269,6 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
     if (widget.itemData.video != null) {
       return IntrinsicHeight(
         child: Container(
-          color: Colors.black,
           // height: 220,
           child: VideoComponent(videoPath: widget.itemData.video as String),
         ),

@@ -1,5 +1,6 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:style_trend_talk/data/fitness_app_theme.dart';
 import 'package:style_trend_talk/widget/flickr.dart';
 import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
 import 'package:video_player/video_player.dart';
@@ -20,7 +21,7 @@ class _VideoComponentState extends State<VideoComponent> {
   bool isChewieControllerInitialized = false;
   bool isShow = false;
   double _videoHeight = 220.0; // 初始高度，可以根据需要调整
-  double _maxVideoHeight = 500.0; // 最大高度，可以根据需要调整
+  double _maxVideoHeight = 400.0; // 最大高度，可以根据需要调整
   double _videoWidth = 300;
 
   @override
@@ -40,8 +41,10 @@ class _VideoComponentState extends State<VideoComponent> {
       ..initialize().then((_) {
         double videoWidth = _controller.value.size.width;
         double videoHeight = _controller.value.size.height;
+        print('video---------width: + ${videoWidth} height: ${videoHeight}');
         // 获取屏幕宽度
         double screenWidth = MediaQuery.of(context).size.width;
+        print('获取屏幕宽度------$screenWidth');
 
         // 计算适当的高度，以确保视频宽度等于屏幕宽度，且高度等比例放大
         double calculatedHeight = screenWidth * (videoHeight / videoWidth);
@@ -51,11 +54,21 @@ class _VideoComponentState extends State<VideoComponent> {
         // _controller.play(); // 播放视频
         print('calculatedHeight----$calculatedHeight');
 
-        setState(() {
-          _videoHeight = calculatedHeight;
-          _videoHeight = screenWidth;
-          isShow = true;
-        });
+        if (calculatedHeight > _maxVideoHeight) {
+          double calculatedWidth = _maxVideoHeight * (videoWidth / videoHeight);
+
+          setState(() {
+            _videoHeight = _maxVideoHeight;
+            _videoWidth = calculatedWidth;
+            isShow = true;
+          });
+        } else {
+          setState(() {
+            _videoHeight = calculatedHeight;
+            _videoWidth = screenWidth;
+            isShow = true;
+          });
+        }
       });
 
     // 添加视频控制器监听
@@ -73,11 +86,11 @@ class _VideoComponentState extends State<VideoComponent> {
 
   @override
   Widget build(BuildContext context) {
-    print('videoHeight----$_videoHeight');
+    print('**************************************----$_videoHeight');
     return isShow
         ? Container(
             height: _videoHeight,
-            width: MediaQuery.of(context).size.width,
+            width: _videoWidth,
             child: Stack(
               children: [
                 Positioned.fill(
