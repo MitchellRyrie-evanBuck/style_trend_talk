@@ -1,5 +1,6 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:style_trend_talk/data/fitness_app_theme.dart';
 import 'package:style_trend_talk/widget/flickr.dart';
 import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
@@ -14,15 +15,18 @@ class VideoComponent extends StatefulWidget {
   _VideoComponentState createState() => _VideoComponentState();
 }
 
-class _VideoComponentState extends State<VideoComponent> {
+class _VideoComponentState extends State<VideoComponent>
+    with AutomaticKeepAliveClientMixin {
   late VideoPlayerController _controller;
   // late ChewieController chewieController;
   late Widget playerWidget;
   bool isChewieControllerInitialized = false;
   bool isShow = false;
   double _videoHeight = 220.0; // 初始高度，可以根据需要调整
-  double _maxVideoHeight = 400.0; // 最大高度，可以根据需要调整
+  final double _maxVideoHeight = 400.0; // 最大高度，可以根据需要调整
   double _videoWidth = 300;
+  double iconSize = 50;
+  late bool isPlaying = false;
 
   @override
   void initState() {
@@ -74,6 +78,23 @@ class _VideoComponentState extends State<VideoComponent> {
     // 添加视频控制器监听
     _controller.addListener(() {
       // 在此可以处理视频播放状态的变化
+      print('_controller---->${_controller.value}');
+      print('duration---->${_controller.value.duration}');
+      print('size---->${_controller.value.size}');
+      print('position---->${_controller.value.position}');
+      print('caption---->${_controller.value.caption}');
+      print('captionOffset---->${_controller.value.captionOffset}');
+      print('buffered---->${_controller.value.buffered}');
+      print('isInitialized---->${_controller.value.isInitialized}');
+      print('isPlaying---->${_controller.value.isPlaying}');
+      print('isLooping---->${_controller.value.isLooping}');
+      print('isBuffering---->${_controller.value.isBuffering}');
+      print('volume---->${_controller.value.volume}');
+      print('playbackSpeed---->${_controller.value.playbackSpeed}');
+
+      setState(() {
+        isPlaying = _controller.value.isPlaying;
+      });
     });
   }
 
@@ -85,7 +106,11 @@ class _VideoComponentState extends State<VideoComponent> {
   }
 
   @override
+  bool get wantKeepAlive => true; // 启用状态保持
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context); // 必须调用super.build
     print('**************************************----$_videoHeight');
     return isShow
         ? Container(
@@ -107,20 +132,24 @@ class _VideoComponentState extends State<VideoComponent> {
                           : Container(),
                     ),
                     Positioned(
+                      top: (_videoHeight - iconSize) / 2,
+                      left: (_videoWidth - iconSize) / 2,
                       child: GestureDetector(
                         onTap: () {
-                          _controller.value.isPlaying
-                              ? _controller.pause()
-                              : _controller.play();
+                          isPlaying ? _controller.pause() : _controller.play();
                         },
-                        child: Icon(
-                          _controller.value.isPlaying
-                              ? Icons.pause
-                              : Icons.play_arrow,
-                          size: 50,
+                        child: Opacity(
+                          opacity: 0.79,
+                          child: Icon(
+                            isPlaying
+                                ? FontAwesomeIcons.pause
+                                : FontAwesomeIcons.play,
+                            size: iconSize,
+                            color: FitnessAppTheme.black,
+                          ),
                         ),
                       ),
-                    ),
+                    )
                   ],
                 ),
               ),
