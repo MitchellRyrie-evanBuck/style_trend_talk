@@ -1,9 +1,11 @@
-import 'package:chewie/chewie.dart';
+// ignore: duplicate_ignore
+// ignore: file_names
+// ignore_for_file: avoid_print, file_names
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:style_trend_talk/data/fitness_app_theme.dart';
 import 'package:style_trend_talk/widget/flickr.dart';
-import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoComponent extends StatefulWidget {
@@ -12,15 +14,14 @@ class VideoComponent extends StatefulWidget {
   const VideoComponent({super.key, required this.videoPath});
 
   @override
+  // ignore: library_private_types_in_public_api
   _VideoComponentState createState() => _VideoComponentState();
 }
 
 class _VideoComponentState extends State<VideoComponent>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, SingleTickerProviderStateMixin {
   late VideoPlayerController _controller;
-  // late ChewieController chewieController;
   late Widget playerWidget;
-  bool isChewieControllerInitialized = false;
   bool isShow = false;
   double _videoHeight = 220.0; // 初始高度，可以根据需要调整
   final double _maxVideoHeight = 400.0; // 最大高度，可以根据需要调整
@@ -30,6 +31,10 @@ class _VideoComponentState extends State<VideoComponent>
   late Duration duration;
   late Duration position;
   late bool showControls;
+  final Duration animatedPlayFlag = const Duration(milliseconds: 500);
+  late Animation<double> _animation;
+  late AnimationController _animationController;
+  bool isVisibility = true;
 
   @override
   void initState() {
@@ -38,6 +43,7 @@ class _VideoComponentState extends State<VideoComponent>
     isPlaying = false;
     showControls = true;
     _initializeChewieController();
+    _initPlayController();
   }
 
   @override
@@ -56,6 +62,22 @@ class _VideoComponentState extends State<VideoComponent>
         : '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
 
     return formattedDuration;
+  }
+
+  _initPlayController() {
+    _animationController = AnimationController(
+      duration: animatedPlayFlag,
+      vsync: this,
+    );
+
+    _animation = Tween<double>(begin: 1.0, end: 0.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    // _animationController.forward();
   }
 
   _initializeChewieController() {
@@ -91,15 +113,15 @@ class _VideoComponentState extends State<VideoComponent>
     */
     _controller.addListener(() {
       // 在此可以处理视频播放状态的变化
-      print('_controller---->${_controller.value}');
-      print('duration---->${_controller.value.duration}');
-      print('position---->${_controller.value.position}');
-      print('buffered---->${_controller.value.buffered}');
-      print('isPlaying---->${_controller.value.isPlaying}');
-      print('isLooping---->${_controller.value.isLooping}');
-      print('isBuffering---->${_controller.value.isBuffering}');
-      print('volume---->${_controller.value.volume}');
-      print('playbackSpeed---->${_controller.value.playbackSpeed}');
+      // print('_controller---->${_controller.value}');
+      // print('duration---->${_controller.value.duration}');
+      // print('position---->${_controller.value.position}');
+      // print('buffered---->${_controller.value.buffered}');
+      // print('isPlaying---->${_controller.value.isPlaying}');
+      // print('isLooping---->${_controller.value.isLooping}');
+      // print('isBuffering---->${_controller.value.isBuffering}');
+      // print('volume---->${_controller.value.volume}');
+      // print('playbackSpeed---->${_controller.value.playbackSpeed}');
 
       setState(() {
         isPlaying = _controller.value.isPlaying;
@@ -109,6 +131,24 @@ class _VideoComponentState extends State<VideoComponent>
     });
 
     _controller.addListener(() {
+      // 监听点击完开始之后 慢慢消失icon按钮
+      if (_controller.value.isPlaying) {
+        // setState(() {
+        //   showControls = false;
+        //   _animationController.forward();
+        //   Future.delayed(animatedPlayFlag, () {
+        //     isVisibility = false;
+        //   });
+        // });
+      }
+      // if (!_controller.value.isPlaying) {
+      //   setState(() {
+      //     showControls = true;
+      //     _animationController.reverse();
+      //   });
+      // }
+
+      // 播放完成之后 索引回初
       if (!_controller.value.isPlaying &&
           _controller.value.position == duration) {
         _controller.seekTo(Duration.zero); // Reset to the beginning
@@ -121,6 +161,7 @@ class _VideoComponentState extends State<VideoComponent>
   void dispose() {
     super.dispose();
     _controller.dispose();
+    _animationController.dispose();
     // chewieController.dispose();
   }
 
@@ -134,7 +175,16 @@ class _VideoComponentState extends State<VideoComponent>
         ? GestureDetector(
             onTap: () {
               setState(() {
-                showControls = true;
+                print('最外层GestureDetector--${showControls}');
+                // showControls = true;
+                if (!showControls) {
+                  setState(() {
+                    showControls = true;
+                    isVisibility = true;
+                  });
+                  _animationController.reverse();
+                  return;
+                }
               });
             },
             behavior: HitTestBehavior.translucent,
@@ -164,38 +214,76 @@ class _VideoComponentState extends State<VideoComponent>
 
   Positioned videoControls() {
     return Positioned.fill(
-      child: AnimatedOpacity(
-        duration: const Duration(milliseconds: 500),
-        opacity: showControls ? 1.0 : 0.78,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 500),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    if (isPlaying) {
-                      _controller.pause();
-                      setState(() {
-                        showControls = false;
-                      });
-                    } else {
-                      _controller.play();
-                    }
-                  });
-                },
-                icon: Icon(
-                  isPlaying ? FontAwesomeIcons.pause : FontAwesomeIcons.play,
-                  size: iconSize,
-                  color: FitnessAppTheme.black,
-                ),
+        child: Stack(
+      children: [
+        Positioned.fill(
+            child: FadeTransition(
+          opacity: _animation,
+          child: AnimatedContainer(
+              duration: const Duration(milliseconds: 500),
+              color: Color.fromARGB(69, 0, 0, 0)),
+        )),
+        Positioned.fill(
+          child: FadeTransition(
+            opacity: _animation,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 500),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Visibility(
+                    visible: isVisibility,
+                    child: AnimatedSwitcher(
+                      duration: animatedPlayFlag,
+                      transitionBuilder: (child, animation) {
+                        return ScaleTransition(
+                          scale: animation,
+                          child: child,
+                        );
+                      },
+                      child: IconButton(
+                        key: ValueKey<bool>(isPlaying),
+                        onPressed: () {
+                          setState(() {
+                            print('出发play事件${showControls}');
+                            if (!showControls) {
+                              _animationController.reverse();
+                              setState(() {
+                                showControls = true;
+                              });
+                              return;
+                            }
+                            if (isPlaying) {
+                              _controller.pause();
+                            } else {
+                              setState(() {
+                                showControls = false;
+                                _animationController.forward();
+                                Future.delayed(animatedPlayFlag, () {
+                                  isVisibility = false;
+                                });
+                              });
+                              _controller.play();
+                            }
+                          });
+                        },
+                        icon: Icon(
+                          isPlaying
+                              ? FontAwesomeIcons.pause
+                              : FontAwesomeIcons.play,
+                          size: iconSize,
+                          color: FitnessAppTheme.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+        )
+      ],
+    ));
   }
 
   Widget videoViews() {
