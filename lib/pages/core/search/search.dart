@@ -10,6 +10,8 @@ class SeniorSearch extends StatefulWidget {
 class _SearchState extends State<SeniorSearch> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      color: Colors.amber,
+    );
   }
 }

@@ -6,3 +6,4 @@ export 'login/index.dart';
 export 'main/index.dart';
 export 'notification/index.dart';
 export 'profile/index.dart';
+export 'core/search/search.dart';

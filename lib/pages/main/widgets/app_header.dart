@@ -77,6 +77,7 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
                 icon: const Icon(Icons.search),
                 onPressed: () {
                   // 执行搜索操作
+                  Get.toNamed("/search");
                 },
               ),
             ),

@@ -10,6 +10,7 @@ final List<GetPage> appRoutes = [
   GetPage(name: '/discover', page: () => const DiscoverPageMiddle()),
   GetPage(name: '/notification', page: () => const NotificationPage()),
   GetPage(name: '/profile', page: () => const ProfilePage()),
+  GetPage(name: '/search', page: () => const SeniorSearch())
   // 添加其他路由和详情页的GetPage
 ];
 

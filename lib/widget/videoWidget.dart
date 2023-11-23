@@ -27,10 +27,16 @@ class _VideoComponentState extends State<VideoComponent>
   double _videoWidth = 300;
   double iconSize = 50;
   late bool isPlaying = false;
+  late Duration duration;
+  late Duration position;
+  late bool showControls;
 
   @override
   void initState() {
     super.initState();
+    isShow = false;
+    isPlaying = false;
+    showControls = true;
     _initializeChewieController();
   }
 
@@ -40,27 +46,27 @@ class _VideoComponentState extends State<VideoComponent>
     // _initializeChewieController();
   }
 
+  String formatDuration(Duration duration) {
+    int hours = duration.inHours;
+    int minutes = duration.inMinutes.remainder(60);
+    int seconds = duration.inSeconds.remainder(60);
+
+    String formattedDuration = hours > 0
+        ? '$hours:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}'
+        : '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
+
+    return formattedDuration;
+  }
+
   _initializeChewieController() {
     _controller = VideoPlayerController.asset(widget.videoPath)
       ..initialize().then((_) {
         double videoWidth = _controller.value.size.width;
         double videoHeight = _controller.value.size.height;
-        print('video---------width: + ${videoWidth} height: ${videoHeight}');
-        // 获取屏幕宽度
         double screenWidth = MediaQuery.of(context).size.width;
-        print('获取屏幕宽度------$screenWidth');
-
-        // 计算适当的高度，以确保视频宽度等于屏幕宽度，且高度等比例放大
         double calculatedHeight = screenWidth * (videoHeight / videoWidth);
-
-        // 设置视频宽高比
-        // _controller.setVolume(1.0); // 设置音量
-        // _controller.play(); // 播放视频
-        print('calculatedHeight----$calculatedHeight');
-
         if (calculatedHeight > _maxVideoHeight) {
           double calculatedWidth = _maxVideoHeight * (videoWidth / videoHeight);
-
           setState(() {
             _videoHeight = _maxVideoHeight;
             _videoWidth = calculatedWidth;
@@ -75,17 +81,20 @@ class _VideoComponentState extends State<VideoComponent>
         }
       });
 
-    // 添加视频控制器监听
+    /*
+      添加视频控制器监听
+      1.默认显示 播放控制器
+      2.点击 视频 暂停 之后 蒙板
+      3.蒙板显示开始播放按钮 并于一秒后 慢慢消失
+      4.暂停与播放 有一个变换的动画
+      5.播放完成之后 显示蒙版 和 开始播放按钮
+    */
     _controller.addListener(() {
       // 在此可以处理视频播放状态的变化
       print('_controller---->${_controller.value}');
       print('duration---->${_controller.value.duration}');
-      print('size---->${_controller.value.size}');
       print('position---->${_controller.value.position}');
-      print('caption---->${_controller.value.caption}');
-      print('captionOffset---->${_controller.value.captionOffset}');
       print('buffered---->${_controller.value.buffered}');
-      print('isInitialized---->${_controller.value.isInitialized}');
       print('isPlaying---->${_controller.value.isPlaying}');
       print('isLooping---->${_controller.value.isLooping}');
       print('isBuffering---->${_controller.value.isBuffering}');
@@ -94,7 +103,17 @@ class _VideoComponentState extends State<VideoComponent>
 
       setState(() {
         isPlaying = _controller.value.isPlaying;
+        duration = _controller.value.duration;
+        position = _controller.value.position;
       });
+    });
+
+    _controller.addListener(() {
+      if (!_controller.value.isPlaying &&
+          _controller.value.position == duration) {
+        _controller.seekTo(Duration.zero); // Reset to the beginning
+        _controller.pause();
+      }
     });
   }
 
@@ -111,54 +130,82 @@ class _VideoComponentState extends State<VideoComponent>
   @override
   Widget build(BuildContext context) {
     super.build(context); // 必须调用super.build
-    print('**************************************----$_videoHeight');
     return isShow
-        ? Container(
-            height: _videoHeight,
-            width: MediaQuery.of(context).size.width,
-            color: FitnessAppTheme.black,
-            child: Center(
-              child: SizedBox(
+        ? GestureDetector(
+            onTap: () {
+              setState(() {
+                showControls = true;
+              });
+            },
+            behavior: HitTestBehavior.translucent,
+            child: Container(
                 height: _videoHeight,
-                width: _videoWidth,
+                width: MediaQuery.of(context).size.width,
+                color: FitnessAppTheme.black,
                 child: Stack(
                   children: [
-                    Positioned.fill(
-                      child: _controller.value.isInitialized
-                          ? AspectRatio(
-                              aspectRatio: _controller.value.aspectRatio,
-                              child: VideoPlayer(_controller),
-                            )
-                          : Container(),
-                    ),
-                    Positioned(
-                      top: (_videoHeight - iconSize) / 2,
-                      left: (_videoWidth - iconSize) / 2,
-                      child: GestureDetector(
-                        onTap: () {
-                          isPlaying ? _controller.pause() : _controller.play();
-                        },
-                        child: Opacity(
-                          opacity: 0.79,
-                          child: Icon(
-                            isPlaying
-                                ? FontAwesomeIcons.pause
-                                : FontAwesomeIcons.play,
-                            size: iconSize,
-                            color: FitnessAppTheme.black,
-                          ),
-                        ),
+                    Center(
+                      child: SizedBox(
+                        height: _videoHeight,
+                        width: _videoWidth,
+                        child: videoViews(),
                       ),
-                    )
+                    ),
+                    videoControls()
                   ],
-                ),
-              ),
-            ))
+                )))
         : SizedBox(
             height: _videoHeight,
             child: const Center(
               child: ProcesssFlicker(),
             ),
+          );
+  }
+
+  Positioned videoControls() {
+    return Positioned.fill(
+      child: AnimatedOpacity(
+        duration: const Duration(milliseconds: 500),
+        opacity: showControls ? 1.0 : 0.78,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 500),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    if (isPlaying) {
+                      _controller.pause();
+                      setState(() {
+                        showControls = false;
+                      });
+                    } else {
+                      _controller.play();
+                    }
+                  });
+                },
+                icon: Icon(
+                  isPlaying ? FontAwesomeIcons.pause : FontAwesomeIcons.play,
+                  size: iconSize,
+                  color: FitnessAppTheme.black,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget videoViews() {
+    return _controller.value.isInitialized
+        ? AspectRatio(
+            aspectRatio: _controller.value.aspectRatio,
+            child: VideoPlayer(_controller),
+          )
+        : const Center(
+            child: ProcesssFlicker(),
           );
   }
 }
