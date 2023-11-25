@@ -95,31 +95,52 @@ class _HomeMiddleWareWidgeState extends State<HomeMiddleWareWidge>
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: <Widget>[
-        HomeAppHeader(tabController: _tabController),
-        SliverFillRemaining(
-          child: PageView.builder(
-            itemCount: listRouterWidget.length,
-            controller: getMainController.pageController,
-            onPageChanged: (index) {
-              // getMainController.setIndex(index);
+    return NotificationListener<ScrollNotification>(
+        onNotification: (ScrollNotification scrollNotification) {
+          // 在这里处理滚动通知
+          if (scrollNotification is ScrollEndNotification) {
+            // 滚动结束时的处理逻辑
+            print('scrollNotification-----${scrollNotification.metrics}');
+            print(
+                'scrollNotification--toString---${scrollNotification.toString()}');
+            print(
+                'scrollNotification--noSuchMethod---${scrollNotification.noSuchMethod}');
+            print(
+                'scrollNotification--dispatch---${scrollNotification.dispatch}');
 
-              _tabController.animateTo(
-                index,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.ease,
-              );
-            },
-            itemBuilder: (context, index) {
-              return PageStorage(
-                bucket: PageStorageBucket(), // 创建一个新的存储桶
-                child: listRouterWidget[index],
-              );
-            },
-          ),
-        ),
-      ],
+            // 可以检测列表中的视频是否在视窗内，然后触发自动播放
+          }
+          return false;
+        },
+        child: CustomScrollView(
+          slivers: <Widget>[
+            HomeAppHeader(tabController: _tabController),
+            SliverFillRemaining(
+              child: _pageViews(),
+            ),
+          ],
+        ));
+  }
+
+  PageView _pageViews() {
+    return PageView.builder(
+      itemCount: listRouterWidget.length,
+      controller: getMainController.pageController,
+      onPageChanged: (index) {
+        // getMainController.setIndex(index);
+
+        _tabController.animateTo(
+          index,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.ease,
+        );
+      },
+      itemBuilder: (context, index) {
+        return PageStorage(
+          bucket: PageStorageBucket(), // 创建一个新的存储桶
+          child: listRouterWidget[index],
+        );
+      },
     );
   }
 }

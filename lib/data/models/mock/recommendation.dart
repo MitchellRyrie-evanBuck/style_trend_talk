@@ -1,10 +1,13 @@
+import 'dart:ffi';
+
 import 'package:style_trend_talk/data/index.dart';
 
 Future<dynamic> getRecommendation(int page) async {}
 
 class RecommendationModel {
   final String userName;
-  final int userId;
+  final String userId;
+  final String id;
   final String userImg;
   final bool flow;
   final bool flowSelf;
@@ -25,6 +28,7 @@ class RecommendationModel {
   RecommendationModel({
     required this.userName,
     required this.userId,
+    required this.id,
     required this.userImg,
     required this.flow,
     required this.flowSelf,
@@ -45,6 +49,7 @@ class RecommendationModel {
   RecommendationModel.fromMap(Map<String, dynamic> data)
       : userName = data['user_name'],
         userId = data['user_id'],
+        id = data['id'],
         userImg = data['user_img'],
         flow = data['flow'],
         flowSelf = data['flow_self'],
@@ -74,7 +79,8 @@ class RecommendationModel {
 List<RecommendationModel> recommendationItems = List.generate(10, (index) {
   return RecommendationModel(
     userName: generateRandomString(10),
-    userId: 412325,
+    userId: generateRandomUUID(),
+    id: generateRandomUUID(),
     userImg: getRandomUserImgs(userListPath, 10),
     flow: true,
     flowSelf: true,

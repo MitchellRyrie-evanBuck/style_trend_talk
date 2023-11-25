@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:style_trend_talk/pages/main/controllers/controller.dart';
 import 'package:style_trend_talk/pages/main/controllers/recommendation.dart';
 import 'package:style_trend_talk/pages/main/widgets/recommendation/index.dart';
+import 'package:style_trend_talk/widget/flickr.dart';
 import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
 
 class RecommendationPageMiddle extends StatefulWidget {
@@ -46,7 +47,7 @@ class RecommendationPage extends GetView<RecommendationController> {
             future: getData(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const ProgressIndicatorWidget();
+                return const ProcesssFlicker();
               } else if (snapshot.hasError) {
                 return Text('Error--: ${snapshot.error}');
               } else {

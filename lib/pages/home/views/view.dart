@@ -8,6 +8,7 @@ import 'package:style_trend_talk/layout/bottom_bar_view.dart';
 // import 'package:style_trend_talk/layout/navigationBar.dart';
 import 'package:style_trend_talk/routes/routing.dart';
 import 'package:style_trend_talk/store/tab_index.dart';
+import 'package:style_trend_talk/widget/flickr.dart';
 import '../index.dart';
 
 class HomePage extends GetView<HomeController> {
@@ -27,7 +28,7 @@ class HomePage extends GetView<HomeController> {
               future: getData(),
               builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
                 if (!snapshot.hasData) {
-                  return const SizedBox();
+                  return const ProcesssFlicker();
                 } else {
                   return Stack(
                     children: <Widget>[
@@ -46,7 +47,7 @@ class HomePage extends GetView<HomeController> {
   }
 
   Future<bool> getData() async {
-    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
+    // await Future<dynamic>.delayed(const Duration(milliseconds: 200));
     return true;
   }
 

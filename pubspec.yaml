@@ -21,6 +21,8 @@ dependencies:
   infinite_scroll_pagination: ^4.0.0
   pull_to_refresh: ^2.0.0
   easy_refresh: ^3.3.2+4
+  visibility_detector: ^0.4.0+2
+  uuid: ^4.2.1
 
 dev_dependencies:
   flutter_test:

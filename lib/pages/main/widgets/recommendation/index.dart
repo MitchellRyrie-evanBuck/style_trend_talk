@@ -45,34 +45,7 @@ class _RecommendTabPageState extends State<RecommendTabPage>
   @override
   Widget build(BuildContext context) {
     return Scrollbar(
-      child: SmartRefresher(
-        enablePullDown: true,
-        enablePullUp: true,
-        header: const WaterDropMaterialHeader(
-            color: Colors.white,
-            distance: 30,
-            semanticsValue: '',
-            semanticsLabel: "努力加载中",
-            backgroundColor: Color.fromARGB(255, 120, 120, 120)),
-        controller: _refreshController,
-        onRefresh: _onRefresh,
-        onLoading: _onLoading,
-        child: PagedListView<int, RecommendationModel>.separated(
-          padding: const EdgeInsets.only(bottom: 100),
-          separatorBuilder: (context, index) => const SizedBox(height: 1),
-          pagingController: mainController.pagingController,
-          builderDelegate: PagedChildBuilderDelegate<RecommendationModel>(
-            firstPageProgressIndicatorBuilder: (context) =>
-                const ProcesssFlicker(),
-            newPageProgressIndicatorBuilder: (context) =>
-                const ProcesssFlicker(),
-            itemBuilder: (context, item, index) {
-              // print('获取到的单条数据：${item.video}');
-              return RecommendItemDetails(index: index, itemData: item);
-            },
-          ),
-        ),
-      ),
+      child: _refreViews(),
     );
 
     // return ListView.separated(
@@ -89,6 +62,36 @@ class _RecommendTabPageState extends State<RecommendTabPage>
     //     return null;
     //   },
     // );
+  }
+
+  SmartRefresher _refreViews() {
+    return SmartRefresher(
+      enablePullDown: true,
+      enablePullUp: true,
+      header: const WaterDropMaterialHeader(
+          color: Colors.white,
+          distance: 30,
+          semanticsValue: '',
+          semanticsLabel: "努力加载中",
+          backgroundColor: Color.fromARGB(255, 120, 120, 120)),
+      controller: _refreshController,
+      onRefresh: _onRefresh,
+      onLoading: _onLoading,
+      child: PagedListView<int, RecommendationModel>.separated(
+        padding: const EdgeInsets.only(bottom: 100),
+        separatorBuilder: (context, index) => const SizedBox(height: 1),
+        pagingController: mainController.pagingController,
+        builderDelegate: PagedChildBuilderDelegate<RecommendationModel>(
+          firstPageProgressIndicatorBuilder: (context) =>
+              const ProcesssFlicker(),
+          newPageProgressIndicatorBuilder: (context) => const ProcesssFlicker(),
+          itemBuilder: (context, item, index) {
+            // print('获取到的单条数据：${item.video}');
+            return RecommendItemDetails(index: index, itemData: item);
+          },
+        ),
+      ),
+    );
   }
 }
 
@@ -270,7 +273,9 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
       return IntrinsicHeight(
         child: Container(
           // height: 220,
-          child: VideoComponent(videoPath: widget.itemData.video as String),
+          child: VideoComponent(
+              videoPath: widget.itemData.video as String,
+              id: widget.itemData.id!),
         ),
       );
     }

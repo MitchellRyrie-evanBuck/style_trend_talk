@@ -1,6 +1,8 @@
 // 生成随机字符串的函数
 import 'dart:math';
 
+import 'package:uuid/uuid.dart';
+
 final random = Random();
 
 String generateRandomString(int length) {
@@ -45,4 +47,9 @@ String? getRandomStringOrNull(List<String> stringList) {
   return (randomIndex <= 7)
       ? stringList[Random().nextInt(stringList.length)]
       : null;
+}
+
+String generateRandomUUID() {
+  const uuid = Uuid();
+  return uuid.v4();
 }

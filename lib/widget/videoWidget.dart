@@ -9,11 +9,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:style_trend_talk/data/fitness_app_theme.dart';
 import 'package:style_trend_talk/widget/flickr.dart';
 import 'package:video_player/video_player.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class VideoComponent extends StatefulWidget {
   final String videoPath;
+  final String id;
 
-  const VideoComponent({super.key, required this.videoPath});
+  const VideoComponent({super.key, required this.videoPath, required this.id});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -29,6 +31,7 @@ class _VideoComponentState extends State<VideoComponent>
   final double _maxVideoHeight = 400.0; // 最大高度，可以根据需要调整
   double _videoWidth = 300;
   double iconSize = 30;
+  double distance = 7;
   late bool isPlaying = false;
   late Duration duration;
   late Duration position;
@@ -131,12 +134,13 @@ class _VideoComponentState extends State<VideoComponent>
       // print('isBuffering---->${_controller.value.isBuffering}');
       // print('volume---->${_controller.value.volume}');
       // print('playbackSpeed---->${_controller.value.playbackSpeed}');
-
-      setState(() {
-        isPlaying = _controller.value.isPlaying;
-        duration = _controller.value.duration;
-        position = _controller.value.position;
-      });
+      if (mounted) {
+        setState(() {
+          isPlaying = _controller.value.isPlaying;
+          duration = _controller.value.duration;
+          position = _controller.value.position;
+        });
+      }
     });
 
     _controller.addListener(() {
@@ -152,17 +156,32 @@ class _VideoComponentState extends State<VideoComponent>
         });
       }
     });
+    _controller.addListener(_checkVisibility);
+  }
+
+  void _checkVisibility() {
+    // VisibilityDetectorController
+
+    // if (isVisible && !isPlaying) {
+    //   _controller!.play();
+
+    // } else if (!isVisible && isPlaying) {
+    //   _controller!.pause();
+
+    // }
   }
 
   void _displayContoller() {
-    setState(() {
-      showControls = false;
-      _animationController.forward();
-      Future.delayed(milliseconds300, () {
-        isVisibility = false;
-        operation = true;
+    if (mounted) {
+      setState(() {
+        showControls = false;
+        _animationController.forward();
+        Future.delayed(milliseconds300, () {
+          isVisibility = false;
+          operation = true;
+        });
       });
-    });
+    }
   }
 
   void _showPlayController() {
@@ -205,8 +224,8 @@ class _VideoComponentState extends State<VideoComponent>
         // });
       } else {
         delayedTimer.cancel();
-        _displayContoller();
         _controller.play();
+        _displayContoller();
       }
       operation = false;
     });
@@ -220,43 +239,91 @@ class _VideoComponentState extends State<VideoComponent>
       if (!showControls) {
         _showPlayController();
       }
+
       if (showControls) {
-        showControls = false;
+        _animationController.reverse(); // 隐藏控制器
+        if (_controller.value.isPlaying) {
+          _controller.pause(); // 如果当前在播放，点击控制器时暂停视频
+        }
+      } else {
+        _animationController.forward(); // 展示控制器
       }
     });
+  }
+
+  onVisibilityChanged(visibilityInfo) {
+    // Handle visibility changes if needed
+    var visiblePercentage = visibilityInfo.visibleFraction * 100;
+    if (visiblePercentage == 100) {
+      _controller.play();
+      _displayContoller();
+    } else {
+      if (mounted) {
+        _controller.pause();
+        _displayContoller();
+      }
+    }
+    debugPrint('Widget ${widget.videoPath} is ${visiblePercentage}% visible');
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context); // 必须调用super.build
-    return isShow
-        ? GestureDetector(
-            onTap: () {
-              _viewsContainerCallback();
-            },
-            behavior: HitTestBehavior.deferToChild,
-            child: Container(
+    return VisibilityDetector(
+        key: ObjectKey(widget.id), // Use ObjectKey with a unique identifier
+        onVisibilityChanged: onVisibilityChanged,
+        child: isShow
+            ? GestureDetector(
+                onTap: () {
+                  _viewsContainerCallback();
+                },
+                behavior: HitTestBehavior.deferToChild,
+                child: Container(
+                    height: _videoHeight,
+                    width: MediaQuery.of(context).size.width,
+                    color: FitnessAppTheme.black,
+                    child: Stack(
+                      children: [
+                        Center(
+                          child: SizedBox(
+                            height: _videoHeight,
+                            width: _videoWidth,
+                            child: videoViews(),
+                          ),
+                        ),
+                        videoControls(),
+                        Positioned(
+                            right: distance,
+                            bottom: distance,
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: Icon(
+                                FontAwesomeIcons.volumeHigh,
+                                color: FitnessAppTheme.white,
+                                size: 12,
+                              ),
+                            )),
+                        Positioned(
+                            right: distance,
+                            top: distance,
+                            child: Container(
+                              height: 24,
+                              width: 54,
+                              alignment: Alignment.center,
+                              child: Text(
+                                '-12:45',
+                                style: TextStyle(
+                                    color: FitnessAppTheme.white, fontSize: 14),
+                              ),
+                            ))
+                      ],
+                    )))
+            : SizedBox(
                 height: _videoHeight,
-                width: MediaQuery.of(context).size.width,
-                color: FitnessAppTheme.black,
-                child: Stack(
-                  children: [
-                    Center(
-                      child: SizedBox(
-                        height: _videoHeight,
-                        width: _videoWidth,
-                        child: videoViews(),
-                      ),
-                    ),
-                    videoControls()
-                  ],
-                )))
-        : SizedBox(
-            height: _videoHeight,
-            child: const Center(
-              child: ProcesssFlicker(),
-            ),
-          );
+                child: const Center(
+                  child: ProcesssFlicker(),
+                ),
+              ));
   }
 
   Positioned videoControls() {
@@ -327,9 +394,12 @@ class _VideoComponentState extends State<VideoComponent>
 
   @override
   void dispose() {
-    super.dispose();
+    delayedTimer.cancel();
     _controller.dispose();
+    _controller.removeListener(_checkVisibility);
+    VisibilityDetectorController.instance.forget(Key(widget.id));
     _animationController.dispose();
+    super.dispose();
   }
 
   @override

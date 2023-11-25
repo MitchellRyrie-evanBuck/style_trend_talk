@@ -1,5 +1,6 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:style_trend_talk/widget/flickr.dart';
 import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
 import 'package:video_player/video_player.dart';
 
@@ -112,12 +113,12 @@ class _VideoComponentState extends State<VideoComponent> {
         );
       } else {
         return const Center(
-          child: CircularProgressIndicator(), // 或者其他加载中的指示器
+          child: ProcesssFlicker(), // 或者其他加载中的指示器
         );
       }
     } else {
       return const Center(
-        child: ProgressIndicatorWidget(),
+        child: ProcesssFlicker(),
       );
     }
   }
