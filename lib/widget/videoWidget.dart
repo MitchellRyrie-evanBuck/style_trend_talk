@@ -6,10 +6,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:style_trend_talk/data/fitness_app_theme.dart';
 import 'package:style_trend_talk/widget/flickr.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
+
+import '../pages/index.dart';
 
 class VideoComponent extends StatefulWidget {
   final String videoPath;
@@ -39,6 +42,10 @@ class _VideoComponentState extends State<VideoComponent>
   final Duration milliseconds300 = const Duration(milliseconds: 300);
   final Duration seconds2 = const Duration(seconds: 2);
   late Timer delayedTimer = Timer(milliseconds300, () {});
+  late String videoTimer;
+  late Timer _timer;
+  Duration _currentTime = Duration.zero;
+  final homeController = Get.put(HomeController());
 
   /// 每次执行完 暂停 播放时 都会置为false
   bool operation = true; // 检测你在 两秒内 有没有动作
@@ -52,6 +59,7 @@ class _VideoComponentState extends State<VideoComponent>
     isShow = false;
     isPlaying = false;
     showControls = true;
+    homeController.setVideoId(widget.id); // 设置初始ID
     _initializeChewieController();
     _initPlayController();
   }
@@ -97,6 +105,7 @@ class _VideoComponentState extends State<VideoComponent>
         double videoHeight = _controller.value.size.height;
         double screenWidth = MediaQuery.of(context).size.width;
         double calculatedHeight = screenWidth * (videoHeight / videoWidth);
+
         if (calculatedHeight > _maxVideoHeight) {
           double calculatedWidth = _maxVideoHeight * (videoWidth / videoHeight);
           setState(() {
@@ -139,7 +148,13 @@ class _VideoComponentState extends State<VideoComponent>
           isPlaying = _controller.value.isPlaying;
           duration = _controller.value.duration;
           position = _controller.value.position;
+          _timer = Timer.periodic(const Duration(seconds: 1), _updateTimer);
         });
+      }
+      if (homeController.volume.value) {
+        _controller.setVolume(1);
+      } else {
+        _controller.setVolume(0);
       }
     });
 
@@ -153,22 +168,46 @@ class _VideoComponentState extends State<VideoComponent>
           showControls = true;
           isVisibility = true;
           _animationController.reverse();
+          _timer = Timer.periodic(const Duration(seconds: 1), _updateTimer);
+          _currentTime = _controller.value.position;
         });
       }
     });
-    _controller.addListener(_checkVisibility);
   }
 
-  void _checkVisibility() {
-    // VisibilityDetectorController
+  void _updateTimer(Timer timer) {
+    if (_controller.value.isPlaying && mounted) {
+      setState(() {
+        _currentTime = _controller.value.position;
+      });
+    }
+  }
 
-    // if (isVisible && !isPlaying) {
-    //   _controller!.play();
+  String _formatDuration(Duration duration) {
+    int hours = duration.inHours;
+    int minutes = duration.inMinutes.remainder(60);
+    int seconds = duration.inSeconds.remainder(60);
 
-    // } else if (!isVisible && isPlaying) {
-    //   _controller!.pause();
+    String formattedDuration = '';
 
-    // }
+    if (hours > 0) {
+      formattedDuration += '${hours.toString()}:';
+    }
+
+    formattedDuration +=
+        '${minutes.toString().padLeft(1, '0')}:${seconds.toString().padLeft(2, '0')}';
+
+    return formattedDuration;
+  }
+
+  void _setVolume() {
+    if (homeController.volume.value) {
+      _controller.setVolume(0);
+      homeController.setVolume(false);
+    } else {
+      _controller.setVolume(1);
+      homeController.setVolume(true);
+    }
   }
 
   void _displayContoller() {
@@ -254,21 +293,42 @@ class _VideoComponentState extends State<VideoComponent>
   onVisibilityChanged(visibilityInfo) {
     // Handle visibility changes if needed
     var visiblePercentage = visibilityInfo.visibleFraction * 100;
+    debugPrint(
+        'Widget ${homeController.currentPlayingVideoId} ----=====---- ${widget.id} is ==========================');
     if (visiblePercentage == 100) {
-      _controller.play();
-      _displayContoller();
+      if (homeController.currentPlayingVideoId.value != widget.id) {
+        // 设置视频ID为当前播放ID
+        homeController.setVideoId(widget.id);
+      } else {}
+
+      // ignore: unrelated_type_equality_checks
+      if (homeController.currentPlayingVideoId.value == widget.id) {
+        _controller.play();
+        _displayContoller();
+      } else {
+        if (mounted) {
+          _controller.pause();
+          _displayContoller();
+        }
+      }
     } else {
       if (mounted) {
         _controller.pause();
         _displayContoller();
       }
     }
-    debugPrint('Widget ${widget.videoPath} is ${visiblePercentage}% visible');
+
+    // ignore: unnecessary_brace_in_string_interps
+    // debugPrint('Widget ${widget.videoPath} is ${visiblePercentage}% visible');
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context); // 必须调用super.build
+    return _visibilityDetector(context);
+  }
+
+  VisibilityDetector _visibilityDetector(BuildContext context) {
     return VisibilityDetector(
         key: ObjectKey(widget.id), // Use ObjectKey with a unique identifier
         onVisibilityChanged: onVisibilityChanged,
@@ -295,12 +355,18 @@ class _VideoComponentState extends State<VideoComponent>
                         Positioned(
                             right: distance,
                             bottom: distance,
-                            child: IconButton(
-                              onPressed: () {},
-                              icon: Icon(
-                                FontAwesomeIcons.volumeHigh,
-                                color: FitnessAppTheme.white,
-                                size: 12,
+                            child: Obx(
+                              () => IconButton(
+                                onPressed: () {
+                                  _setVolume();
+                                },
+                                icon: Icon(
+                                  !homeController.volume.value
+                                      ? FontAwesomeIcons.volumeXmark
+                                      : FontAwesomeIcons.volumeHigh,
+                                  color: FitnessAppTheme.white,
+                                  size: 12,
+                                ),
                               ),
                             )),
                         Positioned(
@@ -311,8 +377,9 @@ class _VideoComponentState extends State<VideoComponent>
                               width: 54,
                               alignment: Alignment.center,
                               child: Text(
-                                '-12:45',
-                                style: TextStyle(
+                                _formatDuration(
+                                    _controller.value.duration - _currentTime),
+                                style: const TextStyle(
                                     color: FitnessAppTheme.white, fontSize: 14),
                               ),
                             ))
@@ -396,7 +463,7 @@ class _VideoComponentState extends State<VideoComponent>
   void dispose() {
     delayedTimer.cancel();
     _controller.dispose();
-    _controller.removeListener(_checkVisibility);
+    _timer.cancel();
     VisibilityDetectorController.instance.forget(Key(widget.id));
     _animationController.dispose();
     super.dispose();

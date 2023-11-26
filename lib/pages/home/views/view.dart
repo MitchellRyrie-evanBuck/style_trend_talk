@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:style_trend_talk/data/fitness_app_theme.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:style_trend_talk/data/tabIcon_data.dart';
 import 'package:style_trend_talk/layout/bottom_bar_view.dart';
+import 'package:style_trend_talk/pages/core/publish/publish.dart';
 // import 'package:style_trend_talk/layout/drawer_widget.dart';
 // import 'package:style_trend_talk/layout/header_widget.dart';
 // import 'package:style_trend_talk/layout/navigationBar.dart';
 import 'package:style_trend_talk/routes/routing.dart';
 import 'package:style_trend_talk/store/tab_index.dart';
+import 'package:style_trend_talk/widget/customBtnRouterJump.dart';
 import 'package:style_trend_talk/widget/flickr.dart';
 import '../index.dart';
 
@@ -36,7 +39,7 @@ class HomePage extends GetView<HomeController> {
                         index: index.value,
                         children: routing,
                       ),
-                      bottomBar(),
+                      bottomBar(context),
                     ],
                   );
                 }
@@ -51,7 +54,14 @@ class HomePage extends GetView<HomeController> {
     return true;
   }
 
-  Widget bottomBar() {
+  publish(context) {
+    // Get.toNamed("/publish");
+
+    Navigator.of(context)
+        .push(CustomBottomSheetRoute(builder: (_) => PublishWidgetPage()));
+  }
+
+  Widget bottomBar(context) {
     return Column(
       children: <Widget>[
         const Expanded(
@@ -59,7 +69,9 @@ class HomePage extends GetView<HomeController> {
         ),
         BottomBarView(
           tabIconsList: tabIconsList,
-          addClick: () {},
+          addClick: () {
+            publish(context);
+          },
           changeIndex: (int index) {
             tabIndexController.setIndex(index);
           },

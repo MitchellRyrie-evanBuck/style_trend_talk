@@ -38,6 +38,8 @@ class _BottomBarViewState extends State<BottomBarView>
   ];
   int _currentColorIndex = 0;
 
+  bool isBtnFloat = false;
+
   @override
   void initState() {
     animationController = AnimationController(
@@ -109,10 +111,12 @@ class _BottomBarViewState extends State<BottomBarView>
                                 parent: animationController!,
                                 curve: Curves.fastOutSlowIn))
                             .value *
-                        38.0),
+                        // 38.0),
+                        (isBtnFloat ? 38.0 : 0)),
                 child: Column(
                   children: <Widget>[
-                    SizedBox(
+                    Container(
+                      color: Colors.transparent,
                       height: 48,
                       child: Padding(
                         padding:
@@ -160,22 +164,45 @@ class _BottomBarViewState extends State<BottomBarView>
             );
           },
         ),
-        Padding(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom),
-          child: SizedBox(
-            width: 38 * 2.0,
-            height: 38 + 48.0,
-            child: Container(
-                alignment: Alignment.topCenter,
-                color: Colors.transparent,
-                child: AnimatedBuilder(
-                    animation: animationController!,
-                    builder: (BuildContext context, Widget? child) {
-                      return _btnContaienrAT();
-                    })),
-          ),
-        ),
+        isBtnFloat
+            ? Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).padding.bottom),
+                child: SizedBox(
+                  width: 38 * 2.0,
+                  height: 38 + 48.0,
+                  child: Container(
+                      alignment: Alignment.topCenter,
+                      color: Colors.transparent,
+                      child: AnimatedBuilder(
+                          animation: animationController!,
+                          builder: (BuildContext context, Widget? child) {
+                            return _btnContaienrAT();
+                          })),
+                ),
+              )
+            : Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).padding.bottom),
+                child: Container(
+                    width: 40,
+                    height: 48,
+                    alignment: Alignment.center,
+                    color: Colors.transparent,
+                    child: AnimatedBuilder(
+                        animation: animationController!,
+                        builder: (BuildContext context, Widget? child) {
+                          return IconButton(
+                              onPressed: widget.addClick,
+                              icon: Icon(
+                                FontAwesomeIcons.squarePlus,
+                                size: 28,
+                                color: index.value != 1
+                                    ? Colors.black
+                                    : Colors.white,
+                              ));
+                        })),
+              ),
       ],
     );
     //   },
@@ -221,7 +248,9 @@ class _BottomBarViewState extends State<BottomBarView>
                 focusColor: Colors.transparent,
                 onTap: widget.addClick,
                 child: Icon(
-                  FontAwesomeIcons.at,
+                  // FontAwesomeIcons.pushed,
+                  FontAwesomeIcons.squarePlus,
+
                   color: index.value != 1
                       ? FitnessAppTheme.white
                       : FitnessAppTheme.btnNotCheck,
@@ -252,7 +281,10 @@ class _TabIconsState extends State<TabIcons> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => {widget.changeIndex!(widget.tabData?.index)},
+      onTap: () => {
+        debugPrint('打印${widget.tabData?.index}'),
+        widget.changeIndex!(widget.tabData?.index)
+      },
       child: Center(child: GetBuilder<TabIndexController>(
         builder: (controller) {
           return Stack(
