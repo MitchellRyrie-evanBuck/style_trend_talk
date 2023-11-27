@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:style_trend_talk/data/fitness_app_theme.dart';
+// import 'package:style_trend_talk/data/fitness_app_theme.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:style_trend_talk/data/tabIcon_data.dart';
 import 'package:style_trend_talk/layout/bottom_bar_view.dart';
