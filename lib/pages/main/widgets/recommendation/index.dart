@@ -6,11 +6,11 @@ import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:style_trend_talk/data/fitness_app_theme.dart';
+// import 'package:style_trend_talk/data/fitness_app_theme.dart';
 import 'package:style_trend_talk/data/index.dart';
 import 'package:style_trend_talk/pages/index.dart';
 import 'package:style_trend_talk/widget/flickr.dart';
-import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
+// import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
 import 'package:style_trend_talk/widget/videoWidget.dart';
 // import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
