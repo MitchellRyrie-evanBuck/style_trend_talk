@@ -6,7 +6,7 @@ import 'package:style_trend_talk/pages/main/controllers/controller.dart';
 import 'package:style_trend_talk/pages/main/controllers/recommendation.dart';
 import 'package:style_trend_talk/pages/main/widgets/recommendation/index.dart';
 import 'package:style_trend_talk/widget/flickr.dart';
-import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
+// import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
 
 class RecommendationPageMiddle extends StatefulWidget {
   const RecommendationPageMiddle({super.key});

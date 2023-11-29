@@ -275,7 +275,7 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
           // height: 220,
           child: VideoComponent(
               videoPath: widget.itemData.video as String,
-              id: widget.itemData.id!),
+              id: widget.itemData.id),
         ),
       );
     }
