@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:style_trend_talk/pages/core/search/widget/header.dart';
 
 class SeniorSearch extends StatefulWidget {
   const SeniorSearch({super.key});
@@ -10,8 +11,16 @@ class SeniorSearch extends StatefulWidget {
 class _SearchState extends State<SeniorSearch> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.amber,
+    return SafeArea(
+      child: CustomScrollView(
+        slivers: [
+          // const SearchAppHeader(),
+          // 其他 Sliver 组件
+          SliverFillRemaining(
+            child: Container(),
+          ),
+        ],
+      ),
     );
   }
 }
