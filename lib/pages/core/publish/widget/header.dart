@@ -29,7 +29,6 @@ class _PublishAppHeaderState extends State<PublishAppHeader>
 
 class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   MySliverPersistentHeaderDelegate();
-
   final double tabHeight = 50;
 
   @override
@@ -37,44 +36,43 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     final double tabWidth = MediaQuery.of(context).size.width - 120;
 
-    return GetBuilder<PublishController>(builder: (controller) {
-      return Container(
-          width: MediaQuery.of(context).size.width,
-          color: Colors.white,
-          child: Stack(fit: StackFit.expand, children: [
-            Positioned(
-                left: 0.0,
-                child: IconButton(
-                  icon: const Icon(FontAwesomeIcons.backward),
-                  onPressed: () {
-                    // 打开抽屉
-                  },
-                )),
-            Positioned(
-              right: 0.0,
+    return Container(
+        width: MediaQuery.of(context).size.width,
+        color: Colors.white,
+        child: Stack(fit: StackFit.expand, children: [
+          Positioned(
+              left: 0.0,
               child: IconButton(
-                icon: const Icon(FontAwesomeIcons.seedling),
-                onPressed: () {},
-              ),
+                icon: const Icon(FontAwesomeIcons.xmark),
+                onPressed: () {
+                  // 打开抽屉
+                  Navigator.pop(context);
+                },
+              )),
+          Positioned(
+            right: 0.0,
+            child: IconButton(
+              icon: const Icon(FontAwesomeIcons.seedling),
+              onPressed: () {},
             ),
-            // Align(
-            //   alignment: Alignment.center,
-            //   child: Container(
-            //     padding: const EdgeInsets.only(bottom: 3),
-            //     width: tabWidth,
-            //     height: tabHeight - 20,
-            //     // child: const CustomPageWidget(),
-            //   ),
-            // )
-          ]));
-    });
+          ),
+          // Align(
+          //   alignment: Alignment.center,
+          //   child: Container(
+          //     padding: const EdgeInsets.only(bottom: 3),
+          //     width: tabWidth,
+          //     height: tabHeight - 20,
+          //     // child: const CustomPageWidget(),
+          //   ),
+          // )
+        ]));
   }
 
   @override
-  double get maxExtent => 50;
+  double get maxExtent => tabHeight;
 
   @override
-  double get minExtent => 50;
+  double get minExtent => tabHeight;
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {

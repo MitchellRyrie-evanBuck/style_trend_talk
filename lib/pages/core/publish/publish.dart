@@ -20,7 +20,8 @@ class _PublishWidgetPageState extends State<PublishWidgetPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: FutureBuilder<bool>(
+        body: SafeArea(
+      child: FutureBuilder<bool>(
           future: getData(),
           builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
             if (!snapshot.hasData) {
@@ -30,33 +31,7 @@ class _PublishWidgetPageState extends State<PublishWidgetPage> {
                 children: <Widget>[
                   CustomScrollView(
                     slivers: [
-                      // const PublishAppHeader(),
-                      SliverAppBar(
-                        expandedHeight: 50.0,
-                        floating: false,
-                        pinned: true,
-                        elevation: 10,
-                        leading: Container(
-                            child: Center(
-                          child: IconButton(
-                            icon: const Icon(
-                              FontAwesomeIcons.xmark,
-                              size: 18,
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        )),
-                        backgroundColor: FitnessAppTheme.white,
-                        surfaceTintColor: FitnessAppTheme.white,
-                        flexibleSpace: const FlexibleSpaceBar(
-                          title: Text(
-                            '用户名称...',
-                            style: TextStyle(color: Colors.black, fontSize: 16),
-                          ),
-                        ),
-                      ),
+                      const PublishAppHeader(),
                       // 其他 Sliver 组件
                       SliverFillRemaining(
                         child: Container(
@@ -69,7 +44,7 @@ class _PublishWidgetPageState extends State<PublishWidgetPage> {
               );
             }
           }),
-    );
+    ));
 
     // ...
   }
