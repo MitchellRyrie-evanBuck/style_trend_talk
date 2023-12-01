@@ -40,7 +40,7 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
     return GetBuilder<PublishController>(builder: (controller) {
       return Container(
           width: MediaQuery.of(context).size.width,
-          color: Colors.transparent,
+          color: Colors.white,
           child: Stack(fit: StackFit.expand, children: [
             Positioned(
                 left: 0.0,
@@ -71,10 +71,10 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => tabHeight;
+  double get maxExtent => 50;
 
   @override
-  double get minExtent => tabHeight;
+  double get minExtent => 50;
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
