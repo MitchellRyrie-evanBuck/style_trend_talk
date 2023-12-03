@@ -1,5 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:style_trend_talk/data/fitness_app_theme.dart';
 // import 'package:style_trend_talk/data/fitness_app_theme.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:style_trend_talk/data/tabIcon_data.dart';
@@ -21,12 +24,14 @@ class HomePage extends GetView<HomeController> {
   final index = Get.find<TabIndexController>().index;
   @override
   Widget build(BuildContext context) {
+    final publishHeight = MediaQuery.of(context).size.height;
+    print('publishHeight-------$publishHeight');
     return GetBuilder<HomeController>(
       init: HomeController(),
       id: "home",
       builder: (_) {
         return Scaffold(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.white,
           body: FutureBuilder<bool>(
               future: getData(),
               builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
@@ -40,12 +45,22 @@ class HomePage extends GetView<HomeController> {
                         children: routing,
                       ),
                       bottomBar(context),
+                      if (false) _addPush(publishHeight)
                     ],
                   );
                 }
               }),
         );
       },
+    );
+  }
+
+  Widget _addPush(double publishHeight) {
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12), // 添加模糊效果
+      child: Container(
+        color: Colors.black.withOpacity(0.39), // 添加半透明的颜色遮罩
+      ),
     );
   }
 

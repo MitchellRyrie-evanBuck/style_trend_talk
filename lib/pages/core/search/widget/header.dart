@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
-import 'package:style_trend_talk/pages/core/publish/controllers/publishControllers.dart';
+// import 'package:get/get.dart';
+import 'package:style_trend_talk/data/fitness_app_theme.dart';
+// import 'package:style_trend_talk/pages/core/publish/controllers/publishControllers.dart';
 
 class SearchAppHeader extends StatefulWidget {
   const SearchAppHeader({
@@ -30,44 +31,43 @@ class _SearchAppHeaderState extends State<SearchAppHeader>
 class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   MySliverPersistentHeaderDelegate();
 
-  final double tabHeight = 50;
+  final double tabHeight = 48;
 
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     final double tabWidth = MediaQuery.of(context).size.width - 120;
 
-    return GetBuilder<PublishController>(builder: (controller) {
-      return Container(
-          width: MediaQuery.of(context).size.width,
-          color: Colors.transparent,
-          child: Stack(fit: StackFit.expand, children: [
-            Positioned(
-                left: 0.0,
-                child: IconButton(
-                  icon: const Icon(FontAwesomeIcons.backward),
-                  onPressed: () {
-                    // 打开抽屉
-                  },
-                )),
-            Positioned(
-              right: 0.0,
+    return Container(
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
               child: IconButton(
-                icon: const Icon(FontAwesomeIcons.seedling),
-                onPressed: () {},
+                  onPressed: () {},
+                  icon: const Icon(
+                    FontAwesomeIcons.arrowLeft,
+                    size: 18,
+                  )),
+            ),
+            const SizedBox(
+              child: Text(
+                '不期而遇',
+                style: TextStyle(
+                    color: FitnessAppTheme.black, fontWeight: FontWeight.w500),
               ),
             ),
-            // Align(
-            //   alignment: Alignment.center,
-            //   child: Container(
-            //     padding: const EdgeInsets.only(bottom: 3),
-            //     width: tabWidth,
-            //     height: tabHeight - 20,
-            //     // child: const CustomPageWidget(),
-            //   ),
-            // )
-          ]));
-    });
+            SizedBox(
+              child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    FontAwesomeIcons.bars,
+                    size: 18,
+                  )),
+            ),
+          ],
+        ));
   }
 
   @override
