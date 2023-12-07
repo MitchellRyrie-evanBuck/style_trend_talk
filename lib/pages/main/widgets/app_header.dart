@@ -44,7 +44,7 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   MySliverPersistentHeaderDelegate(this.screenWidth, this.tabController);
 
   final double screenWidth;
-  final double tabHeight = 50;
+  final double tabHeight = 48;
   final TabController tabController;
 
   @override
@@ -67,6 +67,8 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
                 left: 0.0,
                 child: IconButton(
                   icon: const Icon(Icons.bolt),
+                  // icon: const Icon(FontAwesomeIcons.sliders, size: 16),
+
                   onPressed: () {
                     // 打开抽屉
                   },
