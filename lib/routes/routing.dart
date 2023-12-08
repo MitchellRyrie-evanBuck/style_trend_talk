@@ -11,7 +11,8 @@ final List<GetPage> appRoutes = [
   GetPage(name: '/notification', page: () => const NotificationPage()),
   GetPage(name: '/profile', page: () => const ProfilePage()),
   GetPage(name: '/search', page: () => const SeniorSearch()),
-  GetPage(name: '/publish', page: () => PublishWidgetPage())
+  GetPage(name: '/publish', page: () => PublishWidgetPage()),
+  GetPage(name: '/recommendationDetails', page: () => DetailsPage())
 
   // 添加其他路由和详情页的GetPage
 ];

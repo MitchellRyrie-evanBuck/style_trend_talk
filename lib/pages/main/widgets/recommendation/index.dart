@@ -119,14 +119,19 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
     return IntrinsicHeight(
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 10),
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          _UserDescribe(),
-          _imgContextWidget(context),
-          _DescribeWidget(),
-          _TagWidget(),
-          _LikeOrStarWidget(),
-          _TimeContainer(),
-        ]),
+        child: GestureDetector(
+            onTap: () {
+              debugPrint('点击');
+              Get.toNamed("/recommendationDetails");
+            },
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              _UserDescribe(),
+              _imgContextWidget(context),
+              _DescribeWidget(),
+              _TagWidget(),
+              _LikeOrStarWidget(),
+              _TimeContainer(),
+            ])),
       ),
     );
   }
