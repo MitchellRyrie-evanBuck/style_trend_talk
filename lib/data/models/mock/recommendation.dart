@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:style_trend_talk/data/index.dart';
 
 Future<dynamic> getRecommendation(int page) async {}

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 class TabIndexController extends GetxController {
   TabIndexController();
   final RxInt index = 0.obs;
+  final RxBool publishFlag = false.obs;
 
   _initData() {
     update(["tabIndex"]);
@@ -11,8 +12,12 @@ class TabIndexController extends GetxController {
   void onTap() {}
 
   Future<void> setIndex(int value) async {
-    print('setIndex: $value');
     index.value = value;
+    update();
+  }
+
+  Future<void> setPublishFlag(bool value) async {
+    publishFlag.value = value;
     update();
   }
 

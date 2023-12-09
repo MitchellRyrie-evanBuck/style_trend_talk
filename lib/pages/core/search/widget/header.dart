@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 // import 'package:get/get.dart';
-import 'package:style_trend_talk/data/fitness_app_theme.dart';
 // import 'package:style_trend_talk/pages/core/publish/controllers/publishControllers.dart';
 
 class SearchAppHeader extends StatefulWidget {
@@ -31,7 +30,7 @@ class _SearchAppHeaderState extends State<SearchAppHeader>
 
 class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   MySliverPersistentHeaderDelegate();
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
 
   final double tabHeight = 48;
 
@@ -83,17 +82,17 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
                               horizontal: 24.0, vertical: 0),
                           suffixIcon: IconButton(
                             icon: const Icon(
-                              FontAwesomeIcons.search,
+                              FontAwesomeIcons.magnifyingGlass,
                               size: 18,
                             ),
                             onPressed: () {
+                              // ignore: avoid_print
                               print('Searching for: ${_controller.text}');
                             },
                           ),
                         ),
                         onSubmitted: (text) {
                           // Handle search action here as well
-                          print('Searching for: $text');
                         },
                       ),
                     ))

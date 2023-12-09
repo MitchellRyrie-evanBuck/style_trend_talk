@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 // import 'package:style_trend_talk/layout/drawer_widget.dart';
 // import 'package:style_trend_talk/layout/header_widget.dart';
 import 'package:style_trend_talk/pages/main/widgets/app_header.dart';
-import 'package:style_trend_talk/pages/main/widgets/drawer/mainDrawer.dart';
 import 'package:style_trend_talk/pages/main/widgets/follow/index.dart';
 import 'package:style_trend_talk/pages/main/widgets/recommendation.dart';
 
@@ -101,13 +100,13 @@ class _HomeMiddleWareWidgeState extends State<HomeMiddleWareWidge>
           // 在这里处理滚动通知
           if (scrollNotification is ScrollEndNotification) {
             // 滚动结束时的处理逻辑
-            print('scrollNotification-----${scrollNotification.metrics}');
-            print(
-                'scrollNotification--toString---${scrollNotification.toString()}');
-            print(
-                'scrollNotification--noSuchMethod---${scrollNotification.noSuchMethod}');
-            print(
-                'scrollNotification--dispatch---${scrollNotification.dispatch}');
+            // print('scrollNotification-----${scrollNotification.metrics}');
+            // print(
+            //     'scrollNotification--toString---${scrollNotification.toString()}');
+            // print(
+            //     'scrollNotification--noSuchMethod---${scrollNotification.noSuchMethod}');
+            // print(
+            //     'scrollNotification--dispatch---${scrollNotification.dispatch}');
 
             // 可以检测列表中的视频是否在视窗内，然后触发自动播放
           }

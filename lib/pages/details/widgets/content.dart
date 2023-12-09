@@ -8,7 +8,7 @@ class ContentWidget extends StatefulWidget {
 }
 
 TextStyle _textStyle =
-    TextStyle(color: Color.fromARGB(255, 92, 148, 196), fontSize: 14);
+    const TextStyle(color: Color.fromARGB(255, 92, 148, 196), fontSize: 14);
 
 class _ContentWidgetState extends State<ContentWidget> {
   @override

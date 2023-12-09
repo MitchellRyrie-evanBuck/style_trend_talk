@@ -1,7 +1,6 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:style_trend_talk/widget/flickr.dart';
-import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoComponent extends StatefulWidget {
@@ -54,7 +53,7 @@ class _VideoComponentState extends State<VideoComponent> {
             allowFullScreen: false,
             allowMuting: false,
             allowPlaybackSpeedChanging: false,
-            controlsSafeAreaMinimum: EdgeInsets.only(bottom: 8),
+            controlsSafeAreaMinimum: const EdgeInsets.only(bottom: 8),
             // customControls: Column(
             //   children: [
             //     // 添加自定义的全屏按钮

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:style_trend_talk/data/fitness_app_theme.dart';
-import 'package:style_trend_talk/pages/core/publish/controllers/publishControllers.dart';
 
 class PublishAppHeader extends StatefulWidget {
   const PublishAppHeader({
@@ -35,8 +34,6 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    final double tabWidth = MediaQuery.of(context).size.width - 120;
-
     return Container(
         color: Colors.white,
         child: Row(

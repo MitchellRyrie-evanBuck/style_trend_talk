@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:style_trend_talk/pages/index.dart';
-import 'package:style_trend_talk/pages/main/controllers/controller.dart';
 
 List<String> listTabName = ['推荐', '关注', '直播', '广场', '同城'];
 
@@ -235,28 +234,26 @@ class CustomTabBarWidget extends StatelessWidget {
       tabs: listTabName.asMap().entries.map((entry) {
         final int index = entry.key;
         return Tab(
-          child: Container(
-            child: Stack(
-              children: [
-                Center(
-                  child: Text(listTabName[index]),
-                ),
-                // Positioned(
-                //     top: 0,
-                //     right: 0,
-                //     child: Container(
-                //       height: 20,
-                //       width: 20,
-                //       decoration: const BoxDecoration(
-                //           color: Color.fromARGB(255, 255, 16, 16),
-                //           borderRadius: BorderRadius.all(Radius.circular(10))),
-                //       child: const Text(
-                //         '99',
-                //         style: TextStyle(color: Colors.white),
-                //       ),
-                //     ))
-              ],
-            ),
+          child: Stack(
+            children: [
+              Center(
+                child: Text(listTabName[index]),
+              ),
+              // Positioned(
+              //     top: 0,
+              //     right: 0,
+              //     child: Container(
+              //       height: 20,
+              //       width: 20,
+              //       decoration: const BoxDecoration(
+              //           color: Color.fromARGB(255, 255, 16, 16),
+              //           borderRadius: BorderRadius.all(Radius.circular(10))),
+              //       child: const Text(
+              //         '99',
+              //         style: TextStyle(color: Colors.white),
+              //       ),
+              //     ))
+            ],
           ),
         );
       }).toList(),

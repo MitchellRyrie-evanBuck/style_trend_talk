@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-late List<Tab> listTabs = [
+List<Tab> listTabs = [
   const Tab(text: '时光机'),
   const Tab(text: '视频'),
   const Tab(text: '图片'),

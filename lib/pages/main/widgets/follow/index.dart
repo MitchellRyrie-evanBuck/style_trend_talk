@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:style_trend_talk/widget/progressIndicatorWidget.dart';
-import 'package:style_trend_talk/widget/videoWidget.dart';
 
 class FollowPage extends StatefulWidget {
   const FollowPage({super.key});
@@ -15,11 +13,11 @@ class _FollowPageState extends State<FollowPage> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemBuilder: (BuildContext, index) {
-          return Container(
+        itemBuilder: (BuildContext context, index) {
+          return SizedBox(
             height: 50,
             child: Center(
-              child: Text('${index}'),
+              child: Text('$index'),
             ),
           );
         },

@@ -16,6 +16,7 @@ void main() async {
 class MainApp extends StatelessWidget {
   MainApp({super.key, required this.isLogged});
   final bool isLogged;
+  final tabIndexController = Get.put(TabIndexController());
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +30,6 @@ class MainApp extends StatelessWidget {
   }
 
   Widget routerWidget(BuildContext context) {
-    final tabIndexController = Get.put(TabIndexController());
-    final index = Get.find<TabIndexController>().index;
     return GetBuilder<TabIndexController>(
       builder: (tabIndexController) {
         // print('tabIndexController.index.value: ${index}');

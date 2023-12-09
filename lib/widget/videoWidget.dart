@@ -228,7 +228,8 @@ class _VideoComponentState extends State<VideoComponent>
       showControls = true;
       _animationController.reverse();
       isVisibility = true;
-      // TODO 展开蒙层之后没有下一步动作 还是会继续隐藏蒙层
+      // TODO
+      //展开蒙层之后没有下一步动作 还是会继续隐藏蒙层
       delayedTimer = Timer(seconds2, () {
         if (operation) {
           // true 没有进行操作
@@ -242,8 +243,8 @@ class _VideoComponentState extends State<VideoComponent>
   /// 点击开始播放之后 自动 [_displayContoller] 隐藏控制窗
   void iconCallback() {
     setState(() {
-      print('出发play事件showControls---${showControls}');
-      print('出发play事件operation---${operation}');
+      // print('出发play事件showControls---${showControls}');
+      // print('出发play事件operation---${operation}');
 
       // if (!showControls) {
       //   _animationController.reverse();
@@ -274,7 +275,7 @@ class _VideoComponentState extends State<VideoComponent>
   /// 点击显示蒙层 唯一入口
   _viewsContainerCallback() {
     setState(() {
-      print('最外层GestureDetector--${showControls}');
+      // print('最外层GestureDetector--${showControls}');
       if (!showControls) {
         _showPlayController();
       }

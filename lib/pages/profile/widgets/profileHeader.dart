@@ -481,7 +481,7 @@ class _ClipSelfWidgetState extends State<ClipSelfWidget> {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15), // 调整sigma值以改变模糊程度
           child: Container(
-            color: Color.fromARGB(255, 168, 168, 168)
+            color: const Color.fromARGB(255, 168, 168, 168)
                 .withOpacity(0.38), // 调整颜色和不透明度以改变遮罩效果
           ),
         ),

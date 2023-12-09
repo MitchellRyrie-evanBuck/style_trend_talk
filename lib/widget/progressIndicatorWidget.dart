@@ -34,7 +34,7 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget>
       });
 
     _colorAnimation = ColorTween(
-      begin: Color.fromARGB(255, 187, 187, 187),
+      begin: const Color.fromARGB(255, 187, 187, 187),
       end: Colors.black,
     ).animate(_controller);
 

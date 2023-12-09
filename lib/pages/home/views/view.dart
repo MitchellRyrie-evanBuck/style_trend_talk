@@ -2,13 +2,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:style_trend_talk/data/fitness_app_theme.dart';
 // import 'package:style_trend_talk/data/fitness_app_theme.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:style_trend_talk/data/tabIcon_data.dart';
 import 'package:style_trend_talk/layout/bottom_bar_view.dart';
 import 'package:style_trend_talk/pages/core/publish/publish.dart';
-import 'package:style_trend_talk/pages/main/widgets/drawer/mainDrawer.dart';
 // import 'package:style_trend_talk/layout/drawer_widget.dart';
 // import 'package:style_trend_talk/layout/header_widget.dart';
 // import 'package:style_trend_talk/layout/navigationBar.dart';
@@ -26,7 +24,7 @@ class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final publishHeight = MediaQuery.of(context).size.height;
-    print('publishHeight-------$publishHeight');
+
     return GetBuilder<HomeController>(
       init: HomeController(),
       id: "home",
@@ -46,7 +44,8 @@ class HomePage extends GetView<HomeController> {
                         children: routing,
                       ),
                       bottomBar(context),
-                      if (false) _addPush(publishHeight)
+                      if (tabIndexController.publishFlag.value)
+                        _addPush(publishHeight)
                     ],
                   );
                 }
@@ -73,8 +72,8 @@ class HomePage extends GetView<HomeController> {
   publish(context) {
     // Get.toNamed("/publish");
 
-    Navigator.of(context)
-        .push(CustomBottomSheetRoute(builder: (_) => PublishWidgetPage()));
+    Navigator.of(context).push(
+        CustomBottomSheetRoute(builder: (_) => const PublishWidgetPage()));
   }
 
   Widget bottomBar(context) {

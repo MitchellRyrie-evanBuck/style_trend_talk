@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:style_trend_talk/data/fitness_app_theme.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:style_trend_talk/data/fitness_app_theme.dart';
@@ -19,9 +18,9 @@ class _PublishWidgetPageState extends State<PublishWidgetPage> {
     return true;
   }
 
-  TextEditingController _controller = TextEditingController();
-  int _maxLines = 12; // 设置最大行数
-  int _maxTextSize = 100;
+  final TextEditingController _controller = TextEditingController();
+  final int _maxLines = 12; // 设置最大行数
+  final int _maxTextSize = 100;
 
   @override
   Widget build(BuildContext context) {
@@ -82,13 +81,13 @@ class _PublishWidgetPageState extends State<PublishWidgetPage> {
           helperText: 'Please enter your full life',
           helperStyle: const TextStyle(color: Color.fromARGB(255, 61, 61, 61)),
           counter: Text('${_controller.text.length}/$_maxTextSize'),
-          fillColor: Color.fromARGB(255, 62, 62, 62),
+          fillColor: const Color.fromARGB(255, 62, 62, 62),
           counterText:
               '${_controller.text.length}/$_maxTextSize', // 显示当前输入数和最大输入数
           counterStyle: TextStyle(
             color: _controller.text.length > _maxTextSize
                 ? Colors.red
-                : Theme.of(context).textTheme.caption!.color,
+                : Theme.of(context).textTheme.bodySmall!.color,
           ),
           contentPadding:
               const EdgeInsets.only(bottom: 20, left: 10, top: 10, right: 10),
