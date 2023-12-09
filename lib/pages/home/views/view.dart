@@ -8,6 +8,7 @@ import 'package:style_trend_talk/data/fitness_app_theme.dart';
 import 'package:style_trend_talk/data/tabIcon_data.dart';
 import 'package:style_trend_talk/layout/bottom_bar_view.dart';
 import 'package:style_trend_talk/pages/core/publish/publish.dart';
+import 'package:style_trend_talk/pages/main/widgets/drawer/mainDrawer.dart';
 // import 'package:style_trend_talk/layout/drawer_widget.dart';
 // import 'package:style_trend_talk/layout/header_widget.dart';
 // import 'package:style_trend_talk/layout/navigationBar.dart';

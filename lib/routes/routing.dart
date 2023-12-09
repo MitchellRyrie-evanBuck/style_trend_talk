@@ -7,12 +7,13 @@ final List<GetPage> appRoutes = [
   GetPage(name: '/', page: () => HomePage()),
   GetPage(name: '/login', page: () => LoginPage()),
   GetPage(name: '/main', page: () => const MainPageMiddle()),
-  GetPage(name: '/discover', page: () => const DiscoverPageMiddle()),
+  GetPage(name: '/video', page: () => const DiscoverPageMiddle()),
   GetPage(name: '/notification', page: () => const NotificationPage()),
   GetPage(name: '/profile', page: () => const ProfilePage()),
   GetPage(name: '/search', page: () => const SeniorSearch()),
   GetPage(name: '/publish', page: () => PublishWidgetPage()),
-  GetPage(name: '/recommendationDetails', page: () => DetailsPage())
+  GetPage(name: '/recommendationDetails', page: () => DetailsPage()),
+  GetPage(name: '/trend', page: () => TrendPage())
 
   // 添加其他路由和详情页的GetPage
 ];

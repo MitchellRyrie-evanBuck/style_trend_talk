@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:style_trend_talk/data/fitness_app_theme.dart';
 import 'package:style_trend_talk/pages/details/widgets/header.dart';
 
-import 'index.dart';
+import '../index.dart';
 
 class DetailsPage extends GetView<DetailsController> {
   DetailsPage({Key? key}) : super(key: key);
@@ -13,17 +13,27 @@ class DetailsPage extends GetView<DetailsController> {
 
   // 主视图
   Widget _buildView(BuildContext context) {
+    // 获取传递过来的数据
+    var data = Get.arguments;
+    if (data != null) {
+      debugPrint('=========${data.id}');
+    }
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          const Center(
+          Center(
             child: CustomScrollView(
               slivers: <Widget>[
-                DetailsHeader(),
-                ContextWidget(),
-                ContentWidget(),
-                CommentWidget(),
-                SliverFillRemaining(
+                DetailsHeader(
+                  data: data,
+                ),
+                if (data.photo != null)
+                  ContextWidget(
+                    data: data,
+                  ),
+                const ContentWidget(),
+                const CommentWidget(),
+                const SliverFillRemaining(
                   child: SizedBox(),
                 )
               ],

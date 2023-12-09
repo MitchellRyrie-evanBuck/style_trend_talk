@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:style_trend_talk/data/fitness_app_theme.dart';
 // import 'package:style_trend_talk/data/fitness_app_theme.dart';
 import 'package:style_trend_talk/data/index.dart';
 import 'package:style_trend_talk/pages/index.dart';
@@ -122,7 +123,13 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
         child: GestureDetector(
             onTap: () {
               debugPrint('点击');
-              Get.toNamed("/recommendationDetails");
+              Get.to(
+                DetailsPage(),
+                // transition: Transition.circularReveal,
+                transition: Transition.rightToLeftWithFade,
+
+                arguments: widget.itemData,
+              );
             },
             child: Column(mainAxisSize: MainAxisSize.min, children: [
               _UserDescribe(),
@@ -217,12 +224,15 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 30,
-            width: 30,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
-              child: Image.asset(widget.itemData.userImg),
+          Hero(
+            tag: 'userImg-${widget.itemData.id}',
+            child: SizedBox(
+              height: 30,
+              width: 30,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: Image.asset(widget.itemData.userImg),
+              ),
             ),
           ),
           const SizedBox(
@@ -239,8 +249,20 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
                     style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
+                        color: FitnessAppTheme.black,
                         fontFamily: AutofillHints.birthdayDay),
                   ),
+                  // Hero(
+                  //   tag: 'userName-${widget.itemData.id}',
+                  //   child: Text(
+                  //     widget.itemData.userName,
+                  //     style: const TextStyle(
+                  //         fontSize: 14,
+                  //         fontWeight: FontWeight.w600,
+                  //         color: FitnessAppTheme.black,
+                  //         fontFamily: AutofillHints.birthdayDay),
+                  //   ),
+                  // ),
                   const SizedBox(
                     width: 10,
                   ),
@@ -366,7 +388,9 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
       child: const Text(
-        'Life was like a box of chocolates, you never know what you going to get.',
+        'Our lives are streams,flowing into the same river, towards whatever heaven lies in the mist beyond the falls…Close your eyes, let the waters take you home.',
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis, // 设置为省略号
         style: TextStyle(color: Color.fromARGB(255, 54, 54, 54), fontSize: 14),
       ),
     );

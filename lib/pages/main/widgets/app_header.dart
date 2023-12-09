@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:style_trend_talk/pages/index.dart';
 import 'package:style_trend_talk/pages/main/controllers/controller.dart';
 
 List<String> listTabName = ['推荐', '关注', '直播', '广场', '同城'];
@@ -71,6 +72,12 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
 
                   onPressed: () {
                     // 打开抽屉
+                    // Scaffold.of(context).openDrawer();
+                    Get.to(
+                      const TrendPage(),
+                      // transition: Transition.circularReveal,
+                      transition: Transition.leftToRightWithFade,
+                    );
                   },
                 )),
             Positioned(

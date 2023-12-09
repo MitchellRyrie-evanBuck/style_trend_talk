@@ -1,13 +1,16 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:style_trend_talk/data/fitness_app_theme.dart';
+import 'package:style_trend_talk/data/models/mock/recommendation.dart';
 import 'package:style_trend_talk/pages/core/publish/controllers/publishControllers.dart';
 
 class DetailsHeader extends StatefulWidget {
-  const DetailsHeader({
-    super.key,
-  });
+  const DetailsHeader({super.key, required this.data});
+  final RecommendationModel data;
+
   @override
   State<DetailsHeader> createState() => _DetailsHeaderState();
 }
@@ -22,15 +25,16 @@ class _DetailsHeaderState extends State<DetailsHeader>
   @override
   Widget build(BuildContext context) {
     return SliverPersistentHeader(
-      delegate: MySliverPersistentHeaderDelegate(),
+      delegate: MySliverPersistentHeaderDelegate(widget.data),
       pinned: true,
     );
   }
 }
 
 class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
-  MySliverPersistentHeaderDelegate();
+  MySliverPersistentHeaderDelegate(this.itemData);
   final double tabHeight = 48;
+  final RecommendationModel itemData;
 
   @override
   Widget build(
@@ -55,24 +59,40 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
                 child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  width: 36,
-                  height: 36,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/user/user17.png'))),
+                Hero(
+                  tag: 'userImg-${itemData.id}',
+                  child: Container(
+                    width: 36,
+                    height: 36,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image: AssetImage(itemData.userImg))),
+                  ),
                 ),
                 const SizedBox(
                   width: 12,
                 ),
-                const SizedBox(
+                SizedBox(
                   child: Text(
-                    '不期而遇',
-                    style: TextStyle(
+                    itemData.userName,
+                    style: const TextStyle(
+                        fontSize: 14,
                         color: FitnessAppTheme.black,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.w600,
+                        fontFamily: AutofillHints.birthdayDay),
                   ),
+                  //  Hero(
+                  //   tag: 'userName-${itemData.id}',
+                  //   child: Text(
+                  //     itemData.userName,
+                  //     style: const TextStyle(
+                  //         fontSize: 14,
+                  //         color: FitnessAppTheme.black,
+                  //         fontWeight: FontWeight.w600,
+                  //         fontFamily: AutofillHints.birthdayDay),
+                  //   ),
+                  // ),
                 ),
                 const Spacer(),
                 Container(

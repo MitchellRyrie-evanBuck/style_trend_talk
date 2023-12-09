@@ -8,4 +8,5 @@ export 'notification/index.dart';
 export 'profile/index.dart';
 export 'core/search/search.dart';
 export 'core/publish/publish.dart';
-export 'details/view.dart';
+export 'details/views/view.dart';
+export 'trend/index.dart';

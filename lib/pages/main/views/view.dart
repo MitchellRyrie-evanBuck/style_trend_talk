@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 // import 'package:style_trend_talk/layout/drawer_widget.dart';
 // import 'package:style_trend_talk/layout/header_widget.dart';
 import 'package:style_trend_talk/pages/main/widgets/app_header.dart';
+import 'package:style_trend_talk/pages/main/widgets/drawer/mainDrawer.dart';
 import 'package:style_trend_talk/pages/main/widgets/follow/index.dart';
 import 'package:style_trend_talk/pages/main/widgets/recommendation.dart';
 
