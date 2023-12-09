@@ -303,7 +303,7 @@ class _VideoComponentState extends State<VideoComponent>
 
       // ignore: unrelated_type_equality_checks
       if (homeController.currentPlayingVideoId.value == widget.id) {
-        _controller.play();
+        // _controller.play();
         _displayContoller();
       } else {
         if (mounted) {
