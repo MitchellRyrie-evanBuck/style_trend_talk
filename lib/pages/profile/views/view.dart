@@ -1,10 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:style_trend_talk/data/fitness_app_theme.dart';
 import 'package:style_trend_talk/data/main_tab.dart';
+import 'package:style_trend_talk/pages/profile/views/timeMachine/time_machine.dart';
+import 'package:style_trend_talk/pages/profile/widgets/header.dart';
 import 'package:style_trend_talk/pages/profile/widgets/profileHeader.dart';
 
 import '../index.dart';
+
+final List<Widget> listWidgets = [
+  const TimeMachine(),
+  Container(
+    color: Colors.white,
+    child: const Center(child: Text('视频')),
+  ),
+  Container(
+    color: Colors.white,
+    child: const Center(child: Text('图片')),
+  ),
+  Container(
+    color: Colors.white,
+    child: const Center(child: Text('点赞')),
+  ),
+  Container(
+    color: Colors.white,
+    child: const Center(child: Text('收藏')),
+  ),
+];
 
 class ProfilePage extends GetView<ProfileController> {
   const ProfilePage({Key? key}) : super(key: key);
@@ -21,6 +43,7 @@ class ProfilePage extends GetView<ProfileController> {
       id: "profile",
       builder: (_) {
         return Scaffold(
+          backgroundColor: FitnessAppTheme.white,
           body: _buildView(),
         );
       },
@@ -76,13 +99,6 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
         length: listTabs.length,
         child: NotificationListener<ScrollNotification>(
             onNotification: (ScrollNotification scrollInfo) {
-              // scrollInfo.metrics 是ScrollUpdateNotification中包含的ScrollMetrics对象。ScrollMetrics包含了关于滚动位置、速度等信息的数据。
-              // scrollInfo.metrics.pixels表示当前滚动位置的像素值。这个值表示从滚动视图的顶部开始计算的偏移量，当向上滚动时值递增，向下滚动时值递减
-              // 获取滚动信息，例如scrollInfo.metrics等
-              // 在这里你可以处理滚动事件，例如计算透明度等
-              // scrollInfo.metrics.pixels是一个表示当前滚动位置的值
-              print(
-                  'scrollInfo.metrics.pixels==========${scrollInfo.metrics.pixels}');
               if (scrollInfo.metrics.pixels >= 0) {
                 childKey.currentState?.setOpacity(scrollInfo.metrics.pixels);
               }
@@ -90,19 +106,23 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
                   ?.setMaskTransparency(scrollInfo.metrics.pixels);
               return true; // 返回true表示停止事件冒泡，false表示继续冒泡
             },
-            child: _CustomScrollView()));
+            child: _customScrollView()));
     // );
   }
 
-  CustomScrollView _CustomScrollView() {
+  CustomScrollView _customScrollView() {
     return CustomScrollView(
       controller: scrollController,
       slivers: <Widget>[
-        MyProfileHeader(
-            key: childKey,
-            scrollController: scrollController,
-            callBack: setChildValue),
-        _MyProfileDesc(listProfile),
+        // MyProfileHeader(
+        //     key: childKey,
+        //     scrollController: scrollController,
+        //     callBack: setChildValue),
+
+        ProfileHeader(
+            scrollController: scrollController, callBack: setChildValue),
+
+        // _MyProfileDesc(listProfile),
         SliverPersistentHeader(
           delegate: MySliverTabBarHeaderDelegate(
               _profileContainerWidgetStateController),
@@ -130,50 +150,50 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
     );
   }
 
-  SliverList _MyProfileDesc(List<Map<String, dynamic>> listProfile) {
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-        (BuildContext context, int index) {
-          return Container(
-            height: 50,
-            color: const Color.fromARGB(255, 255, 255, 255),
-            margin: const EdgeInsets.only(left: 10, right: 10),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  listProfile[index]['icon'],
-                  color: Color.fromARGB(255, 151, 151, 151),
-                  size: 14,
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(listProfile[index]['name'],
-                            style: const TextStyle(
-                                fontSize: 14,
-                                color: Color.fromARGB(255, 2, 2, 2),
-                                fontWeight: FontWeight.w500)),
-                        Text(listProfile[index]['title'],
-                            style: const TextStyle(
-                                fontSize: 11,
-                                color: Color.fromARGB(255, 151, 151, 151))),
-                      ]),
-                ),
-                const SizedBox(width: 5),
-                const Icon(FontAwesomeIcons.angleRight,
-                    size: 14, color: Color.fromARGB(255, 151, 151, 151))
-              ],
-            ),
-          );
-        },
-        childCount: listProfile.length,
-      ),
-    );
-  }
+  // SliverList _MyProfileDesc(List<Map<String, dynamic>> listProfile) {
+  //   return SliverList(
+  //     delegate: SliverChildBuilderDelegate(
+  //       (BuildContext context, int index) {
+  //         return Container(
+  //           height: 50,
+  //           color: const Color.fromARGB(255, 255, 255, 255),
+  //           margin: const EdgeInsets.only(left: 10, right: 10),
+  //           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+  //           child: Row(
+  //             crossAxisAlignment: CrossAxisAlignment.center,
+  //             children: [
+  //               Icon(
+  //                 listProfile[index]['icon'],
+  //                 color: Color.fromARGB(255, 151, 151, 151),
+  //                 size: 14,
+  //               ),
+  //               const SizedBox(width: 10),
+  //               Expanded(
+  //                 child: Row(
+  //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                     children: [
+  //                       Text(listProfile[index]['name'],
+  //                           style: const TextStyle(
+  //                               fontSize: 14,
+  //                               color: Color.fromARGB(255, 2, 2, 2),
+  //                               fontWeight: FontWeight.w500)),
+  //                       Text(listProfile[index]['title'],
+  //                           style: const TextStyle(
+  //                               fontSize: 11,
+  //                               color: Color.fromARGB(255, 151, 151, 151))),
+  //                     ]),
+  //               ),
+  //               const SizedBox(width: 5),
+  //               const Icon(FontAwesomeIcons.angleRight,
+  //                   size: 14, color: Color.fromARGB(255, 151, 151, 151))
+  //             ],
+  //           ),
+  //         );
+  //       },
+  //       childCount: listProfile.length,
+  //     ),
+  //   );
+  // }
 }
 
 class MySliverTabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
