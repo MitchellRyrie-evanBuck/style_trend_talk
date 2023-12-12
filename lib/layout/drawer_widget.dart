@@ -14,15 +14,15 @@ class _DrawerWidgetState extends State<DrawerWidget> {
       child: ListView(
         children: [
           ListTile(
-            leading: Icon(Icons.home),
-            title: Text('Home'),
+            leading: const Icon(Icons.home),
+            title: const Text('Home'),
             onTap: () {
               // 点击菜单项的回调函数
             },
           ),
           ListTile(
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
+            leading: const Icon(Icons.settings),
+            title: const Text('Settings'),
             onTap: () {
               // 点击菜单项的回调函数
             },
