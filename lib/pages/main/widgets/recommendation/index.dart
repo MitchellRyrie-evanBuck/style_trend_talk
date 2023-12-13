@@ -497,7 +497,7 @@ class _ImgLookContainerState extends State<ImgLookContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: widget.imgHeight,
       child: Column(children: [
         Expanded(
@@ -520,7 +520,7 @@ class _ImgLookContainerState extends State<ImgLookContainer> {
             },
           ),
         )),
-        Container(
+        SizedBox(
           height: 20,
           child: Center(
             child: Row(
@@ -533,7 +533,7 @@ class _ImgLookContainerState extends State<ImgLookContainer> {
                       currentIndex = index;
                       pageController.animateToPage(
                         index,
-                        duration: Duration(milliseconds: 500),
+                        duration: const Duration(milliseconds: 500),
                         curve: Curves.ease,
                       );
                     });
@@ -541,7 +541,7 @@ class _ImgLookContainerState extends State<ImgLookContainer> {
                   child: Container(
                     height: 5,
                     width: 5,
-                    margin: EdgeInsets.symmetric(horizontal: 2),
+                    margin: const EdgeInsets.symmetric(horizontal: 2),
                     decoration: BoxDecoration(
                         color:
                             currentIndex == index ? Colors.black : Colors.grey,

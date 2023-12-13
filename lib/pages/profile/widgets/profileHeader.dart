@@ -115,7 +115,7 @@ class MyProfileHeaderState extends State<MyProfileHeader>
     });
 
     // 控制上滑组件的移出和透明度降低
-    Future.delayed(Duration(milliseconds: 1500), () {
+    Future.delayed(const Duration(milliseconds: 1500), () {
       // setState(() {
       //   slideOutPosition = -100.0; // 移出到视图外部
       // });
@@ -134,9 +134,6 @@ class MyProfileHeaderState extends State<MyProfileHeader>
     if (offset >= 0 && offset <= 100) {
       // 在 0 到 200 的范围内计算透明度
       final opacity = 1.0 - (offset / 100.0);
-      print('**************offset***************$offset');
-
-      print('**************opacity***************$opacity');
       // 更新透明度动画的值
       _opacityAnimation = Tween<double>(
         begin: _opacityAnimation.value, // 保持当前值
@@ -157,7 +154,6 @@ class MyProfileHeaderState extends State<MyProfileHeader>
     if (pixels >= 0 && pixels <= 150) {
       double opacity = 1 - (pixels / 150);
       // 这里可以将透明度应用到你的UI组件中
-      print('Opacity: $opacity');
       topMaskTransparency = opacity;
     } else if (pixels < 0) {
       topMaskTransparency = 0;
@@ -180,14 +176,14 @@ class MyProfileHeaderState extends State<MyProfileHeader>
         child:
             (BuildContext context, double shrinkOffset, bool overlapsContent) {
           // setOpacity(shrinkOffset);
-          return _ProfileController();
+          return _profileController();
         },
       ),
       pinned: true,
     );
   }
 
-  Container _ProfileController() {
+  Container _profileController() {
     return Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -195,20 +191,20 @@ class MyProfileHeaderState extends State<MyProfileHeader>
               fit: BoxFit.cover),
         ),
         child: Stack(children: [
-          _LeftBlur(),
-          _RightBlur(),
-          _BottomGradient(),
-          _UserImg(),
-          _UserImgAdd(),
-          _UserProfileStar(),
-          _PersonalSignature(),
-          _UserDes(),
-          // _UserMoreProfile(),
-          _MaskWidget()
+          _leftBlur(),
+          _rightBlur(),
+          _bottomGradient(),
+          _userImg(),
+          _userImgAdd(),
+          _userProfileStar(),
+          _personalSignature(),
+          _userDes(),
+          // _userMoreProfile(),
+          _maskWidget()
         ]));
   }
 
-  Positioned _MaskWidget() {
+  Positioned _maskWidget() {
     return Positioned(
         child: AnimatedOpacity(
       duration: duration,
@@ -240,7 +236,7 @@ class MyProfileHeaderState extends State<MyProfileHeader>
     ));
   }
 
-  Positioned _UserMoreProfile() {
+  Positioned _userMoreProfile() {
     return Positioned(
         bottom: 10,
         left: (queryScreenWidth - queryUserDescWidth) / 2,
@@ -250,7 +246,7 @@ class MyProfileHeaderState extends State<MyProfileHeader>
             radius: const BorderRadius.all(Radius.circular(10))));
   }
 
-  Positioned _UserDes() {
+  Positioned _userDes() {
     return Positioned(
         bottom: userBottomHeight,
         left: 110,
@@ -279,7 +275,7 @@ class MyProfileHeaderState extends State<MyProfileHeader>
         ));
   }
 
-  Positioned _PersonalSignature() {
+  Positioned _personalSignature() {
     return Positioned(
         bottom: 110,
         left: 0,
@@ -292,7 +288,7 @@ class MyProfileHeaderState extends State<MyProfileHeader>
         ));
   }
 
-  Positioned _UserProfileStar() {
+  Positioned _userProfileStar() {
     return Positioned(
         right: 10,
         bottom: starBottomHeight,
@@ -300,12 +296,12 @@ class MyProfileHeaderState extends State<MyProfileHeader>
           width: 170,
           height: 50,
           child: Row(
-            children: [_StartOrFlow()],
+            children: [_startOrFlow()],
           ),
         ));
   }
 
-  Container _StartOrFlow() {
+  Container _startOrFlow() {
     return Container(
       width: 170,
       height: 50,
@@ -356,7 +352,7 @@ class MyProfileHeaderState extends State<MyProfileHeader>
     );
   }
 
-  Positioned _UserImgAdd() {
+  Positioned _userImgAdd() {
     return Positioned(
         bottom: userBottomHeight,
         left: 22,
@@ -373,7 +369,7 @@ class MyProfileHeaderState extends State<MyProfileHeader>
         ));
   }
 
-  Positioned _UserImg() {
+  Positioned _userImg() {
     return Positioned(
         bottom: userBottomHeight,
         left: 33,
@@ -399,7 +395,7 @@ class MyProfileHeaderState extends State<MyProfileHeader>
     );
   }
 
-  Positioned _BottomGradient() {
+  Positioned _bottomGradient() {
     return Positioned(
         bottom: 0,
         left: 0,
@@ -419,7 +415,7 @@ class MyProfileHeaderState extends State<MyProfileHeader>
         ));
   }
 
-  AnimatedPositioned _RightBlur() {
+  AnimatedPositioned _rightBlur() {
     return AnimatedPositioned(
         duration: duration,
         bottom: bottomRightDistance,
@@ -437,7 +433,7 @@ class MyProfileHeaderState extends State<MyProfileHeader>
             )));
   }
 
-  AnimatedPositioned _LeftBlur() {
+  AnimatedPositioned _leftBlur() {
     return AnimatedPositioned(
         duration: duration,
         bottom: bottomLeftDistance,
