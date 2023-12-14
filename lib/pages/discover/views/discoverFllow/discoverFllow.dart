@@ -24,7 +24,7 @@ class _DiscoverFllowTabPageState extends State<DiscoverFllowTabPage>
       itemBuilder: (context, index) {
         return Center(
           child: Text(
-            'DiscoverFllowTabPage-${index}',
+            'DiscoverFllowTabPage-$index',
             style: const TextStyle(color: FitnessAppTheme.white),
           ),
         );
