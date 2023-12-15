@@ -15,7 +15,7 @@ class _DiscoverFllowTabPageState extends State<DiscoverFllowTabPage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context); // 必须调用super.build
+    super.build(context); 
 
     return PageView.builder(
       // controller: discoverController.tabPageController,
