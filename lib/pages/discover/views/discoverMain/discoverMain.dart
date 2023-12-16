@@ -31,7 +31,7 @@ class _DiscoverMainTabPageState extends State<DiscoverMainTabPage>
           keepAlive: true,
           child: Center(
             child: Text(
-              'DiscoverMainTabPage-${index}',
+              'DiscoverMainTabPage-$index',
               style: const TextStyle(color: FitnessAppTheme.white),
             ),
           ),
