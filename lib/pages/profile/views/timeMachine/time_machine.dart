@@ -22,6 +22,8 @@ class _TimeMachineState extends State<TimeMachine> {
         crossAxisSpacing: 3,
         childAspectRatio: 1 / 1.6, // Set the desired aspect ratio here
       ),
+      shrinkWrap: true, // 添加 shrinkWrap 属性
+      padding: EdgeInsets.zero, // 添加 padding 属性
       physics: const NeverScrollableScrollPhysics(),
       itemCount: 10,
       itemBuilder: (context, index) {
