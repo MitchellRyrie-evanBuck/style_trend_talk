@@ -81,7 +81,7 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
   }
 
   void scrollControllerFn() {
-    // print('scrollController----${scrollController.offset}');
+    print('scrollController----${scrollController.offset}');
   }
 
   void profileContainerWidgetStateControllerFn() {
@@ -128,25 +128,20 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
               _profileContainerWidgetStateController),
           pinned: true,
         ),
-        _MyProfileContext()
+        _myProfileContext(),
+        SliverToBoxAdapter(
+          child: Container(height: 62),
+        )
       ],
     );
   }
 
-  Widget _MyProfileContext() {
+  Widget _myProfileContext() {
     return SliverFillRemaining(
       child: TabBarView(
         controller: _profileContainerWidgetStateController,
         children: listWidgets,
       ),
-    );
-  }
-
-  Widget _MyProfileLife() {
-    return SliverPersistentHeader(
-      delegate:
-          MySliverTabBarHeaderDelegate(_profileContainerWidgetStateController),
-      pinned: true,
     );
   }
 

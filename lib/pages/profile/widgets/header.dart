@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:style_trend_talk/data/fitness_app_theme.dart';
@@ -32,7 +34,10 @@ class ProfileHeaderState extends State<ProfileHeader>
         maxHeight: 600,
         child:
             (BuildContext context, double shrinkOffset, bool overlapsContent) {
-          return const TrendProfileController();
+          return TrendProfileController(
+            shrinkOffset: shrinkOffset,
+            overlapsContent: overlapsContent,
+          );
         },
       ),
       pinned: true,
@@ -75,7 +80,11 @@ class ProfileSliverPersistentHeaderDelegate
 }
 
 class TrendProfileController extends StatefulWidget {
-  const TrendProfileController({super.key});
+  const TrendProfileController(
+      {super.key, required this.shrinkOffset, required this.overlapsContent});
+
+  final double shrinkOffset;
+  final bool overlapsContent;
 
   @override
   State<TrendProfileController> createState() => _TrendProfileControllerState();
@@ -87,21 +96,11 @@ class _TrendProfileControllerState extends State<TrendProfileController> {
   @override
   Widget build(BuildContext context) {
     final queryScreenWidth = MediaQuery.of(context).size.width;
-
+    print('shrinkOffset==============${widget.shrinkOffset}');
     return Stack(
       children: [
         Positioned(
-            top: 0,
-            right: 0,
-            left: 0,
-            bottom: 300,
-            child: Container(
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/images/profile/profile.png'),
-                    fit: BoxFit.cover),
-              ),
-            )),
+            top: 0, right: 0, left: 0, bottom: 300, child: _backgroundImg()),
         ...List.generate(listProfile.length, (index) {
           return Positioned(
               bottom: listProfile[index]['btn'],
@@ -257,8 +256,44 @@ class _TrendProfileControllerState extends State<TrendProfileController> {
                 ),
               ]),
             )),
-        _userImg()
+        _userImg(),
+        if (widget.shrinkOffset > 490) _backgroundImg(),
+        if (widget.shrinkOffset > 490) _bottomGradient(),
+        if (widget.shrinkOffset > 490)
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10), // 添加模糊效果
+            child: Container(
+                height: 100,
+                padding: const EdgeInsets.only(top: 46),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _imgWidget(32, 32),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const Text(
+                      'AFL',
+                      style: TextStyle(
+                          color: FitnessAppTheme.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18),
+                    )
+                  ],
+                )),
+          ),
       ],
+    );
+  }
+
+  Container _backgroundImg() {
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage('assets/images/profile/profile.png'),
+            fit: BoxFit.cover),
+      ),
     );
   }
 
@@ -314,6 +349,26 @@ class _TrendProfileControllerState extends State<TrendProfileController> {
           image: const DecorationImage(
               image: AssetImage('assets/images/profile/user.png'))),
     );
+  }
+
+  Positioned _bottomGradient() {
+    return Positioned(
+        bottom: 0,
+        left: 0,
+        right: 0,
+        child: Container(
+          height: 100,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.bottomCenter, // 从底部开始
+              end: Alignment.topCenter, // 渐变到顶部
+              colors: [
+                Colors.black, // 底部颜色
+                Colors.transparent, // 中间透明
+              ],
+            ),
+          ),
+        ));
   }
 }
 
