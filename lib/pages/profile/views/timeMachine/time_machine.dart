@@ -27,8 +27,7 @@ class _TimeMachineState extends State<TimeMachine> {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: 10,
       itemBuilder: (context, index) {
-        return Container(
-            child: Stack(
+        return Stack(
           children: [
             const AspectRatio(
               aspectRatio: 1 / 1.6,
@@ -65,7 +64,7 @@ class _TimeMachineState extends State<TimeMachine> {
                   ),
                 ))
           ],
-        ));
+        );
       },
     ));
   }
