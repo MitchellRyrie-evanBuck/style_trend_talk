@@ -35,16 +35,19 @@ List<T> getRandomItems<T>(int count, List<T> sourceList) {
 /*
   @deprecated 生成随机数据
 */
-String getRandomUserImgs(List sourceList, int nums) {
+String getRandomUserImgs(
+  List sourceList,
+  int nums,
+) {
   return sourceList[random.nextInt(nums)];
 }
 
-String? getRandomStringOrNull(List<String> stringList) {
+String? getRandomStringOrNull(List<String> stringList, int probability) {
   // 生成一个随机数，范围为0到3
   int randomIndex = Random().nextInt(10);
 
   // 如果随机数为0，则返回数组中的随机字符串；否则返回null
-  return (randomIndex <= 7)
+  return (randomIndex <= probability)
       ? stringList[Random().nextInt(stringList.length)]
       : null;
 }

@@ -2,7 +2,7 @@ import 'package:style_trend_talk/data/index.dart';
 
 Future<dynamic> getRecommendation(int page) async {}
 
-class RecommendationModel {
+class DiscoverModel {
   final String userName;
   final String userId;
   final String id;
@@ -23,7 +23,7 @@ class RecommendationModel {
   final String text;
   final List<String> mentions;
 
-  RecommendationModel({
+  DiscoverModel({
     required this.userName,
     required this.userId,
     required this.id,
@@ -44,7 +44,7 @@ class RecommendationModel {
     required this.text,
     required this.mentions,
   });
-  RecommendationModel.fromMap(Map<String, dynamic> data)
+  DiscoverModel.fromMap(Map<String, dynamic> data)
       : userName = data['user_name'],
         userId = data['user_id'],
         id = data['id'],
@@ -69,13 +69,13 @@ class RecommendationModel {
 }
 
 // // 源数据
-// List<RecommendationModel> recommendationListSource = recommendationList
-//     .map((data) => RecommendationModel.fromMap(data))
+// List<DiscoverModel> recommendationListSource = recommendationList
+//     .map((data) => DiscoverModel.fromMap(data))
 //     .toList();
 
 //
-List<RecommendationModel> recommendationItems = List.generate(10, (index) {
-  return RecommendationModel(
+List<DiscoverModel> discoverItems = List.generate(10, (index) {
+  return DiscoverModel(
     userName: generateRandomString(10),
     userId: generateRandomUUID(),
     id: generateRandomUUID(),
@@ -92,7 +92,7 @@ List<RecommendationModel> recommendationItems = List.generate(10, (index) {
     createTimer: '2023-10-10',
     updateTimer: '2023-10-10',
     type: 1,
-    video: getRandomStringOrNull(videoFilesPaths, 7),
+    video: getRandomStringOrNull(videoFilesPaths, 10),
     photo: getRandomItems(random.nextInt(10), userListPath),
     text:
         'Life was like a box of chocolates, you never know what you going to get.o',
@@ -100,7 +100,7 @@ List<RecommendationModel> recommendationItems = List.generate(10, (index) {
   );
 });
 
-Future<List<RecommendationModel>> getBeerList(page, pageSize) async {
+Future<List<DiscoverModel>> getDiscoverList(page, pageSize) async {
   // ignore: avoid_print
-  return recommendationItems;
+  return discoverItems;
 }

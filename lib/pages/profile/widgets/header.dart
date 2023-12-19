@@ -261,7 +261,7 @@ class _TrendProfileControllerState extends State<TrendProfileController> {
         if (widget.shrinkOffset > 490) _bottomGradient(),
         if (widget.shrinkOffset > 490)
           BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10), // 添加模糊效果
+            filter: ImageFilter.blur(sigmaX: 12, sigmaY: 2), // 添加模糊效果
             child: Container(
                 height: 100,
                 padding: const EdgeInsets.only(top: 46),

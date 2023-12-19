@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:style_trend_talk/data/models/mock/discover.dart';
 
 class DiscoverController extends GetxController {
   DiscoverController();
@@ -8,7 +9,11 @@ class DiscoverController extends GetxController {
 
   final RxInt currentIndex = RxInt(0);
 
+  late RxList<DiscoverModel> discoverList = RxList<DiscoverModel>([]);
+
   _initData() {
+    // 先去获取十条视频
+    getDiscoverInfoList();
     update(["discover"]);
   }
 
@@ -18,6 +23,22 @@ class DiscoverController extends GetxController {
   // void onInit() {
   //   super.onInit();
   // }
+
+  Future<void> getDiscoverInfoList() async {
+    try {
+      // 调用你的API获取数据，这里使用假数据 discoverItems 代替
+      List<DiscoverModel> newList = await getDiscoverList(1, 10);
+
+      // 将新的数据添加到之前的数组中
+      discoverList.addAll(newList);
+
+      // 更新UI
+      update(["discover"]);
+    } catch (e) {
+      // 处理异常
+      print("Error fetching discover list: $e");
+    }
+  }
 
   void setIndex(index) {
     currentIndex.value = index;
