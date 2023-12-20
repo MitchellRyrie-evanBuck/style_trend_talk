@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:style_trend_talk/data/fitness_app_theme.dart';
 import 'package:style_trend_talk/data/models/mock/discover.dart';
 import 'package:style_trend_talk/pages/discover/controllers/controller.dart';
+import 'package:style_trend_talk/widget/discoverVideoWidget.dart';
 import 'package:style_trend_talk/widget/keepAliveWrapper.dart';
 import 'package:style_trend_talk/widget/videoWidget.dart';
 
@@ -79,7 +80,8 @@ class DiscoverControllerWidget extends StatelessWidget {
     return Stack(
       children: [
         Positioned.fill(
-          child: VideoComponent(videoPath: info.video as String, id: info.id),
+          child: DiscoverVideoComponent(
+              videoPath: info.video as String, id: info.id),
         ),
         // Center(
         //   child: Text(

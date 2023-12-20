@@ -249,7 +249,9 @@ class _BottomBarViewState extends State<BottomBarView>
                 onTap: widget.addClick,
                 child: Icon(
                   // FontAwesomeIcons.pushed,
-                  FontAwesomeIcons.squarePlus,
+                  isBtnFloat
+                      ? FontAwesomeIcons.plus
+                      : FontAwesomeIcons.squarePlus,
 
                   color: index.value != 1
                       ? FitnessAppTheme.white

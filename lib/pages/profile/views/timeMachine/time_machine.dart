@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+// import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TimeMachine extends StatefulWidget {
@@ -18,8 +18,8 @@ class _TimeMachineState extends State<TimeMachine> {
         child: GridView.builder(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
-        mainAxisSpacing: 3,
-        crossAxisSpacing: 3,
+        mainAxisSpacing: 2,
+        crossAxisSpacing: 2,
         childAspectRatio: 1 / 1.6, // Set the desired aspect ratio here
       ),
       shrinkWrap: true, // 添加 shrinkWrap 属性
