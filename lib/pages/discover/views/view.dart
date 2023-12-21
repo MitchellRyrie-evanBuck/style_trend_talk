@@ -42,32 +42,38 @@ class DiscoverPage extends GetView<DiscoverController> {
   Widget _buildView() {
     return Container(
       decoration: const BoxDecoration(color: FitnessAppTheme.black),
-      child: Stack(children: [
-        // 视频控制器(占满整个底部)
-        Positioned.fill(
-          child: PageView.builder(
-            controller: discoverController.tabPageController,
-            scrollDirection: Axis.horizontal,
-            itemCount: discoverListTabName.length, // 页面数量，假设有10个视频
-            itemBuilder: (context, index) {
-              return PageStorage(
-                bucket: PageStorageBucket(), // 创建一个新的存储桶
-                child: discoverRouterList[index],
-              );
-            },
+      child: Column(children: [
+        Expanded(
+            child: Stack(children: [
+          // 视频控制器(占满整个底部)
+          Positioned.fill(
+            child: PageView.builder(
+              controller: discoverController.tabPageController,
+              scrollDirection: Axis.horizontal,
+              itemCount: discoverListTabName.length, // 页面数量，假设有10个视频
+              itemBuilder: (context, index) {
+                return PageStorage(
+                  bucket: PageStorageBucket(), // 创建一个新的存储桶
+                  child: discoverRouterList[index],
+                );
+              },
+            ),
           ),
-        ),
-        // 表头
-        const Positioned(
-            top: 50,
-            left: 50,
-            right: 50,
-            child: Center(
-              child: DiscoverPageMiddleWareController(),
-            ))
-        // 用户(文案)
-        // 详情(文案)
-        // 操作
+          // 表头
+          const Positioned(
+              top: 50,
+              left: 50,
+              right: 50,
+              child: Center(
+                child: DiscoverPageMiddleWareController(),
+              ))
+          // 用户(文案)
+          // 详情(文案)
+          // 操作
+        ])),
+        const SizedBox(
+          height: 30,
+        )
       ]),
     );
   }
