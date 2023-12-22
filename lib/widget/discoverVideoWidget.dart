@@ -121,6 +121,7 @@ class _DiscoverVideoComponentState extends State<DiscoverVideoComponent>
             isShow = true;
           });
         }
+        _controller.setVolume(1);
       });
 
     /*
@@ -152,7 +153,6 @@ class _DiscoverVideoComponentState extends State<DiscoverVideoComponent>
           _timer = Timer.periodic(const Duration(seconds: 1), _updateTimer);
         });
       }
-      _controller.setVolume(1);
     });
 
     _controller.addListener(() {
