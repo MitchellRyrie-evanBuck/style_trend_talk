@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:style_trend_talk/data/fitness_app_theme.dart';
+// import 'package:style_trend_talk/data/fitness_app_theme.dart';
 import 'package:style_trend_talk/data/models/mock/discover.dart';
 import 'package:style_trend_talk/pages/discover/controllers/controller.dart';
 import 'package:style_trend_talk/widget/discoverVideoWidget.dart';
 import 'package:style_trend_talk/widget/keepAliveWrapper.dart';
-import 'package:style_trend_talk/widget/videoWidget.dart';
+// import 'package:style_trend_talk/widget/videoWidget.dart';
 
 class DiscoverMainTabPage extends StatefulWidget {
   const DiscoverMainTabPage({super.key});
