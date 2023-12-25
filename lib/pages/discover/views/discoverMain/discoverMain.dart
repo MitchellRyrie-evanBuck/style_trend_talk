@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:style_trend_talk/data/fitness_app_theme.dart';
 // import 'package:style_trend_talk/data/fitness_app_theme.dart';
 import 'package:style_trend_talk/data/models/mock/discover.dart';
 import 'package:style_trend_talk/pages/discover/controllers/controller.dart';
 import 'package:style_trend_talk/widget/discoverVideoWidget.dart';
 import 'package:style_trend_talk/widget/keepAliveWrapper.dart';
 // import 'package:style_trend_talk/widget/videoWidget.dart';
+
+TextStyle textStyleForVideo = const TextStyle(
+    color: FitnessAppTheme.white, fontSize: 15, fontWeight: FontWeight.w500);
 
 class DiscoverMainTabPage extends StatefulWidget {
   const DiscoverMainTabPage({super.key});
@@ -45,29 +50,16 @@ class _DiscoverMainTabPageState extends State<DiscoverMainTabPage>
         itemCount: discoverController.discoverList.length,
         itemBuilder: (context, index) {
           return KeepAliveWrapper(
-            keepAlive: true,
-            child: DiscoverControllerWidget(
-              info: discoverController.discoverList[index],
-            ),
-          );
+              keepAlive: true,
+              child: Container(
+                color: Colors.amber,
+                child: DiscoverControllerWidget(
+                  info: discoverController.discoverList[index],
+                ),
+              ));
         },
       ),
     );
-    // return PageView.builder(
-    //   // controller: discoverController.tabPageController,
-    //   scrollDirection: Axis.vertical,
-    //   itemCount: discoverController.discoverList.length, // 页面数量，假设有10个视频
-    //   itemBuilder: (context, index) {
-    //     return const KeepAliveWrapper(
-    //       // 为 true 后会缓存所有的列表项，列表项将不会销毁。
-    //       // 为 false 时，列表项滑出预加载区域后将会别销毁。
-    //       // 使用时一定要注意是否必要，因为对所有列表项都缓存的会导致更多的内存消耗
-
-    //       keepAlive: true,
-    //       child: DiscoverControllerWidget(),
-    //     );
-    //   },
-    // );
   }
 }
 
@@ -83,12 +75,126 @@ class DiscoverControllerWidget extends StatelessWidget {
           child: DiscoverVideoComponent(
               videoPath: info.video as String, id: info.id),
         ),
-        // Center(
-        //   child: Text(
-        //     info.userName,
-        //     style: const TextStyle(color: FitnessAppTheme.white),
-        //   ),
-        // )
+        Positioned(
+          right: 0,
+          bottom: 60,
+          child: Container(
+            // height: 330,
+            width: 70,
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 55,
+                    child: Stack(children: [
+                      Container(
+                        height: 45,
+                        width: 45,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.white,
+                              width: 2,
+                            ),
+                            image: const DecorationImage(
+                                image: AssetImage(
+                                    'assets/images/profile/user.png'))),
+                      ),
+                      Positioned(
+                          top: 35,
+                          left: 13,
+                          child: Container(
+                            height: 20,
+                            width: 20,
+                            decoration: const BoxDecoration(
+                              color: Colors.red,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              FontAwesomeIcons.plus,
+                              color: Colors.white,
+                              size: 15,
+                            ),
+                          ))
+                    ]),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Column(
+                    children: [
+                      const Icon(
+                        FontAwesomeIcons.solidHeart,
+                        color: Colors.red,
+                        size: 32,
+                      ),
+                      Text(
+                        '11.1k',
+                        style: textStyleForVideo,
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Column(
+                    children: [
+                      const Icon(
+                        FontAwesomeIcons.solidCommentDots,
+                        color: Colors.white,
+                        size: 32,
+                      ),
+                      Text(
+                        '11.1k',
+                        style: textStyleForVideo,
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Column(
+                    children: [
+                      const Icon(
+                        FontAwesomeIcons.solidStar,
+                        color: Colors.white,
+                        size: 32,
+                      ),
+                      Text(
+                        '11.1k',
+                        style: textStyleForVideo,
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+
+                  Column(
+                    children: [
+                      const Icon(
+                        FontAwesomeIcons.share,
+                        color: Colors.white,
+                        size: 32,
+                      ),
+                      Text(
+                        '11.1k',
+                        style: textStyleForVideo,
+                      )
+                    ],
+                  ),
+                  // const SizedBox(
+                  //   height: 20,
+                  // ),
+                  // const Icon(
+                  //   FontAwesomeIcons.heartCrack,
+                  //   color: Colors.white,
+                  //   size: 32,
+                  // ),
+                ]),
+          ),
+        )
       ],
     );
   }

@@ -72,7 +72,7 @@ class DiscoverPage extends GetView<DiscoverController> {
           // 操作
         ])),
         const SizedBox(
-          height: 30,
+          height: 80,
         )
       ]),
     );
