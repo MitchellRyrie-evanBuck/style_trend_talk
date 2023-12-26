@@ -78,7 +78,7 @@ class DiscoverControllerWidget extends StatelessWidget {
         Positioned(
           right: 0,
           bottom: 60,
-          child: Container(
+          child: SizedBox(
             // height: 330,
             width: 70,
             child: Column(
