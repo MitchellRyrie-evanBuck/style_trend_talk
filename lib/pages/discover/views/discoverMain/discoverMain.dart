@@ -123,6 +123,8 @@ class DiscoverControllerWidget extends StatelessWidget {
                     height: 16,
                   ),
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Icon(
                         FontAwesomeIcons.solidHeart,
@@ -138,23 +140,34 @@ class DiscoverControllerWidget extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-                  Column(
-                    children: [
-                      const Icon(
-                        FontAwesomeIcons.solidCommentDots,
-                        color: Colors.white,
-                        size: 32,
-                      ),
-                      Text(
-                        '11.1k',
-                        style: textStyleForVideo,
-                      )
-                    ],
+                  GestureDetector(
+                    onTap: () {
+                      // 点击按钮时显示评论框
+                      _showCommentSheet(context);
+                    },
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          FontAwesomeIcons.solidCommentDots,
+                          color: Colors.white,
+                          size: 32,
+                        ),
+                        Text(
+                          '11.1k',
+                          style: textStyleForVideo,
+                        )
+                      ],
+                    ),
                   ),
+
                   const SizedBox(
                     height: 16,
                   ),
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Icon(
                         FontAwesomeIcons.solidStar,
@@ -172,6 +185,8 @@ class DiscoverControllerWidget extends StatelessWidget {
                   ),
 
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Icon(
                         FontAwesomeIcons.share,
@@ -196,6 +211,168 @@ class DiscoverControllerWidget extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+
+  // 显示评论框
+  void _showCommentSheet(BuildContext context) {
+    var sheetHeight = MediaQuery.of(context).size.height;
+    var sheetWidth = MediaQuery.of(context).size.width;
+    TextEditingController controller = TextEditingController();
+    var sheetCommentHeight = (sheetHeight / 2) + 50;
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24.0), topRight: Radius.circular(24.0))),
+      builder: (BuildContext context) {
+        return Container(
+          height: sheetCommentHeight,
+          width: sheetWidth,
+          child: Column(
+            children: [
+              Container(
+                width: sheetWidth,
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 6,
+                      width: 38,
+                      decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 92, 92, 92),
+                          borderRadius: BorderRadius.circular(16.0)),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      '评论',
+                      style: TextStyle(color: Colors.black, fontSize: 14),
+                    )
+                  ],
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  child: const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          '还没有评论',
+                          style: TextStyle(color: Colors.black, fontSize: 18),
+                        ),
+                        Text(
+                          '开始评论',
+                          style: TextStyle(
+                              color: Color.fromARGB(255, 87, 87, 87),
+                              fontSize: 14),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              CommentAlign(controller: controller),
+              const SizedBox(
+                height: 30,
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class CommentAlign extends StatelessWidget {
+  const CommentAlign({
+    super.key,
+    required TextEditingController controller,
+  }) : _controller = controller;
+
+  final TextEditingController _controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        padding: EdgeInsets.only(
+          bottom: MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Container(
+          height: 50,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                height: 40,
+                width: 40,
+                decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/profile/user.png'))),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Container(
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 233, 233, 233), // 设置背景色
+                    borderRadius: BorderRadius.circular(20.0), // 设置圆角（可选）
+                  ),
+                  child: TextField(
+                    controller: _controller,
+                    style: const TextStyle(color: Colors.black),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: '善语结善缘，恶语伤人心.',
+                      hintStyle:
+                          const TextStyle(color: Colors.grey, fontSize: 14),
+                      contentPadding:
+                          const EdgeInsets.only(top: 2, left: 24, right: 0),
+                      suffixIconConstraints:
+                          const BoxConstraints.tightFor(width: 40),
+                      suffixIcon: IconButton(
+                        icon: const Icon(
+                          FontAwesomeIcons.circleUp,
+                          color: Color.fromARGB(255, 82, 82, 82),
+                          size: 20,
+                        ),
+                        onPressed: () {
+                          print('Searching for: ${_controller.text}');
+                        },
+                      ),
+                    ),
+                    onSubmitted: (text) {
+                      // Handle search action here as well
+                      print('Searching for: $text');
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(width: 16),
+              const SizedBox(
+                height: 40,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [Icon(FontAwesomeIcons.gift)],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
