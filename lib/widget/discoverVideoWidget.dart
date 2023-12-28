@@ -31,9 +31,8 @@ class _DiscoverVideoComponentState extends State<DiscoverVideoComponent>
   late VideoPlayerController _controller;
   late Widget playerWidget;
   bool isShow = false;
-  double _videoHeight = 220.0; // 初始高度，可以根据需要调整
+// 初始高度，可以根据需要调整
   final double _maxVideoHeight = 400.0; // 最大高度，可以根据需要调整
-  double _videoWidth = 300;
   double iconSize = 30;
   double distance = 7;
   late bool isPlaying = false;
@@ -45,12 +44,10 @@ class _DiscoverVideoComponentState extends State<DiscoverVideoComponent>
   late Timer delayedTimer = Timer(milliseconds300, () {});
   late String videoTimer;
   late Timer _timer;
-  Duration _currentTime = Duration.zero;
   final homeController = Get.put(HomeController());
 
   /// 每次执行完 暂停 播放时 都会置为false
   bool operation = true; // 检测你在 两秒内 有没有动作
-  late Animation<double> _animation;
   late AnimationController _animationController;
   bool isVisibility = true;
 
@@ -89,13 +86,6 @@ class _DiscoverVideoComponentState extends State<DiscoverVideoComponent>
       vsync: this,
     );
 
-    _animation = Tween<double>(begin: 1.0, end: 0.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeInOut,
-      ),
-    );
-
     // _animationController.forward();
   }
 
@@ -108,16 +98,12 @@ class _DiscoverVideoComponentState extends State<DiscoverVideoComponent>
         double calculatedHeight = screenWidth * (videoHeight / videoWidth);
 
         if (calculatedHeight > _maxVideoHeight) {
-          double calculatedWidth = _maxVideoHeight * (videoWidth / videoHeight);
+          // double calculatedWidth = _maxVideoHeight * (videoWidth / videoHeight);
           setState(() {
-            _videoHeight = _maxVideoHeight;
-            _videoWidth = calculatedWidth;
             isShow = true;
           });
         } else {
           setState(() {
-            _videoHeight = calculatedHeight;
-            _videoWidth = screenWidth;
             isShow = true;
           });
         }
@@ -166,7 +152,6 @@ class _DiscoverVideoComponentState extends State<DiscoverVideoComponent>
           isVisibility = true;
           _animationController.reverse();
           _timer = Timer.periodic(const Duration(seconds: 1), _updateTimer);
-          _currentTime = _controller.value.position;
         });
       }
     });
@@ -174,9 +159,7 @@ class _DiscoverVideoComponentState extends State<DiscoverVideoComponent>
 
   void _updateTimer(Timer timer) {
     if (_controller.value.isPlaying && mounted) {
-      setState(() {
-        _currentTime = _controller.value.position;
-      });
+      setState(() {});
     }
   }
 
