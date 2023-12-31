@@ -220,6 +220,7 @@ class DiscoverControllerWidget extends StatelessWidget {
     var sheetWidth = MediaQuery.of(context).size.width;
     TextEditingController controller = TextEditingController();
     var sheetCommentHeight = (sheetHeight / 2) + 50;
+    var showComment = true;
 
     showModalBottomSheet(
       context: context,
@@ -257,26 +258,29 @@ class DiscoverControllerWidget extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: Container(
-                  child: const Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          '还没有评论',
-                          style: TextStyle(color: Colors.black, fontSize: 18),
+                child: showComment
+                    ? _commentContainer()
+                    : Container(
+                        child: const Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                '还没有评论',
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 18),
+                              ),
+                              Text(
+                                '开始评论',
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 87, 87, 87),
+                                    fontSize: 14),
+                              )
+                            ],
+                          ),
                         ),
-                        Text(
-                          '开始评论',
-                          style: TextStyle(
-                              color: Color.fromARGB(255, 87, 87, 87),
-                              fontSize: 14),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                      ),
               ),
               CommentAlign(controller: controller),
               const SizedBox(
@@ -286,6 +290,18 @@ class DiscoverControllerWidget extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  Widget _commentContainer() {
+    return SingleChildScrollView(
+      child: Column(
+        children: List.generate(30, (index) {
+          return ListTile(
+            title: Text('Item ${index + 1}'),
+          );
+        }),
+      ),
     );
   }
 }
