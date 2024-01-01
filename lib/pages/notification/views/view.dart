@@ -1,6 +1,7 @@
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:style_trend_talk/data/fitness_app_theme.dart';
 // import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:style_trend_talk/pages/notification/widgets/group/index.dart';
 import 'package:style_trend_talk/pages/notification/widgets/message_search/search.dart';
@@ -28,6 +29,7 @@ class NotificationPage extends GetView<NotificationController> {
       id: "notification",
       builder: (_) {
         return Scaffold(
+          backgroundColor: FitnessAppTheme.white,
           body: SafeArea(
             child: _buildView(),
           ),
