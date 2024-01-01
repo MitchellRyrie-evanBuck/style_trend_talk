@@ -13,7 +13,8 @@ final List<GetPage> appRoutes = [
   GetPage(name: '/search', page: () => const SeniorSearch()),
   GetPage(name: '/publish', page: () => const PublishWidgetPage()),
   GetPage(name: '/recommendationDetails', page: () => DetailsPage()),
-  GetPage(name: '/trend', page: () => const TrendPage())
+  GetPage(name: '/trend', page: () => const TrendPage()),
+  GetPage(name: '/chart', page: () => const ChatPages()),
 
   // 添加其他路由和详情页的GetPage
 ];

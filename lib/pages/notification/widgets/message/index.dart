@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:style_trend_talk/data/index.dart';
+import 'package:style_trend_talk/pages/index.dart';
 
 class CustomMessageWidget extends StatefulWidget {
   const CustomMessageWidget({super.key, required this.itemData});
@@ -99,37 +101,46 @@ class SwipeToDeleteChatBubble extends StatelessWidget {
                     width: 15,
                   ),
                   Expanded(
-                      child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(
-                              data.name,
-                              style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  data.lastMessage,
-                                  style: const TextStyle(
-                                      color: Color.fromARGB(255, 99, 99, 99),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      )
-                    ],
+                      child: GestureDetector(
+                    onTap: () {
+                      Get.to(
+                        const ChatPages(),
+                        // transition: Transition.circularReveal,
+                        transition: Transition.rightToLeftWithFade,
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                data.name,
+                                style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    data.lastMessage,
+                                    style: const TextStyle(
+                                        color: Color.fromARGB(255, 99, 99, 99),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ))
                 ],
               ),

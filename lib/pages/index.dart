@@ -10,3 +10,4 @@ export 'core/search/search.dart';
 export 'core/publish/publish.dart';
 export 'details/views/view.dart';
 export 'trend/index.dart';
+export 'core/chat/index.dart';
