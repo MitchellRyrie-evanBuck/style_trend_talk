@@ -13,7 +13,36 @@ class ChatPages extends StatefulWidget {
 
 class _ChatPagesState extends State<ChatPages> {
   final TextEditingController _textController = new TextEditingController();
-  final List<ChatMessage> _messages = <ChatMessage>[];
+  final List<ChatMessage> _messages = <ChatMessage>[
+    const ChatMessage(
+      text:
+          "Using a widget function instead of a widget fully guarantees that the widget and its controllers will be removed from memory when they are no longer used",
+    ),
+    const ChatMessage(
+      text:
+          "Using a widget function instead of a widget fully guarantees that the widget and its controllers will be removed from memory when they are no longer used",
+    ),
+    const ChatMessage(
+      text:
+          "Using a widget function instead of a widget fully guarantees that the widget and its controllers will be removed from memory when they are no longer used",
+    ),
+    const ChatMessage(
+      text:
+          "Using a widget function instead of a widget fully guarantees that the widget and its controllers will be removed from memory when they are no longer used",
+    ),
+    const ChatMessage(
+      text:
+          "Using a widget function instead of a widget fully guarantees that the widget and its controllers will be removed from memory when they are no longer used",
+    ),
+    const ChatMessage(
+      text:
+          "Using a widget function instead of a widget fully guarantees that the widget and its controllers will be removed from memory when they are no longer used",
+    ),
+    const ChatMessage(
+      text:
+          "Using a widget function instead of a widget fully guarantees that the widget and its controllers will be removed from memory when they are no longer used",
+    ),
+  ];
 
   void _handleSubmitted(String text) {
     _textController.clear();

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -51,7 +53,8 @@ class ChartForSliverPersistentHeaderDelegate
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return SizedBox.expand(
+    return Container(
+        color: Colors.transparent,
         child: child(context, shrinkOffset, overlapsContent));
   }
 
@@ -79,29 +82,34 @@ class _ChartMessageControllerState extends State<ChartMessageController> {
   Widget build(BuildContext context) {
     final queryScreenWidth = MediaQuery.of(context).size.width;
     print('shrinkOffset==============${widget.shrinkOffset}');
-    return Stack(
-      children: [
-        Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: 54,
-              color: Colors.blueAccent,
-              child: Row(
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        navigator?.pop(context);
-                      },
-                      icon: const Icon(
-                        FontAwesomeIcons.arrowLeft,
-                        size: 18,
-                      )),
-                ],
-              ),
-            ))
-      ],
+    return Container(
+      child: Stack(
+        children: [
+          Positioned.fill(
+              child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 22, sigmaY: 22),
+          )),
+          Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                height: 54,
+                child: Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          navigator?.pop(context);
+                        },
+                        icon: const Icon(
+                          FontAwesomeIcons.arrowLeft,
+                          size: 18,
+                        )),
+                  ],
+                ),
+              ))
+        ],
+      ),
     );
   }
 }
