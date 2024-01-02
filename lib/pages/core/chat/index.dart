@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:style_trend_talk/data/fitness_app_theme.dart';
 
 import 'chartHeader.dart';
@@ -15,34 +16,32 @@ class _ChatPagesState extends State<ChatPages> {
   final TextEditingController _textController = new TextEditingController();
   final List<ChatMessage> _messages = <ChatMessage>[
     const ChatMessage(
-      text:
-          "Using a widget function instead of a widget fully guarantees that the widget and its controllers will be removed from memory when they are no longer used",
+      text: "Using a widget function instead of ",
     ),
     const ChatMessage(
       text:
           "Using a widget function instead of a widget fully guarantees that the widget and its controllers will be removed from memory when they are no longer used",
     ),
     const ChatMessage(
-      text:
-          "Using a widget function instead of a widget fully guarantees that the widget and its controllers will be removed from memory when they are no longer used",
+      text: "Using a widget ",
     ),
     const ChatMessage(
       text:
-          "Using a widget function instead of a widget fully guarantees that the widget and its controllers will be removed from memory when they are no longer used",
+          "Using a widget function instead of a widget fullyare no longer used",
+    ),
+    const ChatMessage(
+      text: "Using a widget functioom memory when they are no longer used",
     ),
     const ChatMessage(
       text:
-          "Using a widget function instead of a widget fully guarantees that the widget and its controllers will be removed from memory when they are no longer used",
+          "Using a widget function inste removed from memory when they are no longer used",
     ),
     const ChatMessage(
       text:
-          "Using a widget function instead of a widget fully guarantees that the widget and its controllers will be removed from memory when they are no longer used",
-    ),
-    const ChatMessage(
-      text:
-          "Using a widget function instead of a widget fully guarantees that the widget and its controllers will be removed from memory when they are no longer used",
+          "Using a widget function i and its controllers will be removed from memory when they are no longer used",
     ),
   ];
+  final FocusNode _focusNode = FocusNode();
 
   void _handleSubmitted(String text) {
     _textController.clear();
@@ -52,34 +51,6 @@ class _ChatPagesState extends State<ChatPages> {
     setState(() {
       _messages.insert(0, message);
     });
-  }
-
-  Widget _textComposerWidget() {
-    return IconTheme(
-      data: const IconThemeData(color: Colors.blue),
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Row(
-          children: <Widget>[
-            Flexible(
-              child: TextField(
-                decoration:
-                    const InputDecoration.collapsed(hintText: "Send a message"),
-                controller: _textController,
-                onSubmitted: _handleSubmitted,
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 4.0),
-              child: IconButton(
-                icon: const Icon(Icons.send),
-                onPressed: () => _handleSubmitted(_textController.text),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
   }
 
   @override
@@ -97,12 +68,10 @@ class _ChatPagesState extends State<ChatPages> {
                   child: ListView.builder(
                     padding: const EdgeInsets.all(8.0),
                     reverse: true,
+                    physics: const AlwaysScrollableScrollPhysics(),
                     itemBuilder: (_, int index) => _messages[index],
                     itemCount: _messages.length,
                   ),
-                ),
-                const Divider(
-                  height: 1.0,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -116,5 +85,112 @@ class _ChatPagesState extends State<ChatPages> {
         ],
       ),
     );
+  }
+
+  Widget _textComposerWidget() {
+    return IconTheme(
+      data: const IconThemeData(color: Color.fromARGB(255, 0, 140, 255)),
+      child: Container(
+        padding: const EdgeInsets.only(bottom: 32, left: 10, right: 10),
+        child: Row(
+          children: <Widget>[
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 0),
+              padding: EdgeInsets.zero,
+              width: 38,
+              child: IconButton(
+                icon: const Icon(
+                  FontAwesomeIcons.circlePlus,
+                  size: 18,
+                ),
+                onPressed: () => _handleSubmitted(_textController.text),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 0),
+              padding: EdgeInsets.zero,
+              width: 38,
+              child: IconButton(
+                icon: const Icon(
+                  FontAwesomeIcons.camera,
+                  size: 18,
+                ),
+                onPressed: () => _handleSubmitted(_textController.text),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 0),
+              padding: EdgeInsets.zero,
+              width: 38,
+              child: IconButton(
+                icon: const Icon(
+                  FontAwesomeIcons.image,
+                  size: 18,
+                ),
+                onPressed: () => _handleSubmitted(_textController.text),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 0),
+              padding: EdgeInsets.zero,
+              width: 38,
+              child: IconButton(
+                icon: const Icon(
+                  FontAwesomeIcons.microphone,
+                  size: 18,
+                ),
+                onPressed: () => _handleSubmitted(_textController.text),
+              ),
+            ),
+            Flexible(child: _textField()),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 5),
+              padding: EdgeInsets.zero,
+              width: 38,
+              child: IconButton(
+                icon: const Icon(
+                  FontAwesomeIcons.solidThumbsUp,
+                  size: 18,
+                ),
+                onPressed: () => _handleSubmitted(_textController.text),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _textField() {
+    return IconTheme(
+        data: const IconThemeData(color: Color.fromARGB(255, 0, 140, 255)),
+        child: ClipRRect(
+            // 裁剪一个borderRadius为25的矩形
+            borderRadius: BorderRadius.circular(25),
+            child: Container(
+                height: 36,
+                decoration: const BoxDecoration(
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    borderRadius: BorderRadius.all(Radius.circular(25))),
+                child: TextField(
+                  focusNode: _focusNode,
+                  style: const TextStyle(
+                      fontSize: 16, color: Color.fromARGB(255, 0, 0, 0)),
+                  decoration: const InputDecoration(
+                    filled: true,
+                    fillColor: Color.fromARGB(255, 241, 241, 241),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+                    hintText: 'Aa......',
+                    hintStyle:
+                        TextStyle(color: Color.fromARGB(255, 93, 93, 93)),
+                    suffixIcon: Icon(
+                      FontAwesomeIcons.solidFaceSmile,
+                      color: Color.fromARGB(255, 0, 140, 255),
+                      size: 18,
+                    ),
+                    border: InputBorder.none,
+                  ),
+                ))));
   }
 }

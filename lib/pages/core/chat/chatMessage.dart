@@ -9,35 +9,55 @@ class ChatMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final queryScreenWidth = MediaQuery.of(context).size.width;
-
+    print('queryScreenWidth===@@@@@@@@@@@@@@@@@@@@@@@@@@@@$queryScreenWidth');
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10.0),
-      width: queryScreenWidth - 100,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           Container(
-            margin: const EdgeInsets.only(right: 16.0),
-            child: CircleAvatar(
-              backgroundColor: Colors.black,
-              child: Text(_name[0]),
+            margin: const EdgeInsets.only(right: 10.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.black,
+                  child: Text(_name[0]),
+                ),
+              ],
             ),
           ),
-          Expanded(
-            // 使用Expanded包装文本所在的Container
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(_name, style: Theme.of(context).textTheme.bodyLarge),
-                Container(
-                  margin: const EdgeInsets.only(top: 5.0),
-                  child: Text(
-                    text,
-                    softWrap: true,
-                    style: TextStyle(),
-                  ),
-                )
-              ],
+          Container(
+            constraints: BoxConstraints(
+              maxWidth: queryScreenWidth - 100,
+            ),
+            child: Container(
+              padding: const EdgeInsets.only(
+                  top: 8.0, left: 12, right: 12, bottom: 8),
+              decoration: const BoxDecoration(
+                color: Color.fromARGB(255, 111, 77, 246),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    child: Text(
+                      text,
+                      softWrap: true,
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ],
