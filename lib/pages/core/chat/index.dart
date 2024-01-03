@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:style_trend_talk/data/fitness_app_theme.dart';
 import 'package:style_trend_talk/data/models/mock/chat.dart';
+import 'package:style_trend_talk/pages/core/chat/myChatMessage.dart';
 
 import 'chartHeader.dart';
 import 'chatMessage.dart';
@@ -64,8 +65,9 @@ class _ChatPagesState extends State<ChatPages> {
                     padding: const EdgeInsets.all(8.0),
                     reverse: true,
                     physics: const AlwaysScrollableScrollPhysics(),
-                    itemBuilder: (_, int index) =>
-                        ChatMessage(_messages[index]),
+                    itemBuilder: (_, int index) => _messages[index].id == 1
+                        ? ChatMessage(_messages[index])
+                        : MyChatMessage(_messages[index]),
                     itemCount: _messages.length,
                   ),
                 ),
