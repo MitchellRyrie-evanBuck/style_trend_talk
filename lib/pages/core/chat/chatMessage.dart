@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:style_trend_talk/data/models/mock/chat.dart';
 
 const String _name = "Pawan";
 
 class ChatMessage extends StatelessWidget {
-  final String text;
-  const ChatMessage({required this.text});
+  final ChartModel data;
+  const ChatMessage(this.data);
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +22,13 @@ class ChatMessage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                CircleAvatar(
-                  backgroundColor: Colors.black,
-                  child: Text(_name[0]),
+                Container(
+                  width: 30,
+                  height: 30,
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: AssetImage('assets/images/profile/user.png'))),
                 ),
               ],
             ),
@@ -49,7 +54,7 @@ class ChatMessage extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     child: Text(
-                      text,
+                      data.text,
                       softWrap: true,
                       style: const TextStyle(
                         color: Colors.white,

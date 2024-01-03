@@ -1,4 +1,5 @@
 // 生成随机字符串的函数
+// import 'dart:ffi';
 import 'dart:math';
 
 import 'package:uuid/uuid.dart';
@@ -55,4 +56,12 @@ String? getRandomStringOrNull(List<String> stringList, int probability) {
 String generateRandomUUID() {
   const uuid = Uuid();
   return uuid.v4();
+}
+
+int getRandomByID() {
+  // 生成一个随机数，范围为0到3
+  int randomIndex = Random().nextInt(10);
+
+  // 如果随机数为0，则返回数组中的随机字符串；否则返回null
+  return randomIndex <= 8 ? 1 : 2;
 }

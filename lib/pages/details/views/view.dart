@@ -9,7 +9,7 @@ import '../index.dart';
 class DetailsPage extends GetView<DetailsController> {
   DetailsPage({Key? key}) : super(key: key);
 
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
 
   // 主视图
   Widget _buildView(BuildContext context) {

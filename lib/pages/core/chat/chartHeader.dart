@@ -54,7 +54,7 @@ class ChartForSliverPersistentHeaderDelegate
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
-        color: Colors.transparent,
+        color: Color.fromARGB(0, 255, 255, 255),
         child: child(context, shrinkOffset, overlapsContent));
   }
 
@@ -102,9 +102,49 @@ class _ChartMessageControllerState extends State<ChartMessageController> {
                           navigator?.pop(context);
                         },
                         icon: const Icon(
-                          FontAwesomeIcons.arrowLeft,
+                          FontAwesomeIcons.chevronLeft,
                           size: 18,
+                          color: Color.fromARGB(255, 142, 39, 207),
                         )),
+                    Container(
+                      width: 32,
+                      height: 32,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  'assets/images/profile/user.png'))),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const Text(
+                      'Mitchell Ryrie',
+                      style: TextStyle(
+                          color: FitnessAppTheme.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    const Spacer(),
+                    const SizedBox(
+                      width: 50,
+                      child: Icon(
+                        FontAwesomeIcons.phone,
+                        size: 20,
+                        color: Color.fromARGB(255, 142, 39, 207),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 40,
+                      child: Icon(
+                        FontAwesomeIcons.video,
+                        size: 20,
+                        color: Color.fromARGB(255, 142, 39, 207),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    )
                   ],
                 ),
               ))

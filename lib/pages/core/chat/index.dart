@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:style_trend_talk/data/fitness_app_theme.dart';
+import 'package:style_trend_talk/data/models/mock/chat.dart';
 
 import 'chartHeader.dart';
 import 'chatMessage.dart';
@@ -13,44 +14,38 @@ class ChatPages extends StatefulWidget {
 }
 
 class _ChatPagesState extends State<ChatPages> {
-  final TextEditingController _textController = new TextEditingController();
-  final List<ChatMessage> _messages = <ChatMessage>[
-    const ChatMessage(
-      text: "Using a widget function instead of ",
-    ),
-    const ChatMessage(
-      text:
-          "Using a widget function instead of a widget fully guarantees that the widget and its controllers will be removed from memory when they are no longer used",
-    ),
-    const ChatMessage(
-      text: "Using a widget ",
-    ),
-    const ChatMessage(
-      text:
-          "Using a widget function instead of a widget fullyare no longer used",
-    ),
-    const ChatMessage(
-      text: "Using a widget functioom memory when they are no longer used",
-    ),
-    const ChatMessage(
-      text:
-          "Using a widget function inste removed from memory when they are no longer used",
-    ),
-    const ChatMessage(
-      text:
-          "Using a widget function i and its controllers will be removed from memory when they are no longer used",
-    ),
-  ];
+  final TextEditingController _textController = TextEditingController();
+
+  final List<ChartModel> _messages = <ChartModel>[];
   final FocusNode _focusNode = FocusNode();
 
   void _handleSubmitted(String text) {
     _textController.clear();
-    ChatMessage message = ChatMessage(
-      text: text,
-    );
+    // ChatMessage message = ChatMessage(
+    //   text: text,
+    // );
     setState(() {
-      _messages.insert(0, message);
+      // _messages.insert(0, message);
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getDiscoverInfoList();
+  }
+
+  Future<void> getDiscoverInfoList() async {
+    try {
+      // 调用你的API获取数据，这里使用假数据 discoverItems 代替
+      List<ChartModel> newList = await getChartList(1, 10);
+      // 将新的数据添加到之前的数组中
+      _messages.addAll(newList);
+      // 更新UI
+    } catch (e) {
+      // 处理异常
+      print("Error fetching discover list: $e");
+    }
   }
 
   @override
@@ -69,7 +64,8 @@ class _ChatPagesState extends State<ChatPages> {
                     padding: const EdgeInsets.all(8.0),
                     reverse: true,
                     physics: const AlwaysScrollableScrollPhysics(),
-                    itemBuilder: (_, int index) => _messages[index],
+                    itemBuilder: (_, int index) =>
+                        ChatMessage(_messages[index]),
                     itemCount: _messages.length,
                   ),
                 ),
@@ -185,7 +181,7 @@ class _ChatPagesState extends State<ChatPages> {
                     hintStyle:
                         TextStyle(color: Color.fromARGB(255, 93, 93, 93)),
                     suffixIcon: Icon(
-                      FontAwesomeIcons.solidFaceSmile,
+                      FontAwesomeIcons.ghost,
                       color: Color.fromARGB(255, 0, 140, 255),
                       size: 18,
                     ),
