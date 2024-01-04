@@ -1,56 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:style_trend_talk/data/fitness_app_theme.dart';
 import 'package:style_trend_talk/data/models/mock/chat.dart';
+import 'package:style_trend_talk/pages/core/chat/controllers/chatController.dart';
 import 'package:style_trend_talk/pages/core/chat/myChatMessage.dart';
 
 import 'chartHeader.dart';
 import 'chatMessage.dart';
 
-class ChatPages extends StatefulWidget {
-  const ChatPages({super.key});
-
-  @override
-  State<ChatPages> createState() => _ChatPagesState();
-}
-
-class _ChatPagesState extends State<ChatPages> {
+class ChatPages extends GetView<ChartController> {
   final TextEditingController _textController = TextEditingController();
 
-  final List<ChartModel> _messages = <ChartModel>[];
+  // final List<ChartModel> _messages = <ChartModel>[];
   final FocusNode _focusNode = FocusNode();
+
+  ChatPages({super.key});
 
   void _handleSubmitted(String text) {
     _textController.clear();
-    // ChatMessage message = ChatMessage(
-    //   text: text,
-    // );
-    setState(() {
-      // _messages.insert(0, message);
-    });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    getDiscoverInfoList();
-  }
-
-  Future<void> getDiscoverInfoList() async {
-    try {
-      // 调用你的API获取数据，这里使用假数据 discoverItems 代替
-      List<ChartModel> newList = await getChartList(1, 10);
-      // 将新的数据添加到之前的数组中
-      _messages.addAll(newList);
-      // 更新UI
-    } catch (e) {
-      // 处理异常
-      print("Error fetching discover list: $e");
-    }
-  }
+  final discoverController = Get.put(ChartController());
 
   @override
   Widget build(BuildContext context) {
+    return GetBuilder<ChartController>(
+      init: ChartController(),
+      // init: controller, // 在这里调用 init 方法
+      id: "chart",
+      builder: (_) {
+        return Scaffold(
+          body: _chartScafold(context),
+        );
+      },
+    );
+  }
+
+  Scaffold _chartScafold(BuildContext context) {
     return Scaffold(
       backgroundColor: FitnessAppTheme.white,
       resizeToAvoidBottomInset: true, // assign true
@@ -65,10 +52,20 @@ class _ChatPagesState extends State<ChatPages> {
                     padding: const EdgeInsets.all(8.0),
                     reverse: true,
                     physics: const AlwaysScrollableScrollPhysics(),
-                    itemBuilder: (_, int index) => _messages[index].id == 1
-                        ? ChatMessage(_messages[index])
-                        : MyChatMessage(_messages[index]),
-                    itemCount: _messages.length,
+                    itemBuilder: (_, int index) => discoverController
+                                .chartList[index].id ==
+                            1
+                        ? ChatMessage(
+                            discoverController.chartList[index],
+                            index == 0
+                                ? null
+                                : discoverController.chartList[index - 1],
+                            index == discoverController.chartList.length - 1
+                                ? null
+                                : discoverController.chartList[index + 1],
+                          )
+                        : MyChatMessage(discoverController.chartList[index]),
+                    itemCount: discoverController.chartList.length,
                   ),
                 ),
                 Container(

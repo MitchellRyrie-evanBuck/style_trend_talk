@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:style_trend_talk/data/models/mock/chat.dart';
 
 class ChatMessage extends StatelessWidget {
+  const ChatMessage(this.data, this.preData, this.nextData, {super.key});
+
   final ChartModel data;
-  const ChatMessage(this.data, {super.key});
+  final ChartModel? preData;
+  final ChartModel? nextData;
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +22,20 @@ class ChatMessage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Container(
-                  width: 30,
-                  height: 30,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/profile/user.png'))),
-                ),
+                if (preData != null && preData!.id == data.id)
+                  const SizedBox(
+                    width: 30,
+                  )
+                else
+                  Container(
+                    width: 30,
+                    height: 30,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image:
+                                AssetImage('assets/images/profile/user.png'))),
+                  ),
               ],
             ),
           ),

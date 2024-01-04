@@ -63,5 +63,5 @@ int getRandomByID() {
   int randomIndex = Random().nextInt(10);
 
   // 如果随机数为0，则返回数组中的随机字符串；否则返回null
-  return randomIndex <= 8 ? 1 : 2;
+  return randomIndex <= 3 ? 1 : 2;
 }

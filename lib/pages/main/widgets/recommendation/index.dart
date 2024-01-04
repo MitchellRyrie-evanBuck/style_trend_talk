@@ -124,7 +124,7 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
             onTap: () {
               debugPrint('点击');
               Get.to(
-                DetailsPage(),
+                () => DetailsPage(),
                 // transition: Transition.circularReveal,
                 transition: Transition.rightToLeftWithFade,
 

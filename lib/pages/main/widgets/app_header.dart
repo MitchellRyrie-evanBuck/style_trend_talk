@@ -73,8 +73,7 @@ class MySliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
                     // 打开抽屉
                     // Scaffold.of(context).openDrawer();
                     Get.to(
-                      const TrendPage(),
-                      // transition: Transition.circularReveal,
+                      () => const TrendPage(),
                       transition: Transition.leftToRightWithFade,
                     );
                   },

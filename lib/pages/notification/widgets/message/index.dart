@@ -104,8 +104,7 @@ class SwipeToDeleteChatBubble extends StatelessWidget {
                       child: GestureDetector(
                     onTap: () {
                       Get.to(
-                        const ChatPages(),
-                        // transition: Transition.circularReveal,
+                        () => ChatPages(),
                         transition: Transition.rightToLeftWithFade,
                       );
                     },
