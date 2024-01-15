@@ -258,30 +258,32 @@ class DiscoverControllerWidget extends StatelessWidget {
                 ),
               ),
               Expanded(
-                child: showComment
-                    ? _commentContainer()
-                    : Container(
-                        child: const Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                '还没有评论',
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
-                              ),
-                              Text(
-                                '开始评论',
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 87, 87, 87),
-                                    fontSize: 14),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-              ),
+                  child:
+                      // showComment
+                      _commentContainer()
+
+                  // Container(
+                  //     child: const Center(
+                  //       child: Column(
+                  //         mainAxisAlignment: MainAxisAlignment.center,
+                  //         crossAxisAlignment: CrossAxisAlignment.center,
+                  //         children: [
+                  //           Text(
+                  //             '还没有评论',
+                  //             style: TextStyle(
+                  //                 color: Colors.black, fontSize: 18),
+                  //           ),
+                  //           Text(
+                  //             '开始评论',
+                  //             style: TextStyle(
+                  //                 color: Color.fromARGB(255, 87, 87, 87),
+                  //                 fontSize: 14),
+                  //           )
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ),
+                  ),
               CommentAlign(controller: controller),
               const SizedBox(
                 height: 30,
