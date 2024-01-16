@@ -23,7 +23,7 @@ class ChartController extends GetxController {
   }
 
   Future<void> getChartInfoList() async {
-    print('开始调用  objects: ----> ${chartList.value} ');
+    // print('开始调用  objects: ----> ${chartList.value} ');
 
     try {
       // 调用你的API获取数据，这里使用假数据 discoverItems 代替
