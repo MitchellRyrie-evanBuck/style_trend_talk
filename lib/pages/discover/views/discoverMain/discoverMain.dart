@@ -220,7 +220,7 @@ class DiscoverControllerWidget extends StatelessWidget {
     var sheetWidth = MediaQuery.of(context).size.width;
     TextEditingController controller = TextEditingController();
     var sheetCommentHeight = (sheetHeight / 2) + 50;
-    var showComment = true;
+    // var showComment = true;
 
     showModalBottomSheet(
       context: context,
