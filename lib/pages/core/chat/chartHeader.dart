@@ -54,7 +54,7 @@ class ChartForSliverPersistentHeaderDelegate
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
-        color: Color.fromARGB(0, 255, 255, 255),
+        color: const Color.fromARGB(0, 255, 255, 255),
         child: child(context, shrinkOffset, overlapsContent));
   }
 
@@ -80,7 +80,7 @@ class _ChartMessageControllerState extends State<ChartMessageController> {
 
   @override
   Widget build(BuildContext context) {
-    final queryScreenWidth = MediaQuery.of(context).size.width;
+    // final queryScreenWidth = MediaQuery.of(context).size.width;
     print('shrinkOffset==============${widget.shrinkOffset}');
     return Container(
       child: Stack(
@@ -93,7 +93,7 @@ class _ChartMessageControllerState extends State<ChartMessageController> {
               bottom: 0,
               left: 0,
               right: 0,
-              child: Container(
+              child: SizedBox(
                 height: 54,
                 child: Row(
                   children: [
