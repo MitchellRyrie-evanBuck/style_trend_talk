@@ -31,13 +31,10 @@ class _DiscoverMainTabPageState extends State<DiscoverMainTabPage>
     super.build(context); // 必须调用super.build
     return NotificationListener<ScrollUpdateNotification>(
       onNotification: (ScrollUpdateNotification scrollInfo) {
-        // 滑动距离
         double scrollDistance = scrollInfo.metrics.pixels;
 
-        // 页面的高度
         double pageHeight = scrollInfo.metrics.maxScrollExtent;
 
-        // 判断是否滑动到底部
         if (scrollDistance >= pageHeight) {
           // Reach the bottom of the page, load more data
           discoverController.getDiscoverInfoList();
