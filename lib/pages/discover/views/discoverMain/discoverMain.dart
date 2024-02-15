@@ -158,7 +158,6 @@ class DiscoverControllerWidget extends StatelessWidget {
                       ],
                     ),
                   ),
-
                   const SizedBox(
                     height: 16,
                   ),
@@ -180,7 +179,6 @@ class DiscoverControllerWidget extends StatelessWidget {
                   const SizedBox(
                     height: 16,
                   ),
-
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -196,14 +194,6 @@ class DiscoverControllerWidget extends StatelessWidget {
                       )
                     ],
                   ),
-                  // const SizedBox(
-                  //   height: 20,
-                  // ),
-                  // const Icon(
-                  //   FontAwesomeIcons.heartCrack,
-                  //   color: Colors.white,
-                  //   size: 32,
-                  // ),
                 ]),
           ),
         )
