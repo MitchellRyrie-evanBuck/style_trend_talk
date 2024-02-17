@@ -36,7 +36,6 @@ class _DiscoverMainTabPageState extends State<DiscoverMainTabPage>
         double pageHeight = scrollInfo.metrics.maxScrollExtent;
 
         if (scrollDistance >= pageHeight) {
-          // Reach the bottom of the page, load more data
           discoverController.getDiscoverInfoList();
           return true;
         }
