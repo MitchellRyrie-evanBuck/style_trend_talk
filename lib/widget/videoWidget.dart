@@ -133,7 +133,6 @@ class _VideoComponentState extends State<VideoComponent>
       7. 播放完开始循环播放
     */
     _controller.addListener(() {
-      // 在此可以处理视频播放状态的变化
       // print('_controller---->${_controller.value}');
       // print('duration---->${_controller.value.duration}');
       // print('position---->${_controller.value.position}');
