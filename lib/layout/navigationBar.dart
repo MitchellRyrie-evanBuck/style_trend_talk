@@ -42,7 +42,6 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
           ],
           currentIndex: tabIndexController.index.value,
           onTap: (index) async {
-            print('index: $index');
             await tabIndexController.setIndex(index);
           },
         );
