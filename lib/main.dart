@@ -25,7 +25,7 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
       home: routerWidget(context),
       initialRoute: "/",
-      getPages: appRoutes, // 使用路由配置文件中的路由
+      getPages: appRoutes,
     );
   }
 
