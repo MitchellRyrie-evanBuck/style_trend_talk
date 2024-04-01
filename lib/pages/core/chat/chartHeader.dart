@@ -80,8 +80,6 @@ class _ChartMessageControllerState extends State<ChartMessageController> {
 
   @override
   Widget build(BuildContext context) {
-    // final queryScreenWidth = MediaQuery.of(context).size.width;
-    // print('shrinkOffset==============${widget.shrinkOffset}');
     return Container(
       child: Stack(
         children: [
