@@ -24,11 +24,9 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget>
       duration: const Duration(seconds: 2),
       vsync: this,
     )..addListener(() {
-        // 监听动画执行完之后 反向执行动画
         if (_controller.status == AnimationStatus.completed) {
           _controller.reverse();
         } else if (_controller.status == AnimationStatus.dismissed) {
-          // 监听动画反向执行完之后 再次正向执行动画
           _controller.forward();
         }
       });
