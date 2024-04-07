@@ -15,7 +15,7 @@ class _ProgressIndicatorWidgetState extends State<ProgressIndicatorWidget>
   late AnimationController _controller;
   late Animation<Color?> _colorAnimation;
   Timer? timer;
-  String loadingText = '加载中.';
+  String loadingText = '加载中...';
   @override
   void initState() {
     super.initState();
