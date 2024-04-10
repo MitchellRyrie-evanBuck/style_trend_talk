@@ -81,7 +81,7 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
   }
 
   void scrollControllerFn() {
-    print('scrollController----${scrollController.offset}');
+    print('scrollController-----${scrollController.offset}');
   }
 
   void profileContainerWidgetStateControllerFn() {
