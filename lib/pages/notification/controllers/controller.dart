@@ -16,7 +16,6 @@ class NotificationController extends GetxController {
 
   _initData() {
     pagingController.addPageRequestListener((pageKey) {
-      print('NotificationController---->${pageKey}');
       fetchData(pageKey);
     });
     update(["notification"]);

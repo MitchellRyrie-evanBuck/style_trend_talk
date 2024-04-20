@@ -362,7 +362,7 @@ class MyProfileHeaderState extends State<MyProfileHeader>
           decoration:
               const BoxDecoration(color: Colors.black, shape: BoxShape.circle),
           child: const Icon(
-            FontAwesomeIcons.add,
+            FontAwesomeIcons.plus,
             color: Colors.white,
             size: 16,
           ),
