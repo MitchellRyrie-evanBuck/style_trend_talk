@@ -3,9 +3,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TabData {
   TabData(
-      {this.imagePath = const Icon(FontAwesomeIcons.home),
+      {this.imagePath = const Icon(FontAwesomeIcons.house),
       this.index = 0,
-      this.selectedImagePath = const Icon(FontAwesomeIcons.home),
+      this.selectedImagePath = const Icon(FontAwesomeIcons.house),
       this.isSelected = false,
       this.animationController,
       this.label = ''});
@@ -21,10 +21,10 @@ class TabData {
   static List<TabData> tabsList = <TabData>[
     TabData(
       imagePath: const Icon(
-        FontAwesomeIcons.home,
+        FontAwesomeIcons.house,
       ),
       selectedImagePath: const Icon(
-        FontAwesomeIcons.home,
+        FontAwesomeIcons.house,
       ),
       index: 0,
       isSelected: true,
@@ -33,10 +33,10 @@ class TabData {
     ),
     TabData(
       imagePath: const Icon(
-        FontAwesomeIcons.search,
+        FontAwesomeIcons.magnifyingGlass,
       ),
       selectedImagePath: const Icon(
-        FontAwesomeIcons.search,
+        FontAwesomeIcons.magnifyingGlass,
       ),
       index: 1,
       isSelected: false,

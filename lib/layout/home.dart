@@ -15,7 +15,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: HeaderWidget(),
+      appBar: const HeaderWidget(),
       body: Container(
         width: 200,
       ),
@@ -24,7 +24,7 @@ class _HomeWidgetState extends State<HomeWidget> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
       floatingActionButton: IconButton(
-        icon: const Icon(FontAwesomeIcons.userCircle),
+        icon: const Icon(FontAwesomeIcons.circleUser),
         onPressed: () {
           // 点击菜单按钮的回调函数
         },

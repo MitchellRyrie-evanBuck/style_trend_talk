@@ -23,7 +23,7 @@ class _NavigationBarWidgetState extends State<NavigationBarWidget> {
           items: const [
             BottomNavigationBarItem(
               icon: Icon(
-                FontAwesomeIcons.home,
+                FontAwesomeIcons.house,
               ),
               label: 'Home',
             ),

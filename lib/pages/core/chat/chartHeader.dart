@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:style_trend_talk/data/fitness_app_theme.dart';
 
 class ChartHeader extends StatefulWidget {
-  const ChartHeader();
+  const ChartHeader({super.key});
   @override
   State<ChartHeader> createState() => ChartHeaderState();
 }
@@ -80,74 +80,72 @@ class _ChartMessageControllerState extends State<ChartMessageController> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Stack(
-        children: [
-          Positioned.fill(
-              child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 22, sigmaY: 22),
-          )),
-          Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: SizedBox(
-                height: 54,
-                child: Row(
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          navigator?.pop(context);
-                        },
-                        icon: const Icon(
-                          FontAwesomeIcons.chevronLeft,
-                          size: 18,
-                          color: Color.fromARGB(255, 142, 39, 207),
-                        )),
-                    Container(
-                      width: 32,
-                      height: 32,
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/profile/user.png'))),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    const Text(
-                      'Mitchell Ryrie',
-                      style: TextStyle(
-                          color: FitnessAppTheme.black,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    const Spacer(),
-                    const SizedBox(
-                      width: 50,
-                      child: Icon(
-                        FontAwesomeIcons.phone,
-                        size: 20,
+    return Stack(
+      children: [
+        Positioned.fill(
+            child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 22, sigmaY: 22),
+        )),
+        Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: SizedBox(
+              height: 54,
+              child: Row(
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        navigator?.pop(context);
+                      },
+                      icon: const Icon(
+                        FontAwesomeIcons.chevronLeft,
+                        size: 18,
                         color: Color.fromARGB(255, 142, 39, 207),
-                      ),
+                      )),
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            image:
+                                AssetImage('assets/images/profile/user.png'))),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  const Text(
+                    'Mitchell Ryrie',
+                    style: TextStyle(
+                        color: FitnessAppTheme.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  const Spacer(),
+                  const SizedBox(
+                    width: 50,
+                    child: Icon(
+                      FontAwesomeIcons.phone,
+                      size: 20,
+                      color: Color.fromARGB(255, 142, 39, 207),
                     ),
-                    const SizedBox(
-                      width: 40,
-                      child: Icon(
-                        FontAwesomeIcons.video,
-                        size: 20,
-                        color: Color.fromARGB(255, 142, 39, 207),
-                      ),
+                  ),
+                  const SizedBox(
+                    width: 40,
+                    child: Icon(
+                      FontAwesomeIcons.video,
+                      size: 20,
+                      color: Color.fromARGB(255, 142, 39, 207),
                     ),
-                    const SizedBox(
-                      width: 20,
-                    )
-                  ],
-                ),
-              ))
-        ],
-      ),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  )
+                ],
+              ),
+            ))
+      ],
     );
   }
 }
