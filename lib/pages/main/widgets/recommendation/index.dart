@@ -392,7 +392,7 @@ class _RecommendItemDetailsState extends State<RecommendItemDetails> {
       child: const Text(
         'Our lives are streams,flowing into the same river, towards whatever heaven lies in the mist beyond the falls…Close your eyes, let the waters take you home.',
         maxLines: 2,
-        overflow: TextOverflow.ellipsis, // 设置为省略号
+        overflow: TextOverflow.ellipsis,
         style: TextStyle(color: Color.fromARGB(255, 54, 54, 54), fontSize: 14),
       ),
     );
