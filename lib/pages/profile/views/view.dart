@@ -86,7 +86,7 @@ class _ProfileContainerWidgetState extends State<ProfileContainerWidget>
 
   void profileContainerWidgetStateControllerFn() {
     print(
-        'profileContainerWidgetStateControllerFn---${_profileContainerWidgetStateController.index}');
+        'profileContainerWidgetStateControllerFn--${_profileContainerWidgetStateController.index}');
   }
 
   double setChildValue(val) {
