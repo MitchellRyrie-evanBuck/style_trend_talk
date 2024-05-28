@@ -7,7 +7,7 @@ import 'package:style_trend_talk/pages/index.dart';
 import 'package:style_trend_talk/store/tab_index.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // 初始化Flutter应用
+  WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
   final isLogged = prefs.getBool('isLogged') ?? false; // 检查登录状态
   runApp(MainApp(isLogged: isLogged));
