@@ -32,7 +32,6 @@ class MainApp extends StatelessWidget {
   Widget routerWidget(BuildContext context) {
     return GetBuilder<TabIndexController>(
       builder: (tabIndexController) {
-        // print('tabIndexController.index.value: ${index}');
         return isLogged ? HomePage() : LoginPage();
       },
     );
