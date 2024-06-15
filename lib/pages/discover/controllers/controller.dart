@@ -34,10 +34,7 @@ class DiscoverController extends GetxController {
 
       // 更新UI
       update(["discover"]);
-    } catch (e) {
-      // 处理异常
-      print("Error fetching discover list: $e");
-    }
+    } catch (e) {}
   }
 
   void setIndex(index) {
