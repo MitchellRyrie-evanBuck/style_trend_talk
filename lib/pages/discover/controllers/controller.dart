@@ -32,7 +32,6 @@ class DiscoverController extends GetxController {
       // 将新的数据添加到之前的数组中
       discoverList.addAll(newList);
 
-      // 更新UI
       update(["discover"]);
     } catch (e) {}
   }
