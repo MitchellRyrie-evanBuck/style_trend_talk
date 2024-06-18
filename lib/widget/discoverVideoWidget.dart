@@ -32,7 +32,7 @@ class _DiscoverVideoComponentState extends State<DiscoverVideoComponent>
   late Widget playerWidget;
   bool isShow = false;
 // 初始高度，可以根据需要调整
-  final double _maxVideoHeight = 400.0; // 最大高度，可以根据需要调整
+  final double _maxVideoHeight = 400.0;
   double iconSize = 30;
   double distance = 7;
   late bool isPlaying = false;
