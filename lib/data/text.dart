@@ -17,7 +17,7 @@ List<String> textList = [
   '自由是创造的源泉，我们要用它来创造美好的生活',
   '自由是每个人的权利，我们要为它而奋斗',
   '自由是无价的，我们要珍惜它',
-  'Freedom is the companion of responsibility, and we should be responsible for our own freedom.',
+  'Freedom is the companion of responsibility, and we should be responsible for our own freedom..',
 ];
 
 String getRandomText() {
